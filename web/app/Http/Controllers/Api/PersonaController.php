@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PersonaResource;
 use App\Persona;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,10 @@ class PersonaController extends Controller
      */
     public function show(Persona $persona)
     {
-        //
+        return response([
+            'message' => 'Retrieved Succesfully',
+            'persona' => new PersonaResource($persona)
+        ], 200);
     }
 
     /**
