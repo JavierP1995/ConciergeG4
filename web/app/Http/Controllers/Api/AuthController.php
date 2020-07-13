@@ -38,7 +38,7 @@ class AuthController extends Controller
         // Insert the user into the database.
         $user = User::create($data);
 
-        $authToken = $user -> createToken('authToken');
+        $authToken = $user->createToken('authToken');
 
 
         //Return the token to the user
