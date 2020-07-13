@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\PersonaResource;
 use App\Persona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PersonaController extends Controller
 {
@@ -16,7 +17,11 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        //
+        $personas = Persona::all();
+        return response([
+            'message' => "Retrieved Successfully",
+            'personas' => PersonaResource::collection($personas),
+        ]);
     }
 
     /**
@@ -27,7 +32,13 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $persona = Persona::create($data);
+
+        return response([
+            'message' => 'Created Successfully',
+            'persona' => new PersonaResource($persona),
+        ],  201);
     }
 
     /**
