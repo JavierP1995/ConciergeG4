@@ -68,7 +68,7 @@ class PersonaController extends Controller
 
         return response([
             'message' => 'Updated Successfully',
-            'persona' => new PersonaResourse($persona),
+            'persona' => new PersonaResource($persona),
         ], 200);
 
     }
@@ -82,7 +82,6 @@ class PersonaController extends Controller
     public function destroy(Persona $persona)
     {
         $persona->delete();
-
         return response([
            'message' => 'Persona Deleted',
         ]);
