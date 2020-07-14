@@ -49,7 +49,13 @@ class PersonaController extends Controller
      */
     public function update(Request $request, Persona $persona)
     {
-        //
+        $persona->update($request->all());
+
+        return response([
+            'message' => 'Updated Successfully',
+            'persona' => new PersonaResourse($persona),
+        ], 200);
+
     }
 
     /**
