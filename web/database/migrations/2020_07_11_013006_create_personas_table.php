@@ -15,12 +15,12 @@ class CreatePersonasTable extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->string('rut');
+            $table->string('rut')->unique();
             $table->string('name');
             $table->string('email');
-            $table->string('phone');
+            $table->string('phone')->unsigned();
             $table->timestamps();
-            // TODO: add the unique
+
         });
     }
 
