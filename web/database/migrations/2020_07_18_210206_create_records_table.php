@@ -15,12 +15,12 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->char('type');
             $table->string('kinship');
             $table->date('entryDate');
             $table->date('departureDate');
             $table->string('comment');
+            $table->foreign('resident_id')->references('id')->on('personas');
             $table->timestamps();
         });
     }
