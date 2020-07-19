@@ -45,10 +45,10 @@ class Record
 }
 class Department {
    id : Long
-   numero : Integer
-   piso : Integer
-   bloque : char
-   residente_id : Long
+   number : Integer
+   floor : Integer
+   block : char
+   resident_id : Long
    void methods()
 }
 
