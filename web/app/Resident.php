@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Persona extends Model
+class Resident extends Model
 {
    protected $fillable = [
        "rut", "name", "phone", "email"

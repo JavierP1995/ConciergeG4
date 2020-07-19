@@ -10,6 +10,9 @@ class Record extends Model
         "type", "kinship", "entryDate", "departureDate", "comment"
     ];
     public function resident(){
-        return $this->belongsTo('App\Persona');
+        return $this->belongsTo('App\Resident');
+    }
+    public function visit(){
+        return $this->belongsTo('App\Visit');
     }
 }

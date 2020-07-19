@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\isRutValid;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PersonaRequest extends FormRequest
+class ResidentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class PersonaRequest extends FormRequest
     public function rules()
     {
         return [
-            'rut' => ['required','max:50', new isRutValid],
+            'rut' => ['required','max:50', new isRutValid()],
             'name' => 'required|max:255',
             'phone' => 'max:12',
             'email' => 'required|email:rfc,dns|max:255'
