@@ -18,7 +18,7 @@ class CreateResidentsTable extends Migration
             $table->string('rut')->unique();
             $table->string('name');
             $table->string('email');
-            $table->string('phone')->unsigned();
+            $table->integer('phone')->unsigned();
             $table->timestamps();
 
         });
