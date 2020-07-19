@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PersonaRequest;
-use App\Http\Resources\PersonaResource;
-use App\Persona;
+use App\Http\Requests\ResidentRequest;
+use App\Http\Resources\ResidentResource;
+use App\Resident;
 
-class PersonaController extends Controller
+class ResidentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class PersonaController extends Controller
      */
     public function index()
     {
-        $personas = Persona::all();
+        $residents = Resident::all();
         return response([
             'message' => "Retrieved Successfully",
-            'personas' => PersonaResource::collection($personas),
+            'residents' => ResidentResource::collection($residents),
         ]);
     }
 
@@ -29,29 +29,29 @@ class PersonaController extends Controller
      * @param  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PersonaRequest $request)
+    public function store(ResidentRequest $request)
     {
        $data = $request->all();
 
-       $persona = Persona::create($data);
+       $resident = Resident::create($data);
 
        return response([
             'message' => 'Created Successfully',
-            'persona' => new PersonaResource($persona),
+            'resident' => new ResidentResource($resident),
         ],  201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Persona  $persona
+     * @param  \App\Resident  $resident
      * @return \Illuminate\Http\Response
      */
-    public function show(Persona $persona)
+    public function show(Resident $resident)
     {
         return response([
             'message' => 'Retrieved Succesfully',
-            'persona' => new PersonaResource($persona)
+            'resident' => new ResidentResource($resident)
         ], 200);
     }
 
@@ -59,16 +59,16 @@ class PersonaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Persona  $persona
+     * @param  \App\Resident  $resident
      * @return \Illuminate\Http\Response
      */
-    public function update(PersonaRequest $request, Persona $persona)
+    public function update(ResidentRequest $request, Resident $resident)
     {
-        $persona->update($request->all());
+        $resident->update($request->all());
 
         return response([
             'message' => 'Updated Successfully',
-            'persona' => new PersonaResource($persona),
+            'resident' => new ResidentResource($resident),
         ], 200);
 
     }
@@ -76,14 +76,14 @@ class PersonaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Persona  $persona
+     * @param  \App\Resident  $resident
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Persona $persona)
+    public function destroy(Resident $resident)
     {
-        $persona->delete();
+        $resident->delete();
         return response([
-           'message' => 'Persona Deleted',
+           'message' => 'Resident Deleted',
         ]);
 
     }
