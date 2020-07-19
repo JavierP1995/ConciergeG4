@@ -22,13 +22,13 @@ class CreateRecordsTable extends Migration
             $table->string('comment');
             $table->timestamps();
 
-
         });
 
         Schema::table('records', function (Blueprint $table){
             $table->foreign('resident_id')->references('id')->on('residents')->onDelete('cascade');
             $table->foreign('visit_id')->references('id')->on('visits')->onDelete('cascade');
         });
+
     }
 
     /**
