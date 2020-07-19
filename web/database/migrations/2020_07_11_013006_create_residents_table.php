@@ -20,7 +20,6 @@ class CreateResidentsTable extends Migration
             $table->string('email');
             $table->integer('phone')->unsigned();
             $table->timestamps();
-
         });
     }
 
