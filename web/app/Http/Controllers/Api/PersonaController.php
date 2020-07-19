@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PersonaRequest;
 use App\Http\Resources\PersonaResource;
 use App\Persona;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PersonaController extends Controller
 {
@@ -27,15 +26,16 @@ class PersonaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PersonaRequest $request)
     {
-        $data = $request->all();
-        $persona = Persona::create($data);
+       $data = $request->all();
 
-        return response([
+       $persona = Persona::create($data);
+
+       return response([
             'message' => 'Created Successfully',
             'persona' => new PersonaResource($persona),
         ],  201);
@@ -62,7 +62,7 @@ class PersonaController extends Controller
      * @param  \App\Persona  $persona
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Persona $persona)
+    public function update(PersonaRequest $request, Persona $persona)
     {
         $persona->update($request->all());
 
