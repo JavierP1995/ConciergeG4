@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RecordResource;
 use Illuminate\Http\Request;
+use App\Record;
 
 class RecordController extends Controller
 {
@@ -13,6 +15,20 @@ class RecordController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        $records = Record::all();
+        return response([
+            'message' => "Retrieved Successfully",
+            'records' => RecordResource::collection($records),
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexForDepartment()
     {
         //
     }
