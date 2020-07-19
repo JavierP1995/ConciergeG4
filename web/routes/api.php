@@ -22,4 +22,9 @@ Route::post('/register', 'Api\AuthController@register');
 Route::post('/login', 'Api\AuthController@login');
 
 Route::get('/logout', 'Api\AuthController@logout')->middleware('auth:api');
+
+// PersonaResource
 Route::apiResource('/personas', 'Api\PersonaController')->middleware('auth:api');
+
+// VisitResource
+Route::apiResource('/visits', 'Api\VisitController')->middleware('auth:api');
