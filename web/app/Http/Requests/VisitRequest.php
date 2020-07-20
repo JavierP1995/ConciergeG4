@@ -27,6 +27,7 @@ class VisitRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'rut' => ['required','max:50', new isRutValid()],
+            'admitted' => 'in:yes,no,Yes,Nos'
         ];
     }
 }

@@ -43,7 +43,8 @@ class RecordController extends Controller
      */
     public function show($department_id)
     {
-        $visits = Record::where('department_id', $department_id)->visits;
+        $visits = Record::where('department_id', $department_id)->visit();
+
         return response([
             'message' => "Retrieved Successfully",
             'visits' => RecordResource::collection($visits),
