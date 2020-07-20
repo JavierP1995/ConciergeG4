@@ -20,6 +20,7 @@ class CreateRecordsTable extends Migration
             $table->date('entryDate');
             $table->date('departureDate');
             $table->string('comment');
+
             $table->biginteger('resident_id');
             $table->biginteger('visit_id');
             $table->timestamps();
