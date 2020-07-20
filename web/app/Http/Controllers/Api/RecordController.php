@@ -108,13 +108,13 @@ class RecordController extends Controller
      * @param  int  $number
      * @return \Illuminate\Http\Response
      */
-    public function showByDepartmentNumber($number)
+    public function showByDepartmentNumber(Request $request)
     {
         $data = DB::table('visits')
             ->join('records', 'visits.id', '=', 'records.visit_id')
             ->join('departments', 'records.department_id', '=', 'departments.id')
             ->select('visits.*')
-            ->where('departments.number', $number)
+            ->where('departments.number', $request->number)
             ->get();
         return response([
             'message' => "Retrieved Successfully",
