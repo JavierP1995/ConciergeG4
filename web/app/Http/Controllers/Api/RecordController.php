@@ -36,14 +36,15 @@ class RecordController extends Controller
         $visit_rut = $request->visit_rut;
         $visit = DB::table('visits')->where('rut', $visit_rut)->first();
 
+        // If the visitant is registered in the database.
         if($visit!= null){
-
             $isAdmitted = $visit->admitted;
+            // If the visitant admitted attribute it's equals to yes.
             if($isAdmitted == "yes"){
 
                 $department_number = $request->department_number;
                 $department = DB::table('departments')->where('number', $department_number)->first();
-
+                // If the department number exists in the database.
                 if ($department != null){
 
                     $department_id = $department->id;
@@ -54,8 +55,7 @@ class RecordController extends Controller
 
                     $data = $request->except(['visit_rut', 'department_number']);
 
-
-                    $record = Record::create($data);
+                    $record = Record::create($data); // Create the record
 
                     return response([
                         'message' => 'Record created successfully',
