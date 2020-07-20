@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DepartmentResource;
 use App\Http\Resources\RecordResource;
+use App\Http\Resources\VisitResource;
 use Illuminate\Http\Request;
 use App\Record;
 use Illuminate\Support\Facades\DB;
-use App\Visit;
 
 class RecordController extends Controller
 {
@@ -88,19 +89,36 @@ class RecordController extends Controller
     }
 
     /**
-     * Display the visits of a unique department
+     * Display the department
      *
-     * @param  int  $id
+     * @param  int  $department
      * @return \Illuminate\Http\Response
      */
-    public function show($department_id)
+    public function show($department)
     {
-        #TODO:Ver si es que funciona correctamente
-        $visits = Record::where('department_id', $department_id)->visit();
-
         return response([
             'message' => "Retrieved Successfully",
-            'visits' => RecordResource::collection($visits),
+            'department' => new DepartmentResource($department),
+            ],200);
+    }
+
+    /**
+     * Display visits of a department with the given number
+     *
+     * @param  int  $number
+     * @return \Illuminate\Http\Response
+     */
+    public function showByDepartmentNumber($number)
+    {
+        $data = DB::table('visits')
+            ->join('records', 'visits.id', '=', 'records.visit_id')
+            ->join('departments', 'records.department_id', '=', 'departments.id')
+            ->select('visits.*')
+            ->where('departments.number', $number)
+            ->get();
+        return response([
+            'message' => "Retrieved Successfully",
+            'visits' => VisitResource::collection($data),
             ],200);
     }
 
