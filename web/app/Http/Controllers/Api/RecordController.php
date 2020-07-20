@@ -14,23 +14,15 @@ class RecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        #FIXME: hacer funcionar el scope
+        #$records = Record::byDepartment($request->department_id)->get();
         $records = Record::all();
         return response([
             'message' => "Retrieved Successfully",
             'records' => RecordResource::collection($records),
         ]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexForDepartment()
-    {
-        //
     }
 
     /**
