@@ -11,6 +11,8 @@ class Department extends Model
             'id','numero','piso','bloque'
         ];
 
+    protected $table = 'departments';
+
     public function residents(){
         return $this->hasMany('App\Resident');
     }
