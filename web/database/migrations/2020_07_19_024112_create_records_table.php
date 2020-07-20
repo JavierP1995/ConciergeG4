@@ -22,7 +22,7 @@ class CreateRecordsTable extends Migration
             $table->string('comment');
             $table->biginteger('resident_id');
             $table->biginteger('visit_id');
-            $table->biginteger('department');
+            $table->biginteger('department_id');
             $table->timestamps();
             $table->foreign('resident_id')->references('id')->on('residents')
                 ->onUpdate('cascade')
