@@ -8,7 +8,7 @@ class Department extends Model
 {
     protected $fillable =
         [
-            'id','numero','piso','bloque'
+            'number','floor','block','resident_id'
         ];
 
     public function residents(){
