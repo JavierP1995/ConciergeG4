@@ -9,6 +9,8 @@ class Visit extends Model
     protected $fillable = [
         'name', 'rut'
     ];
+    protected $table = 'visits';
+
     public function records(){
         return $this->hasMany('App\Record');
     }
