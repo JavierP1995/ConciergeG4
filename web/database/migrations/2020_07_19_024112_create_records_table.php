@@ -23,6 +23,7 @@ class CreateRecordsTable extends Migration
 
             $table->biginteger('resident_id');
             $table->biginteger('visit_id');
+            $table->biginteger('department_id');
             $table->timestamps();
             $table->foreign('resident_id')->references('id')->on('residents')
                 ->onUpdate('cascade')
@@ -30,7 +31,9 @@ class CreateRecordsTable extends Migration
             $table->foreign('visit_id')->references('id')->on('visits')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
+            $table->foreign('department_id')->references('id')->on('departments')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
         });
     }

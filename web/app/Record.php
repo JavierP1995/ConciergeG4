@@ -15,4 +15,7 @@ class Record extends Model
     public function visit(){
         return $this->belongsTo('App\Visit');
     }
+    public function department(){
+        return $this->belongsTo('App\Department');
+    }
 }
