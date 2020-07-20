@@ -8,7 +8,7 @@ class Department extends Model
 {
     protected $fillable =
         [
-            'id','numero','piso','bloque'
+            'id','number','floor','block','resident_id'
         ];
 
     protected $table = 'departments';

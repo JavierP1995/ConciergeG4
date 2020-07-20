@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     protected $fillable = [
-        "type", "kinship", "entryDate", "departureDate", "comment"
+        "visit_rut", "department_number", "type", "kinship", "entryDate", "departureDate", "comment", 'resident_id', 'visit_id', 'department_id'
     ];
-    protected $table = 'records';
 
+    protected $hidden = [
+        'id'
+    ];
+protected $table = 'records';
     public function resident()
     {
         return $this->belongsTo('App\Resident','resident_id');

@@ -19,7 +19,9 @@ class CreateDepartmentsTable extends Migration
             $table->integer('number');
             $table->integer("floor");
             $table->char("block");
-            $table->foreign('resident_id')->references('id')->on('residents')->onDelete('cascade');
+            $table->foreign('resident_id')->references('id')->on('residents')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
 
