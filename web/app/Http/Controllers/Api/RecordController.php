@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\RecordResource;
 use Illuminate\Http\Request;
 use App\Record;
+use App\Visit;
 
 class RecordController extends Controller
 {
@@ -20,17 +21,7 @@ class RecordController extends Controller
         return response([
             'message' => "Retrieved Successfully",
             'records' => RecordResource::collection($records),
-        ]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexForDepartment()
-    {
-        //
+        ],200);
     }
 
     /**
@@ -45,14 +36,18 @@ class RecordController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the visits of a unique department
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($department_id)
     {
-        //
+        $visits = Record::where('department_id', $department_id)->visits;
+        return response([
+            'message' => "Retrieved Successfully",
+            'visits' => RecordResource::collection($visits),
+            ],200);
     }
 
     /**
