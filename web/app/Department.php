@@ -11,8 +11,10 @@ class Department extends Model
             'id','numero','piso','bloque'
         ];
 
-
-    public function resident(){
+    public function residents(){
         return $this->hasMany('App\Resident');
+    }
+    public function records(){
+        return $this->hasMany('App\Record');
     }
 }
