@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RecordResource;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Record;
-use App\Visit;
 
 class RecordController extends Controller
 {
@@ -17,10 +17,15 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $records = Record::all();
+        $records = Record::all()->sortByDesc('entryDate');
+        $visits = new Collection();
+
+        foreach ($records as $record){
+            $visits->add($record->visit->name);
+        }
         return response([
             'message' => "Retrieved Successfully",
-            'records' => RecordResource::collection($records),
+            'records of visits' => $visits,
         ],200);
     }
 
@@ -43,6 +48,7 @@ class RecordController extends Controller
      */
     public function show($department_id)
     {
+        #TODO:Ver si es que funciona correctamente.
         $visits = Record::where('department_id', $department_id)->visits;
         return response([
             'message' => "Retrieved Successfully",
