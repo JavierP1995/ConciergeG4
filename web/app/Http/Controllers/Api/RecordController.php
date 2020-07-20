@@ -14,10 +14,8 @@ class RecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        #FIXME: hacer funcionar el scope
-        #$records = Record::byDepartment($request->department_id)->get();
         $records = Record::all();
         return response([
             'message' => "Retrieved Successfully",
