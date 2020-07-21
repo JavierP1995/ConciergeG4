@@ -17,4 +17,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/records/{showByDepartmentNumber}/', 'RecordsController@showByDepartmentNumber');
