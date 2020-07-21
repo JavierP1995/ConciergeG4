@@ -94,12 +94,18 @@ class RecordController extends Controller
      * @param  int  $department
      * @return \Illuminate\Http\Response
      */
-    public function show($department)
+    public function show($number)
     {
+        $data = DB::table('visits')
+            ->join('records', 'visits.id', '=', 'records.visit_id')
+            ->join('departments', 'records.department_id', '=', 'departments.id')
+            ->select('visits.*')
+            ->where('departments.number', $number)
+            ->get();
         return response([
-            'message' => "Retrieved Successfully",
-            'department' => new DepartmentResource($department),
-            ],200);
+                            'message' => "Retrieved Successfully",
+                            'visits' => VisitResource::collection($data),
+                        ],200);
     }
 
     /**

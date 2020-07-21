@@ -30,7 +30,6 @@ Route::apiResource('/residents', 'Api\ResidentController')->middleware('auth:api
 Route::apiResource('/visits', 'Api\VisitController')->middleware('auth:api');
 
 // RecordResource
-Route::get('api/records/showByDepartmentNumber', 'RecordController@showByDepartmentNumber');
 Route::apiResource('/records', 'Api\RecordController')->middleware('auth:api');
 
 //DepartmentResource
