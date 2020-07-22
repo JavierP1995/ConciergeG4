@@ -19,9 +19,9 @@ class RecordResource extends JsonResource
             'entryDate' => $this->entryDate,
             'departureDate' => $this->departureDate,
             'comment' => $this->comment,
-            'resident' => ResidentResource::collection($this->resident),
-            'visit' => VisitResource::collection($this->visit),
-            'department' => DepartmentResource::collection($this->department),
+            'resident' => $this->resident,
+            'visit' => $this->visit,
+            'department' => $this->department
         ];
     }
 }
