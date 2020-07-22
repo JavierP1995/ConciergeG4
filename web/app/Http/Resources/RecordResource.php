@@ -15,8 +15,13 @@ class RecordResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'type' => $this->type,
             'entryDate' => $this->entryDate,
-            'visits' => $this->visit->name,
+            'departureDate' => $this->departureDate,
+            'comment' => $this->comment,
+            'resident' => ResidentResource::collection($this->resident),
+            'visit' => VisitResource::collection($this->visit),
+            'department' => DepartmentResource::collection($this->department),
         ];
     }
 }
