@@ -14,6 +14,14 @@ class ResidentResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return[
+            'rut' => $this->rut,
+            'name' => $this->name,
+            'email' => $this->phone,
+            'phone' => $this->phone,
+            'department' => $this->department,
+            'records' => RecordResource::collection($this->records)
+        ];
+
     }
 }
