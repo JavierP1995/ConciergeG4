@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DepartmentResource;
 use App\Http\Resources\RecordResource;
+use App\Http\Resources\VisitResource;
 use Illuminate\Http\Request;
 use App\Record;
 use Illuminate\Support\Facades\DB;
@@ -84,19 +86,42 @@ class RecordController extends Controller
     }
 
     /**
-     * Display the visits of a unique department
+     * Display the department
      *
-     * @param  int  $id
+     * @param  int  $department
      * @return \Illuminate\Http\Response
      */
-    public function show($department_id)
+    public function show($number)
     {
-        #TODO:Ver si es que funciona correctamente
-        $visits = Record::where('department_id', $department_id)->visit();
+        $data = DB::table('visits')
+            ->join('records', 'visits.id', '=', 'records.visit_id')
+            ->join('departments', 'records.department_id', '=', 'departments.id')
+            ->select('visits.*')
+            ->where('departments.number', $number)
+            ->get();
+        return response([
+                            'message' => "Retrieved Successfully",
+                            'visits' => VisitResource::collection($data),
+                        ],200);
+    }
 
+    /**
+     * Display visits of a department with the given number
+     *
+     * @param  int  $number
+     * @return \Illuminate\Http\Response
+     */
+    public function showByDepartmentNumber(Request $request)
+    {
+        $data = DB::table('visits')
+            ->join('records', 'visits.id', '=', 'records.visit_id')
+            ->join('departments', 'records.department_id', '=', 'departments.id')
+            ->select('visits.*')
+            ->where('departments.number', $request->number)
+            ->get();
         return response([
             'message' => "Retrieved Successfully",
-            'visits' => RecordResource::collection($visits),
+            'visits' => VisitResource::collection($data),
             ],200);
     }
 
@@ -122,5 +147,4 @@ class RecordController extends Controller
     {
         //
     }
-
 }
