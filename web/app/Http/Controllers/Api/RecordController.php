@@ -41,6 +41,10 @@ class RecordController extends Controller
         $visit_rut = $request->visit_rut;
         $visit = Visit::all()->where('rut', $visit_rut)->first();
 
+        // We convert the date formats
+
+
+
         // If the visitant is registered in the database.
         if($visit!= null){
             $isAdmitted = $visit->admitted;

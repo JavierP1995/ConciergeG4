@@ -13,7 +13,14 @@ class Record extends Model
     protected $hidden = [
         'id'
     ];
-protected $table = 'records';
+
+    protected $casts = [
+        'entryDate' => 'date:dd/mm/YYYY',
+        'departureDate' => 'date:dd/mm/YYYY',
+    ];
+
+    protected $table = 'records';
+
     public function resident()
     {
         return $this->belongsTo('App\Resident','resident_id');
