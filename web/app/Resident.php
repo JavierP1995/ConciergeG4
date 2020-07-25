@@ -15,4 +15,7 @@ class Resident extends Model
     public function records(){
         return $this->hasMany('App\Record');
     }
+    public function department(){
+        return $this->belongsTo('App\Department');
+    }
 }

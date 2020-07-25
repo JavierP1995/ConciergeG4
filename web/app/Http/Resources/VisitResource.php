@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Requests\RecordRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class VisitResource extends JsonResource
@@ -14,6 +15,11 @@ class VisitResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return[
+            'rut' => $this->rut,
+            'name' => $this->name,
+            'admitted' => $this->admitted,
+            'records' => RecordResource::collection($this->records)
+        ];
     }
 }
