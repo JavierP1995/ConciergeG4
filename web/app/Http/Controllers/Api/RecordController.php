@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Department;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\DepartmentResource;
 use App\Http\Resources\RecordResource;
 use App\Http\Resources\VisitResource;
 use Illuminate\Http\Request;
@@ -93,16 +93,17 @@ class RecordController extends Controller
      */
     public function show($number)
     {
-        $data = DB::table('visits')
-            ->join('records', 'visits.id', '=', 'records.visit_id')
-            ->join('departments', 'records.department_id', '=', 'departments.id')
-            ->select('visits.*')
-            ->where('departments.number', $number)
-            ->get();
+
+        $apartment = Department::all()->where('number', '=',$number)->first();
+
+        $visits = Record::all()->where('department_id', $apartment->id);
+
+
+
         return response([
-                            'message' => "Retrieved Successfully",
-                            'visits' => VisitResource::collection($data),
-                        ],200);
+            'message' => "Retrieved Successfully",
+            'visits' => $visits,
+        ],200);
     }
 
     /**
