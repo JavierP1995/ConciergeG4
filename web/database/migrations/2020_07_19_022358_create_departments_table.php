@@ -15,13 +15,9 @@ class CreateDepartmentsTable extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('resident_id');
             $table->integer('number');
-            $table->integer("floor");
-            $table->char("block");
-            $table->foreign('resident_id')->references('id')->on('residents')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->integer('floor');
+            $table->char('block');
             $table->timestamps();
         });
 
