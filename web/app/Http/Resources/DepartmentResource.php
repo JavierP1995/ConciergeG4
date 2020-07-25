@@ -19,7 +19,6 @@ class DepartmentResource extends JsonResource
         'floor' => $this->floor,
         'block' => $this->block,
         'residents' => ResidentResource::collection($this->residents),
-        'records' => RecordResource::collection($this->records)
         ];
     }
 }
