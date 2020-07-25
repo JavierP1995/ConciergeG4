@@ -13,6 +13,7 @@ import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.ui.AndroidTheme
+import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,4 +47,11 @@ fun DefaultPreview() {
     AndroidTheme {
         Greeting("Android")
     }
+}
+
+private fun getRetrofit(): Retrofit {
+    return Retrofit.Builder()
+            .baseUrl("https://dog.ceo/api/breed/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 }
