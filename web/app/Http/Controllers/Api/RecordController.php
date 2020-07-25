@@ -109,9 +109,10 @@ class RecordController extends Controller
 
         $visits = Record::all()->where('department_id', $apartment->id);
 
+
         return response([
             'message' => "Retrieved Successfully",
-            'visits' => $visits,
+            'visits' => RecordResource::collection($visits),
         ],200);
     }
 
