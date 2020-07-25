@@ -6,6 +6,8 @@ use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RecordResource;
 use App\Http\Resources\VisitResource;
+use App\Resident;
+use App\Visit;
 use Illuminate\Http\Request;
 use App\Record;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +39,7 @@ class RecordController extends Controller
     public function store(Request $request)
     {
         $visit_rut = $request->visit_rut;
-        $visit = DB::table('visits')->where('rut', $visit_rut)->first();
+        $visit = Visit::all()->where('rut', $visit_rut)->first();
 
         // If the visitant is registered in the database.
         if($visit!= null){
@@ -46,15 +48,20 @@ class RecordController extends Controller
             if($isAdmitted == "yes"){
 
                 $department_number = $request->department_number;
-                $department = DB::table('departments')->where('number', $department_number)->first();
+                //$department = DB::table('departments')->where('number', $department_number)->first();
+                $department = Department::all()->where('number', $department_number)->first();
+
                 // If the department number exists in the database.
                 if ($department != null){
 
                     $department_id = $department->id;
 
-                    $resident_id = DB::table('residents')
-                                ->where('name', '=' ,$request->resident_name)
-                                ->where('department_id', '=' ,$department_id)->value('id');  // Clausula and
+                    /*$resident_id = DB::table('residents')
+                                ->where('name', '=' ,$request->resident_name) // Clausula and
+                                ->where('department_id', '=' ,$department_id)->value('id');*/
+
+                    $resident_id = Resident::all()->where('name', $request->resident_name)
+                        ->where('department_id', $department_id)->first()->id;
 
                     $visit_id = $visit->id;
 
