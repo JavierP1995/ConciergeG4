@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Record;
 use Illuminate\Support\Facades\DB;
 
+
 class RecordController extends Controller
 {
     /**
@@ -20,14 +21,10 @@ class RecordController extends Controller
     public function index()
     {
         $records = Record::all()->sortByDesc('entryDate');
-        $visits = new Collection();
 
-        foreach ($records as $record){
-            $visits->add($record->visit->name);
-        }
         return response([
             'message' => "Retrieved Successfully",
-            'records of visits' => $visits,
+            'records of visits' => RecordResource::collection($records),
         ],200);
     }
 
