@@ -15,7 +15,6 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->char('type');
             $table->string('kinship');
             $table->date('entryDate');
             $table->date('departureDate');
