@@ -6,6 +6,10 @@ use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DepartmentRequest;
 use App\Http\Resources\DepartmentResource;
+use App\Http\Resources\VisitResource;
+use App\Record;
+use App\Visit;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -43,16 +47,23 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display visits from an specific department
      *
-     * @param  \App\Department  $department
+     * @param  int $number
      * @return \Illuminate\Http\Response
      */
-    public function show(Department $department)
+    public function show($number)
     {
+        $department = Department::all()->where('number', $number)->first();
+        $records = Record::all()->where('department_id', $department->id);
+        $visits = new Collection();
+        foreach ($records as $record){
+            $visits->add(Visit::all()->where('id', $record->visit_id)->first());
+        }
+
         return response([
             'message' => 'Retrieved Succesfully',
-            'department' => new DepartmentResource($department)
+            'visits' => VisitResource::collection($visits)
         ], 200);
 
     }
