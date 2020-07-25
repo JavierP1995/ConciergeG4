@@ -26,8 +26,17 @@ class VisitRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'rut' => ['required','max:50', new isRutValid()],
+            'rut' => ['required','max:50', new isRutValid(),'unique:visits'],
             'admitted' => 'in:yes,no,Yes,Nos'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'rut.required' => 'The :attribute it is required',
+            'name.required' => 'Must entered the :attribute',
+        ];
+    }
+
 }

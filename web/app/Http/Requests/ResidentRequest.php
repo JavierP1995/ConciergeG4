@@ -25,7 +25,7 @@ class ResidentRequest extends FormRequest
     public function rules()
     {
         return [
-            'rut' => ['required','max:50', new isRutValid()],
+            'rut' => ['required','max:50', new isRutValid(), 'unique:residents'],
             'name' => 'required|max:255',
             'phone' => 'max:12',
             'email' => 'required|email:rfc,dns|max:255'

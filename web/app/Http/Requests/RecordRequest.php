@@ -13,7 +13,7 @@ class RecordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,23 @@ class RecordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+
+            'kinship' => ['required','max:50'],
+            'entryDate' => ['required','date'],
+            'departureDate' => ['required','date'],
+            'comment' => 'nullable|max:255'
+
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'kinship.required'=> 'Must entered the :attribute',
+            'entryDate.required'=> 'Must entered the :attribute',
+            'departureDate.required'=> 'Must entered the :attribute',
+            'entryDate.date' => 'Format invalid!',
+            'departureDate.date' => 'Format invalid!'
         ];
     }
 }

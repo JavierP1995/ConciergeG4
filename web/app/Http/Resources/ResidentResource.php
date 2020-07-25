@@ -17,7 +17,7 @@ class ResidentResource extends JsonResource
         return[
             'rut' => $this->rut,
             'name' => $this->name,
-            'email' => $this->phone,
+            'email' => $this->email,
             'phone' => $this->phone,
             'department' => $this->department,
             'records' => RecordResource::collection($this->records)
