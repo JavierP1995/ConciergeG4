@@ -6,7 +6,6 @@ use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RecordResource;
 use App\Http\Resources\VisitResource;
-use App\Resident;
 use Illuminate\Http\Request;
 use App\Record;
 use Illuminate\Support\Facades\DB;
