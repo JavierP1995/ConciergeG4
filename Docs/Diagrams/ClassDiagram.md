@@ -18,6 +18,7 @@ class Resident
   rut : String
   phone : Integer
   email : String
+  department_id : Long
   void methods()
 }
 class Visit {
@@ -48,7 +49,6 @@ class Department {
    number : Integer
    floor : Integer
    block : char
-   resident_id : Long
    void methods()
 }
 
