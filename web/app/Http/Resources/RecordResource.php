@@ -15,7 +15,7 @@ class RecordResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'type' => $this->type,
+            'kinship' => $this->kinship,
             'entryDate' => $this->entryDate,
             'departureDate' => $this->departureDate,
             'comment' => $this->comment,

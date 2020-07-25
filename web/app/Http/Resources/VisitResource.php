@@ -18,8 +18,7 @@ class VisitResource extends JsonResource
         return[
             'rut' => $this->rut,
             'name' => $this->name,
-            'admitted' => $this->admitted,
-            'records' => RecordResource::collection($this->records)
+            'admitted' => $this->admitted
         ];
     }
 }
