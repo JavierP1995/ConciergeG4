@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     protected $fillable = [
-        "visit_rut", "department_number", "type", "kinship", "entryDate", "departureDate", "comment", 'resident_id', 'visit_id', 'department_id'
+        "visit_rut", "department_number", 'resident_name', "type", "kinship", "entryDate", "departureDate", "comment", 'visit_id', 'department_id', 'resident_id'
     ];
 
     protected $hidden = [

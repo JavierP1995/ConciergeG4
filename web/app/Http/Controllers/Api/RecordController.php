@@ -6,6 +6,7 @@ use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RecordResource;
 use App\Http\Resources\VisitResource;
+use App\Resident;
 use Illuminate\Http\Request;
 use App\Record;
 use Illuminate\Support\Facades\DB;
@@ -51,12 +52,16 @@ class RecordController extends Controller
                 if ($department != null){
 
                     $department_id = $department->id;
-                    $resident_id =  DB::table('departments')->where('number', $department_number)->first()->resident_id;
+
+                    $resident_id = DB::table('residents')
+                                ->where('name', '=' ,$request->resident_name)
+                                ->where('department_id', '=' ,$department_id)->value('id');  // Clausula and
+
                     $visit_id = $visit->id;
 
                     $request->request->add(['resident_id' => $resident_id, 'department_id' => $department_id,'visit_id' => $visit_id]);
 
-                    $data = $request->except(['visit_rut', 'department_number']);
+                    $data = $request->except(['visit_rut', 'department_number', 'resident_name']);
 
                     $record = Record::create($data); // Create the record
 
