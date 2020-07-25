@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Department;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DepartmentRequest;
 use App\Http\Resources\DepartmentResource;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepartmentRequest $request)
     {
         $info = $request->all();
         $department = Department::create($info);
@@ -63,7 +64,7 @@ class DepartmentController extends Controller
      * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(DepartmentRequest $request, Department $department)
     {
         $department->update($request->all());
 
