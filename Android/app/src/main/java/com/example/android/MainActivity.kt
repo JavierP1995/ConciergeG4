@@ -13,17 +13,16 @@ import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.ui.AndroidTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            AndroidTheme {
-                Greeting("Android")
-            }
-        }
+        setContentView(R.layout.activity_main)
     }
 }
 
@@ -40,7 +39,6 @@ fun Greeting(name: String) {
         Text(text = "Click number $click !")
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
