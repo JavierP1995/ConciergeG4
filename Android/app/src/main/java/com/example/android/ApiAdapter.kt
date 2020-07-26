@@ -1,6 +1,5 @@
-package com.example.android.adapter
+package com.example.android
 
-import com.example.android.APIService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,12 +10,12 @@ import retrofit2.converter.gson.GsonConverterFactory
  * This static class holds all settings for Retrofit
  *
  */
-object DepartmentAdapter{
+object ApiAdapter{
 
-        val departmentAdapter: APIService = Retrofit.Builder()
+        val DEPARTMENT_ADAPTER: ApiService = Retrofit.Builder()
             .baseUrl("https://localhost:8000")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(APIService::class.java)
+            .create(ApiService::class.java)
 }
