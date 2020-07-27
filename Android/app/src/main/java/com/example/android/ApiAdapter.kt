@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiAdapter{
 
         val DEPARTMENT_ADAPTER: ApiService = Retrofit.Builder()
-            .baseUrl("https://localhost:8000")
+            .baseUrl("http://localhost:8000/api/")
             .client(OkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

@@ -10,6 +10,6 @@ import retrofit2.http.Url
  * Created by Chirinoxi
  */
 interface ApiService {
-    @GET("/api/departments/")
+    @GET("departments")
     suspend fun getDepartments(): Response<DepartmentModel>
 }
