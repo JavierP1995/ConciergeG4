@@ -20,7 +20,6 @@ class ResidentResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'department' => $this->department,
-            'records' => RecordResource::collection($this->records)
         ];
 
     }
