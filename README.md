@@ -17,6 +17,15 @@ Javier Palacios Arce ICCI
 
 ![Domain Model](./Docs/Diagrams/Domain_Model.jpeg)
 
+## Class Diagram PHP
+
+![Domain Model](Docs/Diagrams/ClassDiagram.png)
+
+##Class Diagram Kotlin
+
+![Domain Model](./Docs/Diagrams/ClassDiagramKt.png)
+
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
