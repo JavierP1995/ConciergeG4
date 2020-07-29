@@ -53,11 +53,11 @@ class DepartmentActivity : AppCompatActivity() {
                 textAlign = TextAlign.Center
             )
         }
+        listDepartments(departments = this.dptos_list)
     }
 
-
     @Composable
-    private fun listDepartments(departments : List<DepartmentModel>){
+    private fun listDepartments(departments : ArrayList<DepartmentModel>){
         VerticalScroller{
             Column {
                 departments.let {
@@ -66,17 +66,15 @@ class DepartmentActivity : AppCompatActivity() {
                     }
                 }
             }
-
         }
-
     }
 
     @Composable
     private fun printDepartment(department: DepartmentModel) {
         Column {
-            Text(text = department.number.toString())
-            Text(text = department.floor.toString())
-            Text(text = department.block.toString())
+            Text(text = "Number: "+department.number.toString())
+            Text(text = "Floor: "+department.floor.toString())
+            Text(text = "Block: "+department.block.toString())
         }
     }
 
@@ -85,20 +83,20 @@ class DepartmentActivity : AppCompatActivity() {
 
         val departmentService = ApiService.buildService(DepartmentService::class.java)
 
-        val requestCall = departmentService.getDepartments();
+        val requestCall: Call<ArrayList<DepartmentModel>> = departmentService.getDepartments();
 
         doAsync {
-            requestCall.enqueue(object : Callback<DepartmentResponse> {
+            requestCall.enqueue(object : Callback<ArrayList<DepartmentModel>> {
 
                 override fun onResponse(
-                    call: Call<DepartmentResponse>,
-                    response: Response<DepartmentResponse>
+                    call: Call<ArrayList<DepartmentModel>>,
+                    response: Response<ArrayList<DepartmentModel>>
                 ) {
                     when {
                         response.isSuccessful -> {
                             val dataList = response.body()!!
 
-                            dptos_list = dataList.departments
+                            dptos_list = dataList
                         }
                         response.code() == 401 -> {
                             Toast.makeText(
@@ -118,7 +116,7 @@ class DepartmentActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<DepartmentResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ArrayList<DepartmentModel>>, t: Throwable) {
                     Toast.makeText(
                         this@DepartmentActivity,
                         "Error${t.toString()}",
