@@ -26,7 +26,8 @@ import org.jetbrains.anko.doAsync
 
 class DepartmentActivity : AppCompatActivity() {
 
-    var dptos_list: ArrayList<DepartmentModel> = arrayListOf<DepartmentModel>()
+    var listDepartments: ArrayList<DepartmentModel> = ArrayList()
+    private val departmentService = ApiService.buildService(DepartmentService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,35 +84,32 @@ class DepartmentActivity : AppCompatActivity() {
 
     private fun callDepartments(): List<DepartmentModel>{
 
-        val departmentService = ApiService.buildService(DepartmentService::class.java)
-
         val requestCall = departmentService.getDepartments();
 
         doAsync {
             requestCall.enqueue(object : Callback<DepartmentResponse> {
 
-                override fun onResponse(
-                    call: Call<DepartmentResponse>,
-                    response: Response<DepartmentResponse>
-                ) {
+                override fun onResponse(call: Call<DepartmentResponse>,
+                                        response: Response<DepartmentResponse>) {
                     when {
                         response.isSuccessful -> {
-                            val dataList = response.body()!!
+                            val dataList = response.body()!!.departments
 
-                            dptos_list = dataList.departments
+                            for (i in dataList) listDepartments.add(i)
+
                         }
                         response.code() == 401 -> {
                             Toast.makeText(
-                                this@DepartmentActivity,
-                                "Your session has expired. Please Login again.", Toast.LENGTH_LONG
+                                    this@DepartmentActivity,
+                                    "Your session has expired. Please Login again.", Toast.LENGTH_LONG
                             ).show()
                         }
                         else -> {// Application-level failure
                             // Your status code is in the range of 300's, 400's and 500's
                             Toast.makeText(
-                                this@DepartmentActivity,
-                                "Failed to retrieve items",
-                                Toast.LENGTH_LONG
+                                    this@DepartmentActivity,
+                                    "Failed to retrieve items",
+                                    Toast.LENGTH_LONG
                             ).show()
 
                         }
@@ -120,13 +118,15 @@ class DepartmentActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<DepartmentResponse>, t: Throwable) {
                     Toast.makeText(
-                        this@DepartmentActivity,
-                        "Error${t.toString()}",
-                        Toast.LENGTH_LONG
+                            this@DepartmentActivity,
+                            "Error${t.toString()}",
+                            Toast.LENGTH_LONG
                     ).show()
                 }
             })
         }
-        return dptos_list
+        return listDepartments
     }
+
+
 }
