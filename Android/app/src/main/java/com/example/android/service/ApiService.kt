@@ -14,10 +14,10 @@ object ApiService {
 
     private const val URL = "http://127.0.0.1:8000/api/"
 
-    // Create Logger
+    // Creamos logger
     private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    // Create a Custom Interceptor to apply Headers application wide
+    // Cree un interceptor personalizado para aplicar encabezados a toda la aplicación
     val headerInterceptor = object: Interceptor {
 
         override fun intercept(chain: Interceptor.Chain): Response {
@@ -38,12 +38,14 @@ object ApiService {
         .callTimeout(5, TimeUnit.SECONDS)
         .addInterceptor(logger)
 
+    /**
+     * Pasamos la URL
+     */
     private val builder = Retrofit.Builder().baseUrl(URL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttp.build())
 
     private val retrofit = builder.build()
-
 
     fun <T> buildService(serviceType: Class<T>): T {
         return retrofit.create(serviceType)
