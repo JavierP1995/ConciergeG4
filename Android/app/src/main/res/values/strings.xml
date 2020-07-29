@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android</string>
+    <string name="get_departments">Listar Departamentos</string>
 </resources>
