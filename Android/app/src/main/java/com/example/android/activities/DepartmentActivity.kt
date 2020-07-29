@@ -86,8 +86,8 @@ class DepartmentActivity : AppCompatActivity() {
 
         val requestCall = departmentService.getDepartments();
 
-        doAsync {
-            requestCall.enqueue(object : Callback<DepartmentResponse> {
+
+        requestCall.enqueue(object : Callback<DepartmentResponse> {
 
                 override fun onResponse(call: Call<DepartmentResponse>,
                                         response: Response<DepartmentResponse>) {
@@ -116,15 +116,12 @@ class DepartmentActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<DepartmentResponse>, t: Throwable) {
-                    Toast.makeText(
-                            this@DepartmentActivity,
-                            "Error${t.toString()}",
-                            Toast.LENGTH_LONG
-                    ).show()
-                }
-            })
-        }
+            override fun onFailure(call: Call<DepartmentResponse>, t: Throwable) {
+                    Toast.makeText(this@DepartmentActivity, "Error${t.toString()}",
+                            Toast.LENGTH_LONG).show()
+            }
+        })
+
         return listDepartments
     }
 
