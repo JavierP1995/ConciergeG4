@@ -1,10 +1,12 @@
 package com.example.android.reponse
 
 import com.example.android.model.DepartmentModel
+import com.example.android.model.RecordModel
 import com.google.gson.annotations.SerializedName
 
-data class DepartmentResponse(
+data class RecordResponse (
     @SerializedName("message")
     var message:String,
-    @SerializedName("departments")
-    var departments: ArrayList<DepartmentModel>)
+    @SerializedName("records")
+    var records: ArrayList<RecordModel>
+)
