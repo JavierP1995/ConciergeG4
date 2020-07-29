@@ -21,7 +21,7 @@ Javier Palacios Arce ICCI
 
 ![Domain Model](Docs/Diagrams/ClassDiagram.png)
 
-##Class Diagram Kotlin
+## Class Diagram Kotlin
 
 ![Domain Model](./Docs/Diagrams/ClassDiagramKt.png)
 
