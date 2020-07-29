@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://10.0.2.2:8000/api/")
+            .baseUrl("http://192.168.0.5:8000/api/") //192.168.0.5
             .build()
 
         val ApiService = retrofit.create(ApiService::class.java)
