@@ -12,24 +12,26 @@ import java.util.concurrent.TimeUnit
 
 object ApiService {
 
-    private const val URL = "https://192.168.0.17"
-    //private const val URL = "https://127.0.0.1:8080/"
-
+    private const val URL = "http://127.0.0.1:8000/api/"
 
     // Create Logger
     private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     // Create a Custom Interceptor to apply Headers application wide
-    val headerInterceptor = Interceptor { chain ->
-        var request = chain.request()
+    val headerInterceptor = object: Interceptor {
 
-        request = request.newBuilder()
+        override fun intercept(chain: Interceptor.Chain): Response {
+
+            var request = chain.request()
+
+            request = request.newBuilder()
                 .addHeader("x-device-type", Build.DEVICE)
                 .addHeader("Accept-Language", Locale.getDefault().language)
                 .build()
 
-        val response = chain.proceed(request)
-        response
+            val response = chain.proceed(request)
+            return response
+        }
     }
 
     private val okHttp = OkHttpClient.Builder()
