@@ -38,10 +38,13 @@ class MainActivity : AppCompatActivity() {
 
                 val stringBuilder = StringBuilder()
                 for(department in Departments){
+                    stringBuilder.append("Number: ")
                     stringBuilder.append(department.number)
                     stringBuilder.append("\n")
+                    stringBuilder.append("Floor: ")
                     stringBuilder.append(department.floor)
                     stringBuilder.append("\n")
+                    stringBuilder.append("Block: ")
                     stringBuilder.append(department.block)
                     stringBuilder.append("\n")
                     stringBuilder.append("\n")
