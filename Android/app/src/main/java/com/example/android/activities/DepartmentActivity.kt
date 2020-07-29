@@ -19,12 +19,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.android.model.DepartmentModel
+import com.example.android.reponse.DepartmentResponse
 import com.example.android.service.ApiService
 import com.example.android.service.DepartmentService
+import org.jetbrains.anko.doAsync
 
 class DepartmentActivity : AppCompatActivity() {
 
-    lateinit var dptos_list: List<DepartmentModel>
+    var dptos_list: ArrayList<DepartmentModel> = arrayListOf<DepartmentModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,30 +87,46 @@ class DepartmentActivity : AppCompatActivity() {
 
         val requestCall = departmentService.getDepartments();
 
-        requestCall.enqueue(object : Callback<List<DepartmentModel>>
-        {
-            override fun onFailure(call: Call<List<DepartmentModel>>, t: Throwable) {
-                Toast.makeText(this@DepartmentActivity, "Error${t.toString()}",Toast.LENGTH_LONG).show()
-            }
+        doAsync {
+            requestCall.enqueue(object : Callback<DepartmentResponse> {
 
-            override fun onResponse(call: Call<List<DepartmentModel>>, response: Response<List<DepartmentModel>>) {
-                if (response.isSuccessful){
+                override fun onResponse(
+                    call: Call<DepartmentResponse>,
+                    response: Response<DepartmentResponse>
+                ) {
+                    when {
+                        response.isSuccessful -> {
+                            val dataList = response.body()!!
 
-                    val dataList = response.body()!!
-                    dptos_list = dataList
-                } else if (response.code() == 401) {
-                    Toast.makeText(this@DepartmentActivity,
-                        "Your session has expired. Please Login again.", Toast.LENGTH_LONG).show()
+                            dptos_list = dataList.departments
+                        }
+                        response.code() == 401 -> {
+                            Toast.makeText(
+                                this@DepartmentActivity,
+                                "Your session has expired. Please Login again.", Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        else -> {// Application-level failure
+                            // Your status code is in the range of 300's, 400's and 500's
+                            Toast.makeText(
+                                this@DepartmentActivity,
+                                "Failed to retrieve items",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                        }
+                    }
                 }
 
-                else {// Application-level failure
-                    // Your status code is in the range of 300's, 400's and 500's
-                    Toast.makeText(this@DepartmentActivity, "Failed to retrieve items", Toast.LENGTH_LONG).show()
-
+                override fun onFailure(call: Call<DepartmentResponse>, t: Throwable) {
+                    Toast.makeText(
+                        this@DepartmentActivity,
+                        "Error${t.toString()}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-
-            }
-        })
+            })
+        }
         return dptos_list
     }
 }
