@@ -33,5 +33,4 @@ Route::apiResource('/visits', 'Api\VisitController')->middleware('auth:api');
 Route::apiResource('/records', 'Api\RecordController')->middleware('auth:api');
 
 //DepartmentResource
-//Route::apiResource('/departments','Api\DepartmentController')->middleware('auth:api');
 Route::apiResource('/departments','Api\DepartmentController');

@@ -1,17 +1,50 @@
 package com.example.android
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.android.reponse.DepartmentResponse
-import com.google.gson.Gson
-import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import androidx.compose.Composable
+import androidx.ui.foundation.Text
+import androidx.ui.layout.Column
+import androidx.ui.material.Button
+import androidx.ui.material.TopAppBar
+import androidx.ui.tooling.preview.Preview
+import com.example.android.ui.AndroidTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+
+
+@Composable
+fun Greeting(name: String) {
+    var click = 0
+    Column() {
+        TopAppBar(title = {
+            Text(text = "Hello $name!")})
+
+        Button(onClick = {click++}) {
+            Text(text = "Click me !")
+        }
+        Text(text = "Click number $click !")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    AndroidTheme {
+        Greeting("Android")
+    }
+}
 
 }
+
+
+
+
+
