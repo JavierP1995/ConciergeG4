@@ -24,7 +24,7 @@ class DepartmentController extends Controller
         $departaments = Department::all();
         return response([
             'message' => "Retrieved Successfully",
-            'residents' => DepartmentResource::collection($departaments),
+            'departments' => DepartmentResource::collection($departaments),
         ]);
     }
 

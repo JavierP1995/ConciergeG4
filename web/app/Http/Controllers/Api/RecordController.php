@@ -26,7 +26,7 @@ class RecordController extends Controller
 
         return response([
             'message' => "Retrieved Successfully",
-            'records of visits' => RecordResource::collection($records),
+            'records' => RecordResource::collection($records),
         ],200);
     }
 
