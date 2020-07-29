@@ -17,7 +17,7 @@ class CreateVisitsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('rut')->unique();
-            $table->enum('admitted', ['yes', 'no']);
+            $table->string('admitted');
             $table->timestamps();
         });
     }
