@@ -31,10 +31,10 @@ class DepartmentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        callDepartments()
 
         setContent {
             MaterialTheme {
+                callDepartments()
                 topBar()
 
             }
@@ -81,49 +81,61 @@ class DepartmentActivity : AppCompatActivity() {
         }
     }
 
+    private fun callDepartments(): List<DepartmentModel> {
 
-    private fun callDepartments(): List<DepartmentModel>{
+        val requestCall: Call<ArrayList<DepartmentModel>> = departmentService.getDepartments();
+        
+        requestCall.enqueue(object : Callback<ArrayList<DepartmentModel>> {
 
-        val requestCall = departmentService.getDepartments();
+            override fun onResponse(
+                    call: Call<ArrayList<DepartmentModel>>,
+                    response: Response<ArrayList<DepartmentModel>>
+            ) {
+                when {
+                    response.isSuccessful -> {
+                        val dataList = response.body()!!
 
+                        listDepartments = dataList
+                    }
+                    response.code() == 401 -> {
+                        Toast.makeText(
+                                this@DepartmentActivity,
+                                "Your session has expired. Please Login again.", Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    else -> {// Application-level failure
+                        // Your status code is in the range of 300's, 400's and 500's
+                        Toast.makeText(
+                                this@DepartmentActivity,
+                                "Failed to retrieve items",
+                                Toast.LENGTH_LONG
+                        ).show()
 
-        requestCall.enqueue(object : Callback<DepartmentResponse> {
-
-                override fun onResponse(call: Call<DepartmentResponse>,
-                                        response: Response<DepartmentResponse>) {
-                    when {
-                        response.isSuccessful -> {
-                            val dataList = response.body()!!.departments
-
-                            for (i in dataList) listDepartments.add(i)
-
-                        }
-                        response.code() == 401 -> {
-                            Toast.makeText(
-                                    this@DepartmentActivity,
-                                    "Your session has expired. Please Login again.", Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        else -> {// Application-level failure
-                            // Your status code is in the range of 300's, 400's and 500's
-                            Toast.makeText(
-                                    this@DepartmentActivity,
-                                    "Failed to retrieve items",
-                                    Toast.LENGTH_LONG
-                            ).show()
-
-                        }
                     }
                 }
+            }
 
-            override fun onFailure(call: Call<DepartmentResponse>, t: Throwable) {
-                    Toast.makeText(this@DepartmentActivity, "Error${t.toString()}",
-                            Toast.LENGTH_LONG).show()
+            override fun onFailure(call: Call<ArrayList<DepartmentModel>>, t: Throwable) {
+                Toast.makeText(
+                        this@DepartmentActivity,
+                        "Error${t.toString()}",
+                        Toast.LENGTH_LONG
+                ).show()
             }
         })
 
         return listDepartments
     }
 
+/*
+    private fun callDepartments(): ArrayList<DepartmentModel> {
+
+        val requestCall: Call<ArrayList<DepartmentModel>> = departmentService.getDepartments();
+
+        listDepartments = requestCall.execute().body()!!
+
+        return listDepartments
+    }
+*/
 
 }
