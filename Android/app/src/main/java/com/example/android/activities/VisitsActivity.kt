@@ -93,7 +93,8 @@ class VisitsActivity : AppCompatActivity() {
                     response.isSuccessful -> {
                         val dataList = response.body()!!
 
-                        listVisits = dataList
+                        for(i in dataList) listVisits.add(i)
+
                     }
                     response.code() == 401 -> {
                         Toast.makeText(

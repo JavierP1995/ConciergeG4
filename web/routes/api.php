@@ -27,7 +27,8 @@ Route::get('/logout', 'Api\AuthController@logout')->middleware('auth:api');
 Route::apiResource('/residents', 'Api\ResidentController')->middleware('auth:api');
 
 // VisitResource
-Route::apiResource('/visits', 'Api\VisitController')->middleware('auth:api');
+//Route::apiResource('/visits', 'Api\VisitController')->middleware('auth:api');
+Route::apiResource('/visits', 'Api\VisitController');
 
 // RecordResource
 Route::apiResource('/records', 'Api\RecordController')->middleware('auth:api');

@@ -18,10 +18,11 @@ class VisitController extends Controller
     {
         $visits = Visit::all();
 
-        return response([
-            'message' => "Retrieved Successfully",
-            'visits' => VisitResource::collection($visits)
-        ]);
+        return response(
+            //'message' => "Retrieved Successfully",
+            //'visits' => VisitResource::collection($visits)
+            VisitResource::collection($visits)
+        );
     }
 
     /**
