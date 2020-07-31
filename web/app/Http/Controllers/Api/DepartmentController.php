@@ -22,7 +22,11 @@ class DepartmentController extends Controller
     public function index()
     {
         $departaments = Department::all();
-        return response(DepartmentResource::collection($departaments));
+
+        return response([
+            'message' => "Retrieved Successfully",
+            'departments' =>DepartmentResource::collection($departaments)
+        ],200);
     }
 
     /**
