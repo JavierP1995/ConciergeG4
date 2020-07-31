@@ -7,4 +7,4 @@ data class DepartmentResponse(
     @SerializedName("message")
     var message:String,
     @SerializedName("departments")
-    var departments: ArrayList<DepartmentModel>)
+    var departments: Collection<DepartmentModel>)
