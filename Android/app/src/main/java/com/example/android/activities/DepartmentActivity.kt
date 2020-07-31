@@ -1,45 +1,60 @@
 package com.example.android.activities
 
+import android.content.res.Resources
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
+import androidx.compose.getValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.ui.core.Alignment
+import androidx.ui.core.ContextAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Text
-import androidx.ui.foundation.VerticalScroller
 import androidx.ui.layout.Column
+import androidx.ui.layout.Stack
+import androidx.ui.layout.fillMaxSize
+import androidx.ui.livedata.observeAsState
 import androidx.ui.material.MaterialTheme
+import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
 import androidx.ui.text.font.FontStyle
 import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.sp
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.android.ListDepartments
 import com.example.android.model.DepartmentModel
-import com.example.android.reponse.DepartmentResponse
-import com.example.android.service.ApiService
-import com.example.android.service.DepartmentService
-import org.jetbrains.anko.doAsync
+import com.example.android.service.Departments
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DepartmentActivity : AppCompatActivity() {
 
-    var dptos_list: ArrayList<DepartmentModel> = arrayListOf<DepartmentModel>()
-
+    private val departamentsList = MutableLiveData<ListDepartments>().apply {
+        value = ListDepartments(emptyList(), false)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        callDepartments()
-
         setContent {
             MaterialTheme {
-                topBar()
+                listDepartments(departamentsList)
 
             }
         }
-    }
 
+        lifecycleScope.launch {
+            departamentsList.value = departamentsList.value?.copy(loading = true)
+            val dpts = withContext(Dispatchers.IO){
+                Departments.loadDepartments()
+            }
+            departamentsList.value = departamentsList.value?.copy(dpts ?: emptyList(),
+                loading = false)
+
+        }
+    }
 
     @Preview
     @Composable
@@ -53,22 +68,45 @@ class DepartmentActivity : AppCompatActivity() {
                 textAlign = TextAlign.Center
             )
         }
-        listDepartments(departments = this.dptos_list)
+
     }
 
     @Composable
-    private fun listDepartments(departments : ArrayList<DepartmentModel>){
-        VerticalScroller{
-            Column {
-                departments.let {
-                    it.forEach { department ->
-                        printDepartment(department)
+    private fun listDepartments(departments : LiveData<ListDepartments>){
+
+        val deptos by departments.observeAsState()
+
+        Scaffold(
+            topAppBar = {
+                topBar()
+            },
+            bodyContent = {
+                if(deptos == null || deptos?.loading == true){
+                    Loading()
+                }else{
+                    Column() {
+                        deptos!!.departments.let {
+                            it.forEach { department ->
+                                    printDepartment(department = department)
+                                }
+                        }
                     }
                 }
             }
-        }
-    }
+        )
 
+    }
+    @Composable
+    fun Loading() {
+        Stack(modifier = Modifier.fillMaxSize()) {
+            Text(
+                text = "Nada aquí",
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.gravity(Alignment.Center)
+            )
+        }
+
+    }
     @Composable
     private fun printDepartment(department: DepartmentModel) {
         Column {
@@ -78,53 +116,28 @@ class DepartmentActivity : AppCompatActivity() {
         }
     }
 
+    /**private fun callDepartments(): ArrayList<DepartmentModel> {
 
-    private fun callDepartments(): List<DepartmentModel>{
+    val departmentService = ApiService.buildService(DepartmentService::class.java)
 
-        val departmentService = ApiService.buildService(DepartmentService::class.java)
+    val requestCall: Call<ArrayList<DepartmentModel>> = departmentService.getDepartments();
 
-        val requestCall: Call<ArrayList<DepartmentModel>> = departmentService.getDepartments();
+    val response = requestCall.execute()
 
-        doAsync {
-            requestCall.enqueue(object : Callback<ArrayList<DepartmentModel>> {
-
-                override fun onResponse(
-                    call: Call<ArrayList<DepartmentModel>>,
-                    response: Response<ArrayList<DepartmentModel>>
-                ) {
-                    when {
-                        response.isSuccessful -> {
-                            val dataList = response.body()!!
-
-                            dptos_list = dataList
-                        }
-                        response.code() == 401 -> {
-                            Toast.makeText(
-                                this@DepartmentActivity,
-                                "Your session has expired. Please Login again.", Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        else -> {// Application-level failure
-                            // Your status code is in the range of 300's, 400's and 500's
-                            Toast.makeText(
-                                this@DepartmentActivity,
-                                "Failed to retrieve items",
-                                Toast.LENGTH_LONG
-                            ).show()
-
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<ArrayList<DepartmentModel>>, t: Throwable) {
-                    Toast.makeText(
-                        this@DepartmentActivity,
-                        "Error${t.toString()}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            })
-        }
-        return dptos_list
+    if(!response.isSuccessful){
+    // Your status code is in the range of 300's, 400's and 500's
+    Toast.makeText(
+    this@DepartmentActivity,
+    "Failed to retrieve items",
+    Toast.LENGTH_LONG
+    ).show()
     }
+    else if( response.code() == 401) {
+    Toast.makeText(
+    this@DepartmentActivity,
+    "Your session has expired. Please Login again.", Toast.LENGTH_LONG
+    ).show()
+    }
+    return response.body()!!
+    }*/
 }
