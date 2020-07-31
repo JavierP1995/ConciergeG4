@@ -2,7 +2,6 @@ package com.example.android.activities
 
 import android.content.res.Resources
 import android.os.Bundle
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.getValue
@@ -26,34 +25,34 @@ import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.sp
 import com.example.android.ListDepartments
-
 import com.example.android.model.DepartmentModel
 import com.example.android.service.Departments
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 class DepartmentActivity : AppCompatActivity() {
 
-    private val departmentList = MutableLiveData<ListDepartments>().apply {
-        value = ListDepartments(false, emptyList())
+    private val departamentsList = MutableLiveData<ListDepartments>().apply {
+        value = ListDepartments(emptyList(), false)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                listDepartments(departmentList)
+                listDepartments(departamentsList)
 
             }
         }
 
         lifecycleScope.launch {
-            departmentList.value = departmentList.value?.copy(loading = true)
-            val dpts = withContext(Dispatchers.IO) {
+            departamentsList.value = departamentsList.value?.copy(loading = true)
+            val dpts = withContext(Dispatchers.IO){
                 Departments.loadDepartments()
             }
+            departamentsList.value = departamentsList.value?.copy(dpts ?: emptyList(),
+                loading = false)
+
         }
     }
 
@@ -73,10 +72,8 @@ class DepartmentActivity : AppCompatActivity() {
     }
 
     @Composable
-    private fun listDepartments(departments: LiveData<ListDepartments>) {
+    private fun listDepartments(departments : LiveData<ListDepartments>){
 
-        val context = ContextAmbient.current
-        val resources = context.resources
         val deptos by departments.observeAsState()
 
         Scaffold(
@@ -84,14 +81,14 @@ class DepartmentActivity : AppCompatActivity() {
                 topBar()
             },
             bodyContent = {
-                if (deptos == null || deptos?.loading == true) {
-                    Loading(resources)
-                } else {
+                if(deptos == null || deptos?.loading == true){
+                    Loading()
+                }else{
                     Column() {
                         deptos!!.departments.let {
                             it.forEach { department ->
-                                printDepartment(department = department)
-                            }
+                                    printDepartment(department = department)
+                                }
                         }
                     }
                 }
@@ -99,25 +96,48 @@ class DepartmentActivity : AppCompatActivity() {
         )
 
     }
-
     @Composable
-    fun Loading(resources: Resources) {
+    fun Loading() {
         Stack(modifier = Modifier.fillMaxSize()) {
             Text(
-                text = "Loading",
+                text = "Nada aquí",
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.gravity(Alignment.Center)
             )
         }
 
     }
-
     @Composable
     private fun printDepartment(department: DepartmentModel) {
         Column {
-            Text(text = "Number: " + department.number.toString())
-            Text(text = "Floor: " + department.floor.toString())
-            Text(text = "Block: " + department.block.toString())
+            Text(text = "Number: "+department.number.toString())
+            Text(text = "Floor: "+department.floor.toString())
+            Text(text = "Block: "+department.block.toString())
         }
     }
+
+    /**private fun callDepartments(): ArrayList<DepartmentModel> {
+
+    val departmentService = ApiService.buildService(DepartmentService::class.java)
+
+    val requestCall: Call<ArrayList<DepartmentModel>> = departmentService.getDepartments();
+
+    val response = requestCall.execute()
+
+    if(!response.isSuccessful){
+    // Your status code is in the range of 300's, 400's and 500's
+    Toast.makeText(
+    this@DepartmentActivity,
+    "Failed to retrieve items",
+    Toast.LENGTH_LONG
+    ).show()
+    }
+    else if( response.code() == 401) {
+    Toast.makeText(
+    this@DepartmentActivity,
+    "Your session has expired. Please Login again.", Toast.LENGTH_LONG
+    ).show()
+    }
+    return response.body()!!
+    }*/
 }
