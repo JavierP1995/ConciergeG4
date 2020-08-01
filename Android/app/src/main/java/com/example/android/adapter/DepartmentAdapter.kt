@@ -22,4 +22,17 @@ object DepartmentAdapter {
         return null
     }
 
+    fun registerDepartment(number: Int, floor: Int, block: Char): DepartmentModel? {
+        val call: Call<DepartmentModel> = ApiService
+            .buildService(DepartmentService::class.java).createDepartment(number = number, floor = floor, block = block)
+        try{
+            val response = call.execute()
+            Log.v("Json", response.body()!!.toString())
+            return DepartmentModel(number, floor, block)
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
 }
