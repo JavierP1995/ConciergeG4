@@ -9,8 +9,12 @@ use App\Http\Resources\DepartmentResource;
 use App\Http\Resources\VisitResource;
 use App\Record;
 use App\Visit;
+use Facade\FlareClient\Http\Exceptions\BadResponse;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 
 class DepartmentController extends Controller
 {
@@ -21,12 +25,14 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departaments = Department::all();
-
-        return response([
-            'message' => "Retrieved Successfully",
-            'departments' =>DepartmentResource::collection($departaments)
-        ],200);
+        try{
+            $departments = Department::all();
+            $data = response(DepartmentResource::collection($departments));
+        }
+        catch(HttpException $error){
+            $data = $error->getMessage();
+        }
+        return $data;
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VisitRequest;
 use App\Http\Resources\VisitResource;
 use App\Visit;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class VisitController extends Controller
 {
@@ -16,12 +17,14 @@ class VisitController extends Controller
      */
     public function index()
     {
-        $visits = Visit::all();
-
-        return response([
-            'message' => "Retrieved Successfully",
-            'visits' => VisitResource::collection($visits)
-        ]);
+        try{
+            $visits = Visit::all();
+            $data = response(VisitResource::collection($visits));
+        }
+        catch(HttpException $error){
+            $data = $error->getMessage();
+        }
+        return $data;
     }
 
     /**
