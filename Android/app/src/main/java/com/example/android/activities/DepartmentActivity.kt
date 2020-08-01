@@ -27,7 +27,7 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.sp
 import com.example.android.ListDepartments
 import com.example.android.model.DepartmentModel
-import com.example.android.service.Departments
+import com.example.android.adapter.DepartmentAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -37,8 +37,6 @@ class DepartmentActivity : AppCompatActivity() {
     private val departamentsList = MutableLiveData<ListDepartments>().apply {
         value = ListDepartments(emptyList(), false)
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +50,7 @@ class DepartmentActivity : AppCompatActivity() {
         lifecycleScope.launch {
             departamentsList.value = departamentsList.value?.copy(loading = true)
             val dpts = withContext(Dispatchers.IO){
-                Departments.loadDepartments()
+                DepartmentAdapter.loadDepartments()
             }
             departamentsList.value = departamentsList.value?.copy(dpts ?: emptyList(),
                 loading = false)
