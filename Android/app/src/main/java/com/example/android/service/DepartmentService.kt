@@ -11,5 +11,5 @@ interface DepartmentService {
     fun getDepartments():Call<ArrayList<DepartmentModel>>
 
     @POST("/api/departments/")
-    fun createDepartment(@Query("number") number: Int?, @Query("block") block: Char?, @Query("floor") floor: Int?): Call<DepartmentModel>
+    fun createDepartment(@Query("number") number: Int, @Query("floor") floor: Int? ,@Query("block") block: Char?): Call<DepartmentModel>
 }
