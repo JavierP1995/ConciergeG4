@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ResidentRequest;
 use App\Http\Resources\ResidentResource;
 use App\Resident;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ResidentController extends Controller
 {
@@ -16,11 +17,14 @@ class ResidentController extends Controller
      */
     public function index()
     {
-        $residents = Resident::all();
-        return response([
-            'message' => "Retrieved Successfully",
-            'residents' => ResidentResource::collection($residents),
-        ]);
+        try{
+            $residents = Resident::all();
+            $data = response(ResidentResource::collection($residents));
+        }
+        catch(HttpException $error){
+            $data = $error->getMessage();
+        }
+        return $data;
     }
 
     /**
