@@ -20,6 +20,7 @@ import androidx.ui.livedata.observeAsState
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
+import androidx.ui.text.font.FontFamily
 import androidx.ui.text.font.FontStyle
 import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
@@ -36,6 +37,9 @@ class DepartmentActivity : AppCompatActivity() {
     private val departamentsList = MutableLiveData<ListDepartments>().apply {
         value = ListDepartments(emptyList(), false)
     }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -61,8 +65,9 @@ class DepartmentActivity : AppCompatActivity() {
     private fun topBar() {
         TopAppBar {
             Text(
-                text = "List of Departments.",
+                text = "List of Departments",
                 modifier = Modifier.weight(1f),
+                fontFamily = FontFamily.SansSerif,
                 fontStyle = FontStyle.Normal,
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center
@@ -109,7 +114,7 @@ class DepartmentActivity : AppCompatActivity() {
     }
     @Composable
     private fun printDepartment(department: DepartmentModel) {
-        Column {
+        Column() {
             Text(text = "Number: "+department.number.toString())
             Text(text = "Floor: "+department.floor.toString())
             Text(text = "Block: "+department.block.toString())

@@ -24,4 +24,20 @@ object Departments {
         return null
     }
 
+/*    fun createDepartment(): Call<DepartmentModel>? {
+
+        val departmentService = ApiService.buildService(DepartmentService::class.java)
+        val requestCall: Call<DepartmentResponse> = departmentService.createDepartment()
+
+        try{
+            val response = requestCall.execute()
+            Log.v("Json", response.body()?.departments.toString())
+            return response.body()?.departments
+
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+       }*/
+
 }
