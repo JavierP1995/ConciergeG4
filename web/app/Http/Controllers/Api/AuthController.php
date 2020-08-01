@@ -85,6 +85,7 @@ class AuthController extends Controller
         $authToken = auth()->user()->createToken('authToken');
 
         return response([
+            'message' => 'Login Successful',
             'user' => auth()->user(),
             'token' => $authToken->accessToken,
             'token_expires_at' => $authToken->token->expires_at,

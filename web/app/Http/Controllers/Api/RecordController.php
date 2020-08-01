@@ -11,6 +11,7 @@ use App\Visit;
 use Illuminate\Http\Request;
 use App\Record;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class RecordController extends Controller
@@ -22,12 +23,14 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $records = Record::all()->sortByDesc('entryDate');
-
-        return response([
-            'message' => "Retrieved Successfully",
-            'records' => RecordResource::collection($records),
-        ],200);
+        try{
+            $records = Record::all();
+            $data = response(RecordResource::collection($records));
+        }
+        catch(HttpException $error){
+            $data = $error->getMessage();
+        }
+        return $data;
     }
 
     /**
