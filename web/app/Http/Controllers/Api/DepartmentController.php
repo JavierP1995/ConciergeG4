@@ -47,7 +47,7 @@ class DepartmentController extends Controller
         $department = Department::create($info);
 
         return response([
-            'message' => 'Created Susccesfully',
+            //'message' => 'Created Susccesfully',
             'department' => new DepartmentResource($department)
         ], 201);
 
