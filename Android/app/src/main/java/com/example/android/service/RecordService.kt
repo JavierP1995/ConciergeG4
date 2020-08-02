@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface RecordService {
 
-    @GET("/api/records/")
+    @GET("records")
     fun getRecords(): Call<ArrayList<RecordModel>>
 
 }

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface ResidentService {
 
-    @GET("/api/residents/")
+    @GET("residents")
     fun getResidents(): Call<ArrayList<ResidentModel>>
 
 }

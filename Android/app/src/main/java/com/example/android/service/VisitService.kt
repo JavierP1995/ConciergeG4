@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface VisitService {
 
-    @GET("/api/visits/")
+    @GET("visits")
     fun getVisits(): Call<ArrayList<VisitModel>>
 
 }

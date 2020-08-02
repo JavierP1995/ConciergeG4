@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface DepartmentService {
-    @GET("/api/departments/")
+    @GET("departments/")
     fun getDepartments():Call<ArrayList<DepartmentModel>>
 }
