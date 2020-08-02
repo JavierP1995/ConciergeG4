@@ -1,13 +1,15 @@
 package com.example.android.model
 
+import android.service.autofill.DateTransformation
+import java.text.SimpleDateFormat
 import java.util.*
 
 data class RecordModel (
-    val kindship: String,
+    val kinship: String,
     val entryDate: Date,
     val departureDate: Date,
     val comment: String,
-    val residend_id: Int,
-    val visit_id: Int,
-    val department_id: Int
+    val resident: String,
+    val visits: String,
+    val department: Int
 )
