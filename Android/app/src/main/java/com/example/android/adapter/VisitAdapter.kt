@@ -8,7 +8,7 @@ import retrofit2.Call
 
 object VisitAdapter {
 
-    fun loadDepartments(): Collection<VisitModel>? {
+    fun loadVisits(): Collection<VisitModel>? {
         val requestCall: Call<ArrayList<VisitModel>> =
                 ApiService.buildService(VisitService::class.java).
                 getVisits()

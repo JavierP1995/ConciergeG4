@@ -8,7 +8,7 @@ import retrofit2.Call
 
 object ResidentAdapter {
 
-    fun loadDepartments(): Collection<ResidentModel>? {
+    fun loadResidents(): Collection<ResidentModel>? {
         val requestCall: Call<ArrayList<ResidentModel>> =
                 ApiService.buildService(ResidentService::class.java).
                 getResidents()
