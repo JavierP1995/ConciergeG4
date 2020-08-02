@@ -1,8 +1,5 @@
 package com.example.android.activities
 
-import android.content.res.Resources
-import android.graphics.drawable.shapes.OvalShape
-import android.graphics.drawable.shapes.Shape
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
@@ -13,30 +10,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.ui.core.*
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
-import androidx.ui.foundation.contentColor
 import androidx.ui.foundation.shape.corner.CircleShape
-import androidx.ui.graphics.Color
 import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
-import androidx.ui.material.Typography
 import androidx.ui.res.imageResource
-import androidx.ui.text.TextStyle
-import androidx.ui.text.font.FontFamily
-import androidx.ui.text.font.FontStyle
-import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import androidx.ui.unit.sp
 import com.example.android.ListDepartments
 import com.example.android.R
 import com.example.android.model.DepartmentModel
-import com.example.android.service.Departments
-import com.example.android.ui.typography
-import com.example.android.ui.utils.appTypography
+import com.example.android.adapter.DepartmentAdapter
 import com.example.android.ui.utils.darkThemeColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -59,14 +46,13 @@ class DepartmentActivity : AppCompatActivity() {
         lifecycleScope.launch {
             departamentsList.value = departamentsList.value?.copy(loading = true)
             val dpts = withContext(Dispatchers.IO){
-                Departments.loadDepartments()
+                DepartmentAdapter.loadDepartments()
             }
             departamentsList.value = departamentsList.value?.copy(dpts ?: emptyList(),
                 loading = false)
 
         }
     }
-
     @Preview
     @Composable
     private fun topBar() =
@@ -91,6 +77,7 @@ class DepartmentActivity : AppCompatActivity() {
         val deptos by departments.observeAsState()
         MaterialTheme(colors = darkThemeColors) {
             Scaffold(
+
                     topAppBar = {
                         topBar()
                     },
