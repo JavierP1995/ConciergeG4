@@ -27,7 +27,7 @@ class RecordRequest extends FormRequest
 
             'kinship' => ['required','max:50'],
             'entryDate' => ['required','date'],
-            'departureDate' => ['required','date'],
+            'departureDate' => ['nullable','date'],
             'comment' => 'nullable|max:255'
 
         ];
