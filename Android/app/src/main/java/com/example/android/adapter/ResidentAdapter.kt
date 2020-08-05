@@ -21,4 +21,19 @@ object ResidentAdapter {
         }
         return null
     }
+
+    fun registerResident(rut: String, name: String, email: String, phone: Int, department: Int): ResidentModel? {
+        val call: Call<ResidentModel> = ApiService
+                .buildService(ResidentService::class.java)
+                .createResident(rut = rut, name = name, email = email, phone = phone,  department_id = department)
+        try{
+            val response = call.execute()
+            Log.v("Json", response.body()!!.toString())
+            return ResidentModel(rut = rut, name = name, email = email, phone = phone, department_id = department)
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
 }
