@@ -56,7 +56,6 @@ class DepartmentActivity : AppCompatActivity() {
 
         }
     }
-
     @Preview
     @Composable
     private fun topBar() =
@@ -81,6 +80,7 @@ class DepartmentActivity : AppCompatActivity() {
         val deptos by departments.observeAsState()
         MaterialTheme(colors = darkThemeColors) {
             Scaffold(
+
                     topAppBar = {
                         topBar()
                     },

@@ -8,7 +8,7 @@ import retrofit2.Call
 
 object RecordAdapter {
 
-    fun loadDepartments(): Collection<RecordModel>? {
+    fun loadRecords(): Collection<RecordModel>? {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
                 getRecords()

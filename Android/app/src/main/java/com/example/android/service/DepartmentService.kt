@@ -7,7 +7,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface DepartmentService {
-    @GET("/api/departments/")
+    @GET("departments/")
     fun getDepartments():Call<ArrayList<DepartmentModel>>
 
     @POST("/api/departments/")
