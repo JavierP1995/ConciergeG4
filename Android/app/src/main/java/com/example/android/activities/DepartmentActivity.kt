@@ -81,7 +81,7 @@ class DepartmentActivity : AppCompatActivity() {
         MaterialTheme(colors = darkThemeColors) {
             Scaffold(
 
-                    topAppBar = {
+                    topBar = {
                         topBar()
                     },
                     bodyContent = {

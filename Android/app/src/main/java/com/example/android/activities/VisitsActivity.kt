@@ -115,7 +115,7 @@ class VisitsActivity : AppCompatActivity() {
         MaterialTheme(colors = darkThemeColors) {
 
             Scaffold(
-                topAppBar = {
+                topBar = {
                     topBar()
                 },
                 bodyContent = {

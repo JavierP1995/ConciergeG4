@@ -16,8 +16,8 @@ class RecordResource extends JsonResource
     {
         return [
             'kinship' => $this->kinship,
-            'entryDate' => $this->entryDate,
-            'departureDate' => $this->departureDate,
+            'entryDate' => $this->entryDate->format('d-m-Y H:i'),
+            'departureDate' => $this->departureDate->format('d-m-Y H:i'),
             'comment' => $this->comment,
             'resident' => $this->resident->name,
             'visits' => $this->visit->name,
