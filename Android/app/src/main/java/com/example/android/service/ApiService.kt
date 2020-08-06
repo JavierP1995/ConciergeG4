@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiService {
 
-    private const val URL = "http://192.168.0.31:8000/api/"
+    private const val URL = "http://192.168.0.10:8000/api/"
 
     // Creamos logger
     private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)

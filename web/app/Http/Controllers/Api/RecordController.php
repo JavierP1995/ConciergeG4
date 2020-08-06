@@ -8,6 +8,7 @@ use App\Http\Resources\RecordResource;
 use App\Http\Resources\VisitResource;
 use App\Resident;
 use App\Visit;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Record;
 use Illuminate\Support\Facades\DB;
@@ -73,6 +74,8 @@ class RecordController extends Controller
                     $visit_id = $visit->id;
 
                     $request->request->add(['resident_id' => $resident_id, 'department_id' => $department_id,'visit_id' => $visit_id]);
+
+                    $request->request->add(['entryDate' => Carbon::now()]);
 
                     $data = $request->except(['visit_rut', 'department_number', 'resident_name']);
 

@@ -8,5 +8,5 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="page_title">Registrar Departamento</string>
-    <string name="title_activity_register_record">My Compose App</string>
+    <string name="title_activity_register_record">Agregar Registro</string>
 </resources>
