@@ -21,4 +21,6 @@ object ResidentAdapter {
         }
         return null
     }
+
+
 }
