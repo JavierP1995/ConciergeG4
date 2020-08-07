@@ -19,7 +19,7 @@ class ResidentResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'department' => $this->department,
+            'department' => $this->department->number,
         ];
 
     }
