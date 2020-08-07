@@ -30,7 +30,7 @@ Route::apiResource('/residents', 'Api\ResidentController')->middleware('auth:api
 Route::apiResource('/visits', 'Api\VisitController')->middleware('auth:api');
 
 // RecordResource
-Route::apiResource('/records', 'Api\RecordController')->middleware('auth:api');
+Route::apiResource('/records', 'Api\RecordController');
 
 //DepartmentResource
 Route::apiResource('/departments','Api\DepartmentController');

@@ -7,7 +7,10 @@ import androidx.compose.getValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.ui.core.*
+import androidx.ui.core.Alignment
+import androidx.ui.core.Modifier
+import androidx.ui.core.clip
+import androidx.ui.core.setContent
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.shape.corner.CircleShape
@@ -78,7 +81,7 @@ class DepartmentActivity : AppCompatActivity() {
         MaterialTheme(colors = darkThemeColors) {
             Scaffold(
 
-                    topAppBar = {
+                    topBar = {
                         topBar()
                     },
                     bodyContent = {

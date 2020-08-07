@@ -17,8 +17,8 @@ class CreateRecordsTable extends Migration
             $table->id();
             $table->string('kinship');
             $table->date('entryDate');
-            $table->date('departureDate');
-            $table->string('comment');
+            $table->date('departureDate')->nullable();
+            $table->string('comment')->nullable();
 
             $table->biginteger('resident_id');
             $table->biginteger('visit_id');

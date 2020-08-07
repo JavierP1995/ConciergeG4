@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResidentRequest;
 use App\Http\Resources\ResidentResource;
@@ -35,9 +36,21 @@ class ResidentController extends Controller
      */
     public function store(ResidentRequest $request)
     {
-       $data = $request->all();
+       $department_number = $request->department_number;
+       $department = Department::all()
+           ->where('number', $department_number)->first();
 
-       $resident = Resident::create($data);
+        // If the department number exists in the database.
+        if ($department != null) {
+            $department_id = $department->id;
+            $request->request->add(['department_id' => $department_id]);
+            $data = $request->except(['department_number']);
+            $resident = Resident::create($data);
+        }else{
+            return response([
+                'message' => "The indicated department doesn't exist"
+                            ]);
+        }
 
        return response([
             'message' => 'Created Successfully',
