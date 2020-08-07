@@ -80,8 +80,7 @@ class DepartmentActivity : AppCompatActivity() {
         val deptos by departments.observeAsState()
         MaterialTheme(colors = darkThemeColors) {
             Scaffold(
-
-                    topBar = {
+                    topAppBar = {
                         topBar()
                     },
                     bodyContent = {

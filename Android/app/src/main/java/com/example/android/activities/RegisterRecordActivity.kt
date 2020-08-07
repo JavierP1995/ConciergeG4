@@ -7,14 +7,26 @@ import androidx.compose.Composable
 import androidx.compose.state
 import androidx.lifecycle.lifecycleScope
 import androidx.ui.core.Alignment
+import androidx.ui.core.ContentScale
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
+import androidx.ui.foundation.Icon
+import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.TextFieldValue
+import androidx.ui.graphics.Color
+import androidx.ui.graphics.ColorFilter
+import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.material.*
+import androidx.ui.material.icons.Icons
+import androidx.ui.material.icons.filled.ArrowBack
+import androidx.ui.material.icons.filled.List
+import androidx.ui.material.icons.filled.Menu
+import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
+import com.example.android.R
 import com.example.android.activities.ui.AndroidTheme
 import com.example.android.adapter.RecordAdapter
 import com.example.android.service.RecordService
@@ -48,29 +60,39 @@ class RegisterRecordActivity : AppCompatActivity() {
         val comment = state{TextFieldValue("")}
 
         MaterialTheme(colors = darkColorPalette()) {
-            Scaffold( topAppBar = { TopAppBar(title = { Text(text = "Agregar Registro")}) }
+            Scaffold( topAppBar = { TopAppBar(title = { Text(text = "Add Register")},
+                navigationIcon = {IconButton(onClick = {/*Activity*/ }) {
+                Icon(Icons.Filled.Menu)
+            }})}
 
             ){
+
+                Image(asset = imageResource(id = R.drawable.register_icon),
+                        alignment = Alignment.Center,
+                        modifier = Modifier.padding(start = 25.dp, bottom = 40.dp),
+                        colorFilter = ColorFilter.tint(Color(red = 25, blue = 25, green = 25)),
+                        contentScale = ContentScale.Fit)
+
                 Column(
-                        modifier = Modifier.padding(25.dp),
+                        modifier = Modifier.padding(55.dp),
                         verticalArrangement = Arrangement.Center,
                         horizontalGravity = Alignment.CenterHorizontally
                 ) {
+
                     Spacer(modifier = Modifier.padding(top = 20.dp))
                     FilledTextField(
                             value = visitRut.value,
                             activeColor = darkColorPalette().secondary,
                             onValueChange = { visitRut.value = it },
-                            label = { Text("Rut Visitante*") }
+                            label = { Text("Visit Rut*") }
                     )
 
-                    Divider()
                     Spacer(modifier = Modifier.padding(top = 20.dp))
                     FilledTextField(
                             value = departmentNumber.value,
                             activeColor = darkColorPalette().secondary,
                             onValueChange = { departmentNumber.value = it},
-                            label = { Text("Número Departamento*") }
+                            label = { Text("Apartment Number*") }
                     )
 
                     Spacer(modifier = Modifier.padding(top = 20.dp))
@@ -78,7 +100,7 @@ class RegisterRecordActivity : AppCompatActivity() {
                             value = residentName.value,
                             activeColor = darkColorPalette().secondary,
                             onValueChange = { residentName.value = it},
-                            label = { Text("Nombre Residente*") }
+                            label = { Text("Resident Name*") }
                     )
                     Spacer(modifier = Modifier.padding(top = 20.dp))
 
@@ -86,7 +108,7 @@ class RegisterRecordActivity : AppCompatActivity() {
                             value = kinship.value ,
                             activeColor = darkColorPalette().secondary,
                             onValueChange = { kinship.value = it },
-                            label = { Text("Parentezco*") }
+                            label = { Text("Kinship*") }
                     )
                     Spacer(modifier = Modifier.padding(top = 20.dp))
 
@@ -94,19 +116,18 @@ class RegisterRecordActivity : AppCompatActivity() {
                             value = comment.value,
                             activeColor = darkColorPalette().secondary,
                             onValueChange = { comment.value = it },
-                            label = { Text("Comentario") }
+                            label = { Text("Comment") }
                     )
-                    Divider()
                     Spacer(modifier = Modifier.padding(top = 20.dp))
 
                     Row(modifier = Modifier.padding(top = 20.dp, end = 10.dp)) {
                         Button(onClick = {/*Actividad aquí*/}, backgroundColor =
-                        darkColorPalette().secondary,text = { Text(text = "Cancelar")})
-                        Button(modifier = Modifier.padding(start = 80.dp),
+                        darkColorPalette().secondary,text = { Text(text = "Cancel")})
+                        Button(modifier = Modifier.padding(start = 40.dp),
                                 backgroundColor = darkColorPalette().secondary, onClick =
                         {callRegisterActivity(visitRut.value, departmentNumber.value,
                         residentName.value, kinship.value, comment.value)},
-                                text = { Text(text = "Registrar")})
+                                text = { Text(text = "Register")})
                     }
 
 

@@ -81,7 +81,7 @@ class RecordActivity : AppCompatActivity() {
 
         MaterialTheme(colors = darkThemeColors) {
             Scaffold(
-                topBar = {
+                topAppBar = {
                     topBar()
                 },
                 bodyContent = {

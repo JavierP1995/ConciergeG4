@@ -21,7 +21,6 @@ class RegisterResidentActivity : AppCompatActivity() {
             AndroidTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting()
                     Reg()
                 }
             }
@@ -33,7 +32,7 @@ class RegisterResidentActivity : AppCompatActivity() {
 fun Reg() {
     var text = "Text"
 
-    Scaffold( topBar = { TopAppBar(title = { Text(text = "Ingresar Residente")}) }
+    Scaffold( topAppBar = { TopAppBar(title = { Text(text = "Ingresar Residente")}) }
 
     ){
         Column(
@@ -99,6 +98,6 @@ fun Reg() {
 @Composable
 fun DefaultResidentPreview() {
     AndroidTheme {
-        Greeting()
+        Reg()
     }
 }
