@@ -43,7 +43,7 @@ class ResidentController extends Controller
         // If the department number exists in the database.
         if ($department != null) {
             $department_id = $department->id;
-            $request->request->add([$department_id]);
+            $request->request->add(['department_id' => $department_id]);
             $data = $request->except(['department_number']);
             $resident = Resident::create($data);
         }else{
