@@ -6,8 +6,10 @@ use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DepartmentRequest;
 use App\Http\Resources\DepartmentResource;
+use App\Http\Resources\ResidentResource;
 use App\Http\Resources\VisitResource;
 use App\Record;
+use App\Resident;
 use App\Visit;
 use Facade\FlareClient\Http\Exceptions\BadResponse;
 use Illuminate\Database\Eloquent\Collection;
@@ -57,22 +59,39 @@ class DepartmentController extends Controller
      * Display visits from an specific department
      *
      * @param  int $number
+     * @param string $option
      * @return \Illuminate\Http\Response
      */
-    public function show($number)
+    public function show($number, $option = null)
     {
-        $department = Department::all()->where('number', $number)->first();
-        $records = Record::all()->where('department_id', $department->id);
-        $visits = new Collection();
-        foreach ($records as $record){
-            $visits->add(Visit::all()->where('id', $record->visit_id)->first());
+        if($option == "visits")
+        {
+            $department = Department::all()->where('number', $number)->first();
+            $records = Record::all()->where('department_id', $department->id);
+            $visits = new Collection();
+            foreach ($records as $record){
+                $visit = Visit::all()->where('id', $record->visit_id)->first();
+                if(!$visits->contains($visit)){
+                    $visits->add($visit);
+                }
+            }
+            return response(
+                VisitResource::collection($visits), 200);
         }
-
-        return response([
-            'message' => 'Retrieved Succesfully',
-            'visits' => VisitResource::collection($visits)
-        ], 200);
-
+        elseif($option == "residents")
+        {
+            $department = Department::all()->where('number', $number)->first();
+            $residents = Resident::all()->where('department_id', $department->id);
+            return response(
+                ResidentResource::collection($residents), 200);
+        }
+        else
+        {
+            $department = Department::all()->where('number', $number)->first();
+            return response(
+                $department
+            );
+        }
     }
 
     /**

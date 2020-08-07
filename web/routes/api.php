@@ -34,3 +34,4 @@ Route::apiResource('/records', 'Api\RecordController');
 
 //DepartmentResource
 Route::apiResource('/departments','Api\DepartmentController');
+Route::get('/departments/{number}/{option?}', 'Api\DepartmentController@show');
