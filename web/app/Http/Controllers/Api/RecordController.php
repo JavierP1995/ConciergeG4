@@ -108,42 +108,14 @@ class RecordController extends Controller
 
     /**
      * Display the department
-     *
-     * @param  int  $department
+     * @param \App\Record $record
      * @return \Illuminate\Http\Response
      */
-    public function show($number)
+    public function show($record)
     {
-
-        $apartment = Department::all()->where('number', '=',$number)->first();
-
-        $visits = Record::all()->where('department_id', $apartment->id);
-
-
-        return response([
-            'message' => "Retrieved Successfully",
-            'visits' => RecordResource::collection($visits),
-        ],200);
-    }
-
-    /**
-     * Display visits of a department with the given number
-     *
-     * @param  int  $number
-     * @return \Illuminate\Http\Response
-     */
-    public function showByDepartmentNumber(Request $request)
-    {
-        $data = DB::table('visits')
-            ->join('records', 'visits.id', '=', 'records.visit_id')
-            ->join('departments', 'records.department_id', '=', 'departments.id')
-            ->select('visits.*')
-            ->where('departments.number', $request->number)
-            ->get();
-        return response([
-            'message' => "Retrieved Successfully",
-            'visits' => VisitResource::collection($data),
-            ],200);
+        return response(
+            new RecordResource($record)
+        ,200);
     }
 
     /**

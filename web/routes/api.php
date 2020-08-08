@@ -23,11 +23,13 @@ Route::post('/login', 'Api\AuthController@login');
 
 Route::get('/logout', 'Api\AuthController@logout')->middleware('auth:api');
 
-// PersonaResource
+// ResidentResource
 Route::apiResource('/residents', 'Api\ResidentController')->middleware('auth:api');
+Route::get('/departments/{rut}/{option?}', 'Api\DepartmentController@show');
 
 // VisitResource
 Route::apiResource('/visits', 'Api\VisitController')->middleware('auth:api');
+Route::get('/departments/{rut}/{option?}', 'Api\DepartmentController@show');
 
 // RecordResource
 Route::apiResource('/records', 'Api\RecordController');
