@@ -1,4 +1,4 @@
-package com.example.android.menu
+package com.example.android.activities.menu
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,11 +17,11 @@ import androidx.ui.material.MaterialTheme
 import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.example.android.activities.DepartmentActivity
+import com.example.android.activities.display.displayDepartments
 import com.example.android.ui.utils.darkThemeColors
 
 
-class ResidentMenu : AppCompatActivity() {
+class menuResident : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +62,8 @@ class ResidentMenu : AppCompatActivity() {
                         onClick = {
                             startActivity(
                                     Intent(
-                                            this@ResidentMenu,
-                                            DepartmentActivity::class.java
+                                            this@menuResident,
+                                            displayDepartments::class.java
                                     ))
                         }
                 )

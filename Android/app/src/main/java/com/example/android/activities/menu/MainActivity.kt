@@ -1,4 +1,4 @@
-package com.example.android.menu
+package com.example.android.activities.menu
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,7 +17,6 @@ import androidx.ui.material.MaterialTheme
 import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.example.android.activities.DepartmentActivity
 import com.example.android.ui.utils.darkThemeColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -64,7 +63,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                         startActivity(
                                 Intent(
                                         this@MainActivity,
-                                        RecordMenu::class.java
+                                        menuRecord::class.java
                                 ))
                     }
             )
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                         startActivity(
                                 Intent(
                                         this@MainActivity,
-                                        ResidentMenu::class.java
+                                        menuResident::class.java
                                 ))
                     }
             )
@@ -88,7 +87,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                         startActivity(
                                 Intent(
                                         this@MainActivity,
-                                        DepartmentMenu::class.java
+                                        menuDepartment::class.java
                         ))
                     }
             )
@@ -100,7 +99,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                         startActivity(
                                 Intent(
                                         this@MainActivity,
-                                        VisitMenu::class.java
+                                        menuVisit::class.java
                                 ))
                     }
             )

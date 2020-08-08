@@ -1,4 +1,4 @@
-package com.example.android.activities
+package com.example.android.activities.save
 
 import android.os.Bundle
 import android.widget.Toast
@@ -16,12 +16,9 @@ import androidx.ui.foundation.Text
 import androidx.ui.foundation.TextFieldValue
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.ColorFilter
-import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.ArrowBack
-import androidx.ui.material.icons.filled.List
 import androidx.ui.material.icons.filled.Menu
 import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
@@ -29,12 +26,11 @@ import androidx.ui.unit.dp
 import com.example.android.R
 import com.example.android.activities.ui.AndroidTheme
 import com.example.android.adapter.RecordAdapter
-import com.example.android.service.RecordService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RegisterRecordActivity : AppCompatActivity() {
+class saveRecord : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

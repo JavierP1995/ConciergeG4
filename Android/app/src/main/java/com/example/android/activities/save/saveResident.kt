@@ -1,4 +1,4 @@
-package com.example.android.activities
+package com.example.android.activities.save
 
 import android.content.Intent
 import android.os.Bundle
@@ -27,7 +27,7 @@ import androidx.ui.unit.dp
 import com.example.android.R
 import com.example.android.activities.ui.AndroidTheme
 import com.example.android.adapter.ResidentAdapter
-import com.example.android.menu.RecordMenu
+import com.example.android.activities.menu.menuRecord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -128,7 +128,7 @@ class saveResident : AppCompatActivity() {
                             startActivity(
                                 Intent(
                                     this@saveResident,
-                                    RecordMenu::class.java
+                                    menuRecord::class.java
                                 ))
                         }, backgroundColor =
                         darkColorPalette().secondary, text = { Text(text = "Cancel") })

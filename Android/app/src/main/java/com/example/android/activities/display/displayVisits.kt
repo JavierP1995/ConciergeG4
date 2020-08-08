@@ -1,7 +1,6 @@
-package com.example.android.activities
+package com.example.android.activities.display
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.getValue
@@ -14,7 +13,6 @@ import androidx.ui.core.clip
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
-import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.CircleShape
 import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
@@ -22,29 +20,19 @@ import androidx.ui.livedata.observeAsState
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
-import androidx.ui.material.darkColorPalette
 import androidx.ui.res.imageResource
-import androidx.ui.text.font.FontStyle
-import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import androidx.ui.unit.sp
 import com.example.android.ListVisits
 import com.example.android.R
-import com.example.android.adapter.RecordAdapter
 import com.example.android.adapter.VisitAdapter
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import com.example.android.model.VisitModel
-import com.example.android.service.ApiService
-import com.example.android.service.VisitService
 import com.example.android.ui.utils.darkThemeColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class VisitsActivity : AppCompatActivity() {
+class displayVisits : AppCompatActivity() {
 
 
 
