@@ -21,7 +21,7 @@ class CreateRecordsTable extends Migration
             $table->string('comment')->nullable();
 
             $table->biginteger('resident_id');
-            $table->biginteger('visit_id');
+            $table->biginteger('visit_id')->nullable();
             $table->biginteger('department_id');
             $table->timestamps();
             $table->foreign('resident_id')->references('id')->on('residents')
