@@ -141,11 +141,15 @@ class displayVisits : AppCompatActivity() {
                     modifier = Modifier.padding(10.dp, 0.dp)
                 ) {
                     Text(
-                        text = visit.name,
+                        text = "Name: " + visit.name,
                         color= darkThemeColors.onPrimary
                     )
                     Text(
-                        text = visit.rut,
+                        text = "Rut: " + visit.rut,
+                        color = darkThemeColors.onPrimary
+                    )
+                    Text(
+                        text = "Admitted: " + visit.admitted,
                         color = darkThemeColors.onPrimary
                     )
                 }
