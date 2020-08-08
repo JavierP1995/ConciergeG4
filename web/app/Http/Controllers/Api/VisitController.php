@@ -62,7 +62,7 @@ class VisitController extends Controller
     {
         if($option == null)
         {
-            $visits = Visit::all()->where('rut', 'like', '%' .$rut);
+            $visits = Visit::all()->where('rut', 'like', $rut. '%');
             return response(
                 VisitResource::collection($visits)
             );

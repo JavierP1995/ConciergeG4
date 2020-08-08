@@ -74,7 +74,7 @@ class ResidentController extends Controller
     {
         if($option == null)
         {
-            $residents = Resident::all()->where('rut', 'like', '%' .$rut);
+            $residents = Resident::all()->where('rut', 'like',  $rut. '%');
             return response(
                 ResidentResource::collection($residents)
             );
