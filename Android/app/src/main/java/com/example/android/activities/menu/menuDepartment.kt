@@ -18,6 +18,7 @@ import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.activities.display.displayDepartments
+import com.example.android.activities.search.searchDepartment
 import com.example.android.ui.utils.darkThemeColors
 
 
@@ -56,15 +57,17 @@ class menuDepartment : AppCompatActivity() {
                 horizontalGravity = Alignment.CenterHorizontally
         ){
             Button(
-                    text = { Text("Desplegar Datos") },
+                    text = { Text("Display Data") },
                     backgroundColor = darkThemeColors.onPrimary,
                     modifier = Modifier.padding(0.dp,10.dp),
                     onClick = {
-                        startActivity(
-                                Intent(
-                                        this@menuDepartment,
-                                        displayDepartments::class.java
-                                ))
+                        val display = Intent(this@menuDepartment,
+                                displayDepartments::class.java)
+                        val b = Bundle()
+                        b.putString("option", "all")
+                        display.putExtras(b)
+                        startActivity(display)
+                        finish()
                     }
             )
             Button(
@@ -79,7 +82,13 @@ class menuDepartment : AppCompatActivity() {
                     backgroundColor = darkThemeColors.onPrimary,
                     modifier = Modifier.padding(0.dp,10.dp),
                     onClick = {
-                                                }
+                        startActivity(
+                            Intent(
+                                this@menuDepartment,
+                                searchDepartment::class.java
+                            )
+                        )
+                    }
             )
         }
 

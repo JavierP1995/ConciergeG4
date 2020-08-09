@@ -25,14 +25,18 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.ListDepartments
 import com.example.android.R
-import com.example.android.model.DepartmentModel
 import com.example.android.adapter.DepartmentAdapter
+import com.example.android.model.DepartmentModel
 import com.example.android.ui.utils.darkThemeColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class displayDepartments : AppCompatActivity() {
+    //recibimos el bundle
+    var b = intent.extras
+    val option = b?.getString("option")
+    val search = b?.getString("search")
 
     private val departamentsList = MutableLiveData<ListDepartments>().apply {
         value = ListDepartments(emptyList(), false)
@@ -49,7 +53,16 @@ class displayDepartments : AppCompatActivity() {
         lifecycleScope.launch {
             departamentsList.value = departamentsList.value?.copy(loading = true)
             val dpts = withContext(Dispatchers.IO){
-                DepartmentAdapter.loadDepartments()
+                if( option == "all"){
+                    DepartmentAdapter.loadDepartments()
+                }else if(option == "byNumber"){
+                    search?.let { DepartmentAdapter.loadByNumber(it) }
+                }else if(option == "byResident"){
+                    search?.let { DepartmentAdapter.loadByResident(it) }
+                }else{
+                    search?.let { DepartmentAdapter.loadByVisit(it) }
+                }
+
             }
             departamentsList.value = departamentsList.value?.copy(dpts ?: emptyList(),
                 loading = false)
