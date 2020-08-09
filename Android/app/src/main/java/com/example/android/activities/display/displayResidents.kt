@@ -50,7 +50,7 @@ class displayResidents : AppCompatActivity() {
         lifecycleScope.launch {
             residentsList.value = residentsList.value?.copy(loading = true)
             val residents = withContext(Dispatchers.IO) {
-                ResidentAdapter.loadAllResidents()
+                ResidentAdapter.loadResidents()
             }
             residentsList.value = residentsList.value?.copy(residents ?: emptyList(),
                     loading = false)
