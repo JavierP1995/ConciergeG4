@@ -117,7 +117,7 @@ class RecordController extends Controller
         if ($option == 'resident')
         {
             $resident = Resident::all()->where('rut', $search)->first();
-            $records = Record::all()->where('resident_id', $search);
+            $records = Record::all()->where('resident_id', $resident->id);
         }
         elseif ($option == "department")
         {
