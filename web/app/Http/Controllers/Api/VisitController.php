@@ -87,7 +87,7 @@ class VisitController extends Controller
             foreach ($records as $record)
             {
                 $visit = Visit::all()->where('id', $record->visit_id);
-                if (!$visits.contains($visit))
+                if (!$visits->contains($visit))
                 {
                     $visits->add($visit);
                 }

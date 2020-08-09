@@ -89,7 +89,7 @@ class ResidentController extends Controller
             foreach ($records as $record)
             {
                 $resident = Resident::all()->where('id', $record->resident_id);
-                if (!$residents.contains($resident))
+                if (!$residents->contains($resident))
                 {
                     $residents->add($resident);
                 }

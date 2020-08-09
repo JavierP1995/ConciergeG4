@@ -81,7 +81,7 @@ class DepartmentController extends Controller
             foreach ($records as $record)
             {
                 $department = Department::all()->where('id', $record->department_id);
-                if (!$departments.contains($department))
+                if (!$departments->contains($department))
                 {
                     $departments->add($department);
                 }
