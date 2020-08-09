@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VisitRequest;
 use App\Http\Resources\RecordResource;
@@ -54,46 +55,51 @@ class VisitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param String $rut
+     * @param String $search
      * @param String $option
      * @return \Illuminate\Http\Response
      */
-    public function show($rut, $option = null)
+    public function show($search, $option = null)
     {
-        if($option == null)
+        if ($option == null)
         {
-            $visits = Visit::all()->where('rut', 'like', $rut. '%');
+            $visits = Visit::all()->where('rut', $search);
+        }
+        elseif ($option == "department")
+        {
+            $department = Department::all()->where('number', $search)->first();
+            $records = Record::all()->where('department_id', $department->id);
+            $visits = new Collection();
+            foreach ($records as $record)
+            {
+                $visit = Visit::all()->where('id', $record->visit_id);
+                if (!$visits.contains($visit))
+                {
+                    $visits->add($visit);
+                }
+            }
+        }
+        elseif ($option == "resident")
+        {
+            $resident = Resident::all()->where('rut', $search)->first();
+            $records = Record::all()->where('resident_id', $resident->id);
+            $visits = new Collection();
+            foreach ($records as $record)
+            {
+                $visit = Visit::all()->where('id', $record->visit_id);
+                if (!$visits.contains($visit))
+                {
+                    $visits->add($visit);
+                }
+            }
+        }else{
             return response(
-                VisitResource::collection($visits)
+                ["message", "invalid route"]
             );
         }
-        else {
-            $visit = Visit::all()->where('rut', $rut)->first();
-            $records = Record::all()->where('visit_id', $visit->id);
-            if ($option == 'records')
-            {
-                return response(
-                    RecordResource::collection($records),
-                    200
-                );
-            } elseif ($option == 'residents')
-            {
-                $residents = new Collection();
-                foreach ($records as $record) {
-                    $resident = Resident::all()->where('id', $record->resident_id)->first();
-                    if (!$residents->contains($resident)) {
-                        $residents->add($resident);
-                    }
-                }
-                return response(
-                    ResidentResource::collection($residents),
-                    200
-                );
-            }
-            else{
-                return response('message',  'failed route');
-            }
-        }
+        return response(
+            ResidentResource::collection($visits)
+        );
     }
 
     /**

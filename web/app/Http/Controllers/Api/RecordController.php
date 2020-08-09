@@ -108,14 +108,35 @@ class RecordController extends Controller
 
     /**
      * Display the department
-     * @param \App\Record $record
+     * @param String $search
+     * @param String $option
      * @return \Illuminate\Http\Response
      */
-    public function show($record)
+    public function show($search, $option)
     {
+        if ($option == 'resident')
+        {
+            $resident = Resident::all()->where('rut', $search)->first();
+            $records = Record::all()->where('resident_id', $search);
+        }
+        elseif ($option == "department")
+        {
+            $department = Department::all()->where('number', $search)->first();
+            $records = Record::all()->where('department_id', $department->id);
+        }
+        elseif ($option == "visit")
+        {
+            $visit = Visit::all()->where('rut', $search)->first();
+            $records = Record::all()->where('resident_id', $visit->id);
+
+        }else{
+            return response(
+                ["message", "invalid route"]
+            );
+        }
         return response(
-            new RecordResource($record)
-        ,200);
+            RecordResource::collection($records)
+        );
     }
 
     /**

@@ -59,53 +59,43 @@ class DepartmentController extends Controller
     /**
      * Display visits from an specific department
      *
-     * @param  int $number
+     * @param  string $search
      * @param string $option
      * @return \Illuminate\Http\Response
      */
-    public function show($number, $option = null)
+    public function show($search, $option = null)
     {
-        if($option == null)
+        if($option == null) {
+            $departments = Department::all()->where('number', $search);
+        }
+        elseif($option == 'resident')
         {
-            $departments = Department::all()->where('number', 'like', $number);
+            $resident = Resident::all()->where('rut', $search)->first();
+            $departments = Department::all()->where('id', $resident->id);
+        }
+        elseif($option == 'visit')
+        {
+            $visit = Visit::all()->where('rut', $search)->first();
+            $records = Record::all()->where('visit_id', $visit->id);
+            $departments = new Collection();
+            foreach ($records as $record)
+            {
+                $department = Department::all()->where('id', $record->department_id);
+                if (!$departments.contains($department))
+                {
+                    $departments->add($department);
+                }
+            }
+        }
+        else
+        {
             return response(
-                DepartmentResource::collection($departments)
+                ["message", "invalid route"]
             );
         }
-        else {
-            $department = Department::all()->where('number', $number)->first();
-            $records = Record::all()->where('department_id', $department->id);
-            if ($option == 'records')
-            {
-                return response(
-                    RecordResource::collection($records),
-                    200
-                );
-            } elseif ($option == 'residents')
-            {
-                $residents = Resident::all()->where('department_id', $department->id);
-                return response(
-                    ResidentResource::collection($residents),
-                    200
-                );
-            }
-            elseif ($option == 'visits')
-            {
-                $visits = new Collection();
-                foreach ($records as $record) {
-                    $visit = Visit::all()->where('id', $record->visit_id)->first();
-                    if (!$visits->contains($visit)) {
-                        $visits->add($visit);
-                    }
-                }
-                return response(
-                    VisitResource::collection($visits),
-                    200
-                );
-            }else{
-                return response('message',  'failed route');
-            }
-        }
+        return response(
+            DepartmentResource::collection($departments)
+        );
     }
 
     /**
