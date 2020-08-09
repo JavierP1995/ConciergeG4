@@ -33,15 +33,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class displayDepartments : AppCompatActivity() {
-    //recibimos el bundle
-    var b = intent.extras
-    val option = b?.getString("option")
-    val search = b?.getString("search")
 
     private val departamentsList = MutableLiveData<ListDepartments>().apply {
         value = ListDepartments(emptyList(), false)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        //recibimos el bundle
+        var bundle :Bundle ?= intent.extras
+        var option = bundle!!.getString("option")
+        var search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
