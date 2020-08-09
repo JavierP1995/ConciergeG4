@@ -65,7 +65,9 @@ class searchDepartment : AppCompatActivity() {
 
     @Composable
     private fun searchMenu() {
-        var search = state { TextFieldValue("") }
+        var searchN = state { TextFieldValue("") }
+        var searchR = state { TextFieldValue("") }
+        var searchV = state { TextFieldValue("") }
         Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -76,9 +78,9 @@ class searchDepartment : AppCompatActivity() {
                     verticalGravity = Alignment.CenterVertically
             ) {
                 FilledTextField(
-                        value = search.value,
+                        value = searchN.value,
                         activeColor = darkColorPalette().secondary,
-                        onValueChange = { search.value = it },
+                        onValueChange = { searchN.value = it },
                         label = { Text("Number: ") }
                 )
                 Spacer(modifier = Modifier.padding(bottom = 20.dp))
@@ -87,15 +89,11 @@ class searchDepartment : AppCompatActivity() {
                         backgroundColor = darkColorPalette().secondary,
                         modifier = Modifier.padding(0.dp, 10.dp),
                         onClick = {
-                            val display = Intent(this@searchDepartment,
+                            val intent = Intent(this@searchDepartment,
                                     displayDepartments::class.java)
-                            val b = Bundle()
-                            val searchEnd = search.value.text.toString()
-                            b.putString("option", "byNumber")
-                            b.putString("search", searchEnd)
-                            display.putExtras(b)
-                            startActivity(display)
-                            finish()
+                            intent.putExtra("option", "byNumber")
+                            intent.putExtra("search", searchN.value.text.toString())
+                            startActivity(intent)
                         }
                 )
             }
@@ -105,9 +103,9 @@ class searchDepartment : AppCompatActivity() {
                     verticalGravity = Alignment.CenterVertically
             ) {
                 FilledTextField(
-                        value = search.value,
+                        value = searchR.value,
                         activeColor = darkColorPalette().secondary,
-                        onValueChange = { search.value = it },
+                        onValueChange = { searchR.value = it },
                         label = { Text("Rut: ") }
                 )
                 Spacer(modifier = Modifier.padding(bottom = 20.dp))
@@ -116,15 +114,11 @@ class searchDepartment : AppCompatActivity() {
                         backgroundColor = darkColorPalette().secondary,
                         modifier = Modifier.padding(0.dp, 10.dp),
                         onClick = {
-                            val display = Intent(this@searchDepartment,
+                            val intent = Intent(this@searchDepartment,
                                     displayDepartments::class.java)
-                            val b = Bundle()
-                            val searchEnd = search.value.text.toString()
-                            b.putString("option", "byResident")
-                            b.putString("search", searchEnd)
-                            display.putExtras(b)
-                            startActivity(display)
-                            finish()
+                            intent.putExtra("option", "byResident")
+                            intent.putExtra("search", searchR.value.text.toString())
+                            startActivity(intent)
                         }
                 )
             }
@@ -134,9 +128,9 @@ class searchDepartment : AppCompatActivity() {
                     verticalGravity = Alignment.CenterVertically
             ) {
                 FilledTextField(
-                        value = search.value,
+                        value = searchV.value,
                         activeColor = darkColorPalette().secondary,
-                        onValueChange = { search.value = it },
+                        onValueChange = { searchV.value = it },
                         label = { Text("Rut: ") }
                 )
                 Spacer(modifier = Modifier.padding(bottom = 20.dp))
@@ -145,15 +139,11 @@ class searchDepartment : AppCompatActivity() {
                         backgroundColor = darkColorPalette().secondary,
                         modifier = Modifier.padding(0.dp, 10.dp),
                         onClick = {
-                            val display = Intent(this@searchDepartment,
+                            val intent = Intent(this@searchDepartment,
                                     displayDepartments::class.java)
-                            val b = Bundle()
-                            val searchEnd = search.value.text.toString()
-                            b.putString("option", "byVisit")
-                            b.putString("search", searchEnd)
-                            display.putExtras(b)
-                            startActivity(display)
-                            finish()
+                            intent.putExtra("option", "byVisit")
+                            intent.putExtra("search", searchV.value.text.toString())
+                            startActivity(intent)
                         }
                 )
             }

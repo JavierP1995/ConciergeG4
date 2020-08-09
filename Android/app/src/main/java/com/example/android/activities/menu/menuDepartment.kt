@@ -57,28 +57,26 @@ class menuDepartment : AppCompatActivity() {
                 horizontalGravity = Alignment.CenterHorizontally
         ){
             Button(
-                    text = { Text("Display Data") },
+                    text = { Text("Display Data Deptos") },
                     backgroundColor = darkThemeColors.onPrimary,
                     modifier = Modifier.padding(0.dp,10.dp),
                     onClick = {
-                        val display = Intent(this@menuDepartment,
+                        val intent = Intent(this@menuDepartment,
                                 displayDepartments::class.java)
-                        val b = Bundle()
-                        b.putString("option", "all")
-                        display.putExtras(b)
-                        startActivity(display)
-                        finish()
+                        intent.putExtra("option", "all")
+                        intent.putExtra("search", "")
+                        startActivity(intent)
                     }
             )
             Button(
-                    text = { Text("Registrar") },
+                    text = { Text("Registry") },
                     backgroundColor = darkThemeColors.onPrimary,
                     modifier = Modifier.padding(0.dp,10.dp),
                     onClick = {
                     }
             )
             Button(
-                    text = { Text("Buscar") },
+                    text = { Text("Search") },
                     backgroundColor = darkThemeColors.onPrimary,
                     modifier = Modifier.padding(0.dp,10.dp),
                     onClick = {
