@@ -11,7 +11,7 @@ import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Text
-import androidx.ui.input.TextFieldValue
+import androidx.ui.foundation.TextFieldValue
 import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.tooling.preview.Preview
@@ -34,7 +34,6 @@ class createResident : AppCompatActivity() {
             AndroidTheme {
                 // A surface container using the 'background' color from the theme
                 MaterialTheme(colors = darkThemeColors) {
-                    Greeting()
                     Reg()
                 }
             }
@@ -46,7 +45,7 @@ class createResident : AppCompatActivity() {
     fun Reg() {
         var text = "Text"
 
-        Scaffold( topBar = { TopAppBar(title = { Text(text = "Ingresar Residente") }) }
+        Scaffold( topAppBar = { TopAppBar(title = { Text(text = "Ingresar Residente") }) }
 
         ){
             Column(
@@ -143,7 +142,7 @@ class createResident : AppCompatActivity() {
     @Composable
     fun DefaultResidentPreview() {
         AndroidTheme {
-            Greeting()
+            Reg()
         }
     }
 }
