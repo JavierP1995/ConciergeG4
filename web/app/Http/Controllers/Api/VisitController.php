@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VisitRequest;
+use App\Http\Resources\RecordResource;
+use App\Http\Resources\ResidentResource;
 use App\Http\Resources\VisitResource;
+use App\Record;
+use App\Resident;
 use App\Visit;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class VisitController extends Controller
@@ -49,15 +55,51 @@ class VisitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Visit $visit
+     * @param String $search
+     * @param String $option
      * @return \Illuminate\Http\Response
      */
-    public function show(Visit $visit)
+    public function show($search, $option = null)
     {
-        return response([
-            'message' => 'Retrieved Successfully',
-            'visit' => new VisitResource($visit),
-        ], 200);
+        if ($option == null)
+        {
+            $visits = Visit::all()->where('rut', $search);
+        }
+        elseif ($option == "department")
+        {
+            $department = Department::all()->where('number', $search)->first();
+            $records = Record::all()->where('department_id', $department->id);
+            $visits = new Collection();
+            foreach ($records as $record)
+            {
+                $visit = Visit::all()->where('id', $record->visit_id);
+                if (!$visits.contains($visit))
+                {
+                    $visits->add($visit);
+                }
+            }
+        }
+        elseif ($option == "resident")
+        {
+            $resident = Resident::all()->where('rut', $search)->first();
+            $records = Record::all()->where('resident_id', $resident->id);
+            $visits = new Collection();
+            foreach ($records as $record)
+            {
+                $visit = Visit::all()->where('id', $record->visit_id);
+                if (!$visits->contains($visit))
+                {
+                    $visits->add($visit);
+                }
+            }
+        }else{
+            return response(
+                ["message", "invalid route"]
+            );
+        }
+        return response(
+            ResidentResource::collection($visits)
+        );
     }
 
     /**

@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResidentRequest;
+use App\Http\Resources\RecordResource;
 use App\Http\Resources\ResidentResource;
+use App\Http\Resources\VisitResource;
+use App\Record;
 use App\Resident;
+use App\Visit;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Database\Eloquent\Collection;
 
 class ResidentController extends Controller
 {
@@ -61,15 +66,42 @@ class ResidentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Resident  $resident
+     * @param String $search
+     * @param String $option
      * @return \Illuminate\Http\Response
      */
-    public function show(Resident $resident)
+    public function show($search, $option = null)
     {
-        return response([
-            'message' => 'Retrieved Succesfully',
-            'resident' => new ResidentResource($resident)
-        ], 200);
+        if ($option == null)
+        {
+            $residents = Resident::all()->where('rut', $search);
+        }
+        elseif ($option == "department")
+        {
+            $department = Department::all()->where('number', $search)->first();
+            $residents = Resident::all()->where('department_id', $search);
+        }
+        elseif ($option == "visit")
+        {
+            $visit = Visit::all()->where('rut', $search)->first();
+            $records = Record::all()->where('visit_id', $visit->id);
+            $residents = new Collection();
+            foreach ($records as $record)
+            {
+                $resident = Resident::all()->where('id', $record->resident_id);
+                if (!$residents->contains($resident))
+                {
+                    $residents->add($resident);
+                }
+            }
+        }else{
+            return response(
+                ["message", "invalid route"]
+            );
+        }
+        return response(
+            ResidentResource::collection($residents)
+        );
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.example.android.activities
+package com.example.android.activities.display
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -25,19 +25,23 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.ListDepartments
 import com.example.android.R
-import com.example.android.model.DepartmentModel
 import com.example.android.adapter.DepartmentAdapter
+import com.example.android.model.DepartmentModel
 import com.example.android.ui.utils.darkThemeColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DepartmentActivity : AppCompatActivity() {
+class displayDepartments : AppCompatActivity() {
 
     private val departamentsList = MutableLiveData<ListDepartments>().apply {
         value = ListDepartments(emptyList(), false)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        //recibimos el bundle
+        var bundle :Bundle ?= intent.extras
+        var option = bundle!!.getString("option")
+        var search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
@@ -49,7 +53,16 @@ class DepartmentActivity : AppCompatActivity() {
         lifecycleScope.launch {
             departamentsList.value = departamentsList.value?.copy(loading = true)
             val dpts = withContext(Dispatchers.IO){
-                DepartmentAdapter.loadDepartments()
+                if( option == "all"){
+                    DepartmentAdapter.loadDepartments()
+                }else if(option == "byNumber"){
+                    search?.let { DepartmentAdapter.loadByNumber(it) }
+                }else if(option == "byResident"){
+                    search?.let { DepartmentAdapter.loadByResident(it) }
+                }else{
+                    search?.let { DepartmentAdapter.loadByVisit(it) }
+                }
+
             }
             departamentsList.value = departamentsList.value?.copy(dpts ?: emptyList(),
                 loading = false)

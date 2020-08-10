@@ -1,4 +1,4 @@
-package com.example.android.activities
+package com.example.android.activities.display
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RecordActivity : AppCompatActivity() {
+class displayRecords : AppCompatActivity() {
 
 
     private val recordsList = MutableLiveData<ListRecords>().apply {

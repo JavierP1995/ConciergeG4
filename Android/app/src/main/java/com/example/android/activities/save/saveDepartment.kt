@@ -1,4 +1,4 @@
-package com.example.android.activities
+package com.example.android.activities.save
 
 import android.os.Bundle
 import android.view.View
@@ -7,12 +7,11 @@ import androidx.lifecycle.lifecycleScope
 import com.example.android.R
 import com.example.android.adapter.DepartmentAdapter
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class   RegisterDepartmentActivity : AppCompatActivity() {
+class   saveDepartment : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

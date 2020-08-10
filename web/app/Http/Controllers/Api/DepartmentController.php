@@ -6,6 +6,7 @@ use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DepartmentRequest;
 use App\Http\Resources\DepartmentResource;
+use App\Http\Resources\RecordResource;
 use App\Http\Resources\ResidentResource;
 use App\Http\Resources\VisitResource;
 use App\Record;
@@ -58,40 +59,43 @@ class DepartmentController extends Controller
     /**
      * Display visits from an specific department
      *
-     * @param  int $number
+     * @param  string $search
      * @param string $option
      * @return \Illuminate\Http\Response
      */
-    public function show($number, $option = null)
+    public function show($search, $option = null)
     {
-        if($option == "visits")
+        if($option == null) {
+            $departments = Department::all()->where('number', $search);
+        }
+        elseif($option == 'resident')
         {
-            $department = Department::all()->where('number', $number)->first();
-            $records = Record::all()->where('department_id', $department->id);
-            $visits = new Collection();
-            foreach ($records as $record){
-                $visit = Visit::all()->where('id', $record->visit_id)->first();
-                if(!$visits->contains($visit)){
-                    $visits->add($visit);
+            $resident = Resident::all()->where('rut', $search)->first();
+            $departments = Department::all()->where('id', $resident->id);
+        }
+        elseif($option == 'visit')
+        {
+            $visit = Visit::all()->where('rut', $search)->first();
+            $records = Record::all()->where('visit_id', $visit->id);
+            $departments = new Collection();
+            foreach ($records as $record)
+            {
+                $department = Department::all()->where('id', $record->department_id);
+                if (!$departments->contains($department))
+                {
+                    $departments->add($department);
                 }
             }
-            return response(
-                VisitResource::collection($visits), 200);
-        }
-        elseif($option == "residents")
-        {
-            $department = Department::all()->where('number', $number)->first();
-            $residents = Resident::all()->where('department_id', $department->id);
-            return response(
-                ResidentResource::collection($residents), 200);
         }
         else
         {
-            $department = Department::all()->where('number', $number)->first();
             return response(
-                $department
+                ["message", "invalid route"]
             );
         }
+        return response(
+            DepartmentResource::collection($departments)
+        );
     }
 
     /**
@@ -113,7 +117,7 @@ class DepartmentController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     **
      * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */

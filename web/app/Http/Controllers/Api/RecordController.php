@@ -108,42 +108,35 @@ class RecordController extends Controller
 
     /**
      * Display the department
-     *
-     * @param  int  $department
+     * @param String $search
+     * @param String $option
      * @return \Illuminate\Http\Response
      */
-    public function show($number)
+    public function show($search, $option)
     {
+        if ($option == 'resident')
+        {
+            $resident = Resident::all()->where('rut', $search)->first();
+            $records = Record::all()->where('resident_id', $resident->id);
+        }
+        elseif ($option == "department")
+        {
+            $department = Department::all()->where('number', $search)->first();
+            $records = Record::all()->where('department_id', $department->id);
+        }
+        elseif ($option == "visit")
+        {
+            $visit = Visit::all()->where('rut', $search)->first();
+            $records = Record::all()->where('resident_id', $visit->id);
 
-        $apartment = Department::all()->where('number', '=',$number)->first();
-
-        $visits = Record::all()->where('department_id', $apartment->id);
-
-
-        return response([
-            'message' => "Retrieved Successfully",
-            'visits' => RecordResource::collection($visits),
-        ],200);
-    }
-
-    /**
-     * Display visits of a department with the given number
-     *
-     * @param  int  $number
-     * @return \Illuminate\Http\Response
-     */
-    public function showByDepartmentNumber(Request $request)
-    {
-        $data = DB::table('visits')
-            ->join('records', 'visits.id', '=', 'records.visit_id')
-            ->join('departments', 'records.department_id', '=', 'departments.id')
-            ->select('visits.*')
-            ->where('departments.number', $request->number)
-            ->get();
-        return response([
-            'message' => "Retrieved Successfully",
-            'visits' => VisitResource::collection($data),
-            ],200);
+        }else{
+            return response(
+                ["message", "invalid route"]
+            );
+        }
+        return response(
+            RecordResource::collection($records)
+        );
     }
 
     /**

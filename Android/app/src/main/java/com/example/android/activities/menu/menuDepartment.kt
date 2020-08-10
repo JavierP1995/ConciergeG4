@@ -1,4 +1,4 @@
-package com.example.android.menu
+package com.example.android.activities.menu
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,11 +17,12 @@ import androidx.ui.material.MaterialTheme
 import androidx.ui.material.TopAppBar
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.example.android.activities.DepartmentActivity
+import com.example.android.activities.display.displayDepartments
+import com.example.android.activities.search.searchDepartment
 import com.example.android.ui.utils.darkThemeColors
 
 
-class DepartmentMenu : AppCompatActivity() {
+class menuDepartment : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,30 +57,36 @@ class DepartmentMenu : AppCompatActivity() {
                 horizontalGravity = Alignment.CenterHorizontally
         ){
             Button(
-                    text = { Text("Desplegar Datos") },
+                    text = { Text("Display Data Deptos") },
+                    backgroundColor = darkThemeColors.onPrimary,
+                    modifier = Modifier.padding(0.dp,10.dp),
+                    onClick = {
+                        val intent = Intent(this@menuDepartment,
+                                displayDepartments::class.java)
+                        intent.putExtra("option", "all")
+                        intent.putExtra("search", "")
+                        startActivity(intent)
+                    }
+            )
+            Button(
+                    text = { Text("Registry") },
+                    backgroundColor = darkThemeColors.onPrimary,
+                    modifier = Modifier.padding(0.dp,10.dp),
+                    onClick = {
+                    }
+            )
+            Button(
+                    text = { Text("Search") },
                     backgroundColor = darkThemeColors.onPrimary,
                     modifier = Modifier.padding(0.dp,10.dp),
                     onClick = {
                         startActivity(
-                                Intent(
-                                        this@DepartmentMenu,
-                                        DepartmentActivity::class.java
-                                ))
+                            Intent(
+                                this@menuDepartment,
+                                searchDepartment::class.java
+                            )
+                        )
                     }
-            )
-            Button(
-                    text = { Text("Registrar") },
-                    backgroundColor = darkThemeColors.onPrimary,
-                    modifier = Modifier.padding(0.dp,10.dp),
-                    onClick = {
-                    }
-            )
-            Button(
-                    text = { Text("Buscar") },
-                    backgroundColor = darkThemeColors.onPrimary,
-                    modifier = Modifier.padding(0.dp,10.dp),
-                    onClick = {
-                                                }
             )
         }
 

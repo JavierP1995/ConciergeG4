@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Android">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.menu.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Android.NoActionBar">
             <intent-filter>
@@ -28,16 +28,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".activities.RegisterRecordActivity"
+            android:name=".activities.save.saveRecord"
             android:label="@string/app_name"
             android:theme="@style/Theme.Android.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.display.displayDepartments"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.menu.menuDepartment"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.search.searchDepartment">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
         </activity>
     </application>
 
