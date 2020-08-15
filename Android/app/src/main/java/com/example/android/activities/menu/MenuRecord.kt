@@ -17,35 +17,35 @@ import androidx.ui.layout.*
 import androidx.ui.material.Button
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
-import androidx.ui.material.TopAppBar
 import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
-import com.example.android.activities.display.DisplayDepartments
-import com.example.android.activities.search.searchDepartment
+import com.example.android.activities.display.DisplayRecords
 import com.example.android.ui.utils.darkThemeColors
 
 
-class menuDepartment : AppCompatActivity() {
+class MenuRecord : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             subMenu()
+
         }
     }
+
 
     @Preview
     @Composable
     private fun subMenu(){
-        MaterialTheme(colors = darkThemeColors)
-        {
 
-            Scaffold (bodyContent = {
+        MaterialTheme(colors = darkThemeColors) {
+
+            Scaffold(bodyContent = {
 
                 Image(
-                        painter = ImagePainter(imageResource(id = R.drawable.menudepartments)),
+                        painter = ImagePainter(imageResource(id = R.drawable.menurecords)),
                         alignment = Alignment.TopCenter
                 )
                 Image(
@@ -53,16 +53,14 @@ class menuDepartment : AppCompatActivity() {
                         alignment = Alignment.Center,
                         modifier = Modifier.fillMaxSize()
                 )
+
                 Column(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
                         horizontalGravity = Alignment.CenterHorizontally
                 ){
-
-
-
                     Button(
-                            text = { Text("Display Data Departments",
+                            text = { Text("Display data Records",
                                     color = darkThemeColors.onPrimary,
                                     style = MaterialTheme.typography.h6) },
                             backgroundColor = Color.Transparent,
@@ -70,13 +68,13 @@ class menuDepartment : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
-                                val intent = Intent(this@menuDepartment,
-                                        DisplayDepartments::class.java)
-                                intent.putExtra("option", "all")
-                                intent.putExtra("search", "")
-                                startActivity(intent)
+                                startActivity(
+                                        Intent(this@MenuRecord,
+                                                DisplayRecords::class.java
+                                        ))
                             }
                     )
+
                     Button(
                             text = { Text("Registry",
                                     color = darkThemeColors.onPrimary,
@@ -88,7 +86,6 @@ class menuDepartment : AppCompatActivity() {
                             onClick = {
                             }
                     )
-
                     Button(
                             text = { Text("Search",
                                     color = darkThemeColors.onPrimary,
@@ -98,19 +95,14 @@ class menuDepartment : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
-                                startActivity(
-                                        Intent(
-                                                this@menuDepartment,
-                                                searchDepartment::class.java
-                                        )
-                                )
                             }
                     )
                 }
+
             })
 
         }
 
     }
-}
 
+}

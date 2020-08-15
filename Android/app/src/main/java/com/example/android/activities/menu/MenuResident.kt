@@ -21,16 +21,16 @@ import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
-import com.example.android.activities.display.DisplayVisits
+import com.example.android.activities.display.DisplayResidents
 import com.example.android.ui.utils.darkThemeColors
 
 
-class menuVisit : AppCompatActivity() {
+class MenuResident : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            subMenu()
+                subMenu()
 
         }
     }
@@ -45,7 +45,7 @@ class menuVisit : AppCompatActivity() {
             Scaffold(bodyContent = {
 
                 Image(
-                        painter = ImagePainter(imageResource(id = R.drawable.menuvisits)),
+                        painter = ImagePainter(imageResource(id = R.drawable.menuresidents)),
                         alignment = Alignment.TopCenter
                 )
                 Image(
@@ -60,7 +60,7 @@ class menuVisit : AppCompatActivity() {
                         horizontalGravity = Alignment.CenterHorizontally
                 ){
                     Button(
-                            text = { Text("Display data Visits",
+                            text = { Text("Display data Residents",
                                     color = darkThemeColors.onPrimary,
                                     style = MaterialTheme.typography.h6) },
                             backgroundColor = Color.Transparent,
@@ -69,8 +69,8 @@ class menuVisit : AppCompatActivity() {
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
                                 startActivity(
-                                        Intent(this@menuVisit,
-                                                DisplayVisits::class.java
+                                        Intent(this@MenuResident,
+                                                DisplayResidents::class.java
                                         ))
                             }
                     )
@@ -84,7 +84,7 @@ class menuVisit : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
-                            }
+                                    }
                     )
                     Button(
                             text = { Text("Search",
@@ -104,6 +104,8 @@ class menuVisit : AppCompatActivity() {
         }
 
     }
+
+
 
 
 }
