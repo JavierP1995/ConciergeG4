@@ -32,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class displayRecords : AppCompatActivity() {
+class DisplayRecords : AppCompatActivity() {
 
 
     private val recordsList = MutableLiveData<ListRecords>().apply {
