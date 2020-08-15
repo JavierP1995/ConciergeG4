@@ -22,7 +22,7 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
 import com.example.android.activities.display.DisplayDepartments
-import com.example.android.activities.search.searchDepartment
+import com.example.android.activities.search.SearchDepartment
 import com.example.android.ui.utils.darkThemeColors
 
 
@@ -100,7 +100,7 @@ class MenuDepartment : AppCompatActivity() {
                                 startActivity(
                                         Intent(
                                                 this@MenuDepartment,
-                                                searchDepartment::class.java
+                                                SearchDepartment::class.java
                                         )
                                 )
                             }

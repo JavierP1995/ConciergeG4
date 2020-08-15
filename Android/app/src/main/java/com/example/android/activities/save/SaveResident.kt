@@ -27,12 +27,12 @@ import androidx.ui.unit.dp
 import com.example.android.R
 import com.example.android.activities.ui.AndroidTheme
 import com.example.android.adapter.ResidentAdapter
-import com.example.android.activities.menu.menuRecord
+import com.example.android.activities.menu.MenuRecord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class saveResident : AppCompatActivity() {
+class SaveResident : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,13 +49,12 @@ class saveResident : AppCompatActivity() {
 
     @Composable
     fun showForm() {
-        var text = "" //TODO: revisar
 
-        var rut = state { TextFieldValue("") }
-        var name = state { TextFieldValue("") }
-        var email = state { TextFieldValue("") }
-        var phone= state { TextFieldValue("") }
-        var department = state { TextFieldValue("") }
+        val rut = state { TextFieldValue("") }
+        val name = state { TextFieldValue("") }
+        val email = state { TextFieldValue("") }
+        val phone= state { TextFieldValue("") }
+        val department = state { TextFieldValue("") }
 
         MaterialTheme(colors = darkColorPalette()) {
             Scaffold(topAppBar = {
@@ -127,8 +126,8 @@ class saveResident : AppCompatActivity() {
                         Button(onClick = {
                             startActivity(
                                 Intent(
-                                    this@saveResident,
-                                    menuRecord::class.java
+                                    this@SaveResident,
+                                    MenuRecord::class.java
                                 ))
                         }, backgroundColor =
                         darkColorPalette().secondary, text = { Text(text = "Cancel") })
@@ -149,11 +148,11 @@ class saveResident : AppCompatActivity() {
 
     private fun callRegister(rut: TextFieldValue, name: TextFieldValue, email: TextFieldValue,
                              phone: TextFieldValue, department: TextFieldValue) {
-        val rut = rut.text.toString()
-        val name = name.text.toString()
-        val email = email.text.toString()
-        val phone = phone.text.toString().toInt()
-        val department = department.text.toString().toInt()
+        val rut = rut.text
+        val name = name.text
+        val email = email.text
+        val phone = phone.text.toInt()
+        val department = department.text.toInt()
 
 
         if (validateFields(rut, name, email, phone, department)) {

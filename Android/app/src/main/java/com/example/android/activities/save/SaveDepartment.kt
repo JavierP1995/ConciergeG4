@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class   saveDepartment : AppCompatActivity() {
+class   SaveDepartment : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,11 +19,11 @@ class   saveDepartment : AppCompatActivity() {
 
     }
 
-    fun doRegister(view: View) {
+    fun doRegister() {
 
-        var inputNumber = findViewById<TextInputEditText>(R.id.txtNumber)
-        var inputFloor = findViewById<TextInputEditText>(R.id.txtFloor)
-        var inputBlock = findViewById<TextInputEditText>(R.id.txtBlock)
+        val inputNumber = findViewById<TextInputEditText>(R.id.txtNumber)
+        val inputFloor = findViewById<TextInputEditText>(R.id.txtFloor)
+        val inputBlock = findViewById<TextInputEditText>(R.id.txtBlock)
 
         val number: Int = inputNumber.text.toString().toInt()
         val floor: Int = inputFloor.text.toString().toInt()
