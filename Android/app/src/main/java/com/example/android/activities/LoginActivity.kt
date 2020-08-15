@@ -1,6 +1,8 @@
 package com.example.android.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.state
@@ -21,6 +23,8 @@ import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
+import com.example.android.activities.display.DisplayDepartments
+import com.example.android.activities.menu.menuDepartment
 import com.example.android.adapter.AuthAdapter.loginUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,11 +44,24 @@ class LoginActivity : AppCompatActivity() {
     private fun callLogin(email : TextFieldValue, password : TextFieldValue){
         lifecycleScope.launch(){
             withContext(Dispatchers.IO){
-                loginUser(email.text, password.text)
+                val auth = (loginUser(email.text,password.text)?.token)
+                if (auth != null) {
+                    Log.v("TOKEN", auth)
+
+                    DisplayDepartments.setLoginData(auth)
+                    startActivity(Intent(this@LoginActivity, menuDepartment::class.java))
+                }
+
             }
+            finish()
         }
 
     }
+
+
+
+
+
 
     @Preview
     @Composable
@@ -100,7 +117,11 @@ class LoginActivity : AppCompatActivity() {
                             )
 
                             Button(
-                                    onClick = {callLogin(email.value,password.value)},
+                                    onClick = {callLogin(email.value,password.value)
+
+
+
+                                    },
                                     text = {Text(text = "Login")},
                                     modifier = Modifier.padding(20.dp),
                                     backgroundColor = darkColorPalette().secondary
