@@ -58,7 +58,7 @@ class SaveResident : AppCompatActivity() {
 
         MaterialTheme(colors = darkColorPalette()) {
             Scaffold(topAppBar = {
-                TopAppBar(title = { Text(text = "Add Register") },
+                TopAppBar(title = { Text(text = "Add Resident") },
                     navigationIcon = {
                         IconButton(onClick = {/*Activity*/ }) {
                             Icon(Icons.Filled.Menu)
