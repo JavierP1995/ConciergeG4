@@ -1,7 +1,6 @@
 package com.example.android.adapter
 
 import android.util.Log
-import com.example.android.model.UserModel
 import com.example.android.reponse.LoginResponse
 import com.example.android.reponse.RegisterResponse
 import com.example.android.service.ApiService
@@ -25,7 +24,7 @@ object AuthAdapter {
 
     }
 
-    fun loginUser(email : String, password: String){
+    fun loginUser(email : String, password: String) : LoginResponse? {
 
         val requestCall : Call<LoginResponse> = ApiService.
         buildService(AuthService::class.java).login(email, password)
@@ -33,10 +32,12 @@ object AuthAdapter {
         try{
             val response  = requestCall.execute()
             Log.v("Json", response.body().toString())
-
+            return response.body()
         }catch (e: Exception){
             e.printStackTrace()
         }
+
+        return null
     }
 
 }

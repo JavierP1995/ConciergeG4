@@ -32,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class displayVisits : AppCompatActivity() {
+class DisplayVisits : AppCompatActivity() {
 
 
 

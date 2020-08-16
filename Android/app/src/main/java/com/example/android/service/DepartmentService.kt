@@ -2,14 +2,12 @@ package com.example.android.service
 
 import com.example.android.model.DepartmentModel
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface DepartmentService {
     @GET("departments/")
-    fun getDepartments():Call<ArrayList<DepartmentModel>>
+    @Headers("Accept: application/json")
+    fun getDepartments(@Header("Authorization") auth:String):Call<ArrayList<DepartmentModel>>
 
     @GET("departments/{search}/")
     fun searchByNumber(@Path("search") number: String) : Call<ArrayList<DepartmentModel>>

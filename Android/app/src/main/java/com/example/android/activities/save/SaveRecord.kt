@@ -30,7 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class saveRecord : AppCompatActivity() {
+class SaveRecord : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,10 +138,10 @@ class saveRecord : AppCompatActivity() {
 
     private fun callRegisterActivity(visitRut: TextFieldValue, departmentNumber: TextFieldValue, residentName: TextFieldValue, kinship: TextFieldValue, comment: TextFieldValue) {
 
-        val visitRutAux = visitRut.text.toString()
-        val residentNameAux = residentName.text.toString()
-        val kinshipAux = kinship.text.toString()
-        val commentAux = comment.text.toString()
+        val visitRutAux = visitRut.text
+        val residentNameAux = residentName.text
+        val kinshipAux = kinship.text
+        val commentAux = comment.text
 
         if(departmentNumber.text != ""){
             val apartmentNumber = departmentNumber.text.toInt()

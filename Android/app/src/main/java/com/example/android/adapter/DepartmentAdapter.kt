@@ -8,10 +8,10 @@ import retrofit2.Call
 
 object DepartmentAdapter {
 
-    fun loadDepartments(): Collection<DepartmentModel>? {
+    fun loadDepartments(token : String): Collection<DepartmentModel>? {
         val requestCall: Call<ArrayList<DepartmentModel>> =
                 ApiService.buildService(DepartmentService::class.java).
-                getDepartments()
+                getDepartments("Bearer $token")
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())

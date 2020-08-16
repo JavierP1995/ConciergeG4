@@ -1,6 +1,7 @@
 package com.example.android.activities.display
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.getValue
@@ -32,11 +33,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class displayDepartments : AppCompatActivity() {
+class DisplayDepartments : AppCompatActivity() {
 
     private val departamentsList = MutableLiveData<ListDepartments>().apply {
         value = ListDepartments(emptyList(), false)
     }
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         //recibimos el bundle
         var bundle :Bundle ?= intent.extras
@@ -54,7 +66,7 @@ class displayDepartments : AppCompatActivity() {
             departamentsList.value = departamentsList.value?.copy(loading = true)
             val dpts = withContext(Dispatchers.IO){
                 if( option == "all"){
-                    DepartmentAdapter.loadDepartments()
+                    DepartmentAdapter.loadDepartments(token)
                 }else if(option == "byNumber"){
                     search?.let { DepartmentAdapter.loadByNumber(it) }
                 }else if(option == "byResident"){

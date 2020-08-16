@@ -32,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class displayResidents : AppCompatActivity() {
+class DisplayResidents : AppCompatActivity() {
 
     private val residentsList = MutableLiveData<ListResidents>().apply {
         value = ListResidents(emptyList(), false)
