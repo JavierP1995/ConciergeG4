@@ -2,8 +2,10 @@ package com.example.android.adapter
 
 import android.util.Log
 import android.widget.Toast
+import com.example.android.model.DepartmentModel
 import com.example.android.model.RecordModel
 import com.example.android.service.ApiService
+import com.example.android.service.DepartmentService
 import com.example.android.service.RecordService
 import retrofit2.Call
 
@@ -13,6 +15,48 @@ object RecordAdapter {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
                 getRecords()
+        try{
+            val response = requestCall.execute()
+            Log.v("Json", response.body()!!.toString())
+            return response.body()!!
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun loadByDepartment(number: String): Collection<RecordModel>? {
+        val requestCall: Call<ArrayList<RecordModel>> =
+                ApiService.buildService(RecordService::class.java).
+                searchByDepartment(number = number)
+        try{
+            val response = requestCall.execute()
+            Log.v("Json", response.body()!!.toString())
+            return response.body()!!
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun loadByResident(rut: String): Collection<RecordModel>? {
+        val requestCall: Call<ArrayList<RecordModel>> =
+                ApiService.buildService(RecordService::class.java).
+                searchByResident(rut = rut)
+        try{
+            val response = requestCall.execute()
+            Log.v("Json", response.body()!!.toString())
+            return response.body()!!
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun loadByVisit(rut: String): Collection<RecordModel>? {
+        val requestCall: Call<ArrayList<RecordModel>> =
+                ApiService.buildService(RecordService::class.java).
+                searchByVisit(rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())

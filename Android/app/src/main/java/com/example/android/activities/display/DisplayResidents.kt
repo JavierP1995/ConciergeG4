@@ -26,6 +26,7 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.ListResidents
 import com.example.android.R
+import com.example.android.adapter.DepartmentAdapter
 import com.example.android.adapter.ResidentAdapter
 import com.example.android.model.ResidentModel
 import com.example.android.ui.utils.darkThemeColors
@@ -49,6 +50,9 @@ class DisplayResidents : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var bundle :Bundle ?= intent.extras
+        var option = bundle!!.getString("option")
+        var search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
@@ -60,7 +64,15 @@ class DisplayResidents : AppCompatActivity() {
         lifecycleScope.launch {
             residentsList.value = residentsList.value?.copy(loading = true)
             val residents = withContext(Dispatchers.IO) {
-                ResidentAdapter.loadResidents()
+                if( option == "all"){
+                    ResidentAdapter.loadResidents()
+                }else if(option == "byRut"){
+                    search?.let { ResidentAdapter.loadByRut(it) }
+                }else if(option == "byVisit"){
+                    search?.let { ResidentAdapter.loadByVisit(it) }
+                }else{
+                    search?.let { ResidentAdapter.loadByDepartment(it) }
+                }
             }
             residentsList.value = residentsList.value?.copy(residents ?: emptyList(),
                     loading = false)
