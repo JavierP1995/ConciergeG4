@@ -151,11 +151,12 @@ class SaveVisit : AppCompatActivity() {
                     VisitAdapter.createVisit(token , rut, name, admitted)
                 }
             }
+            val duration = Toast.LENGTH_SHORT
+            val toast =
+                    Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
+            toast.show()
         }
-        val duration = Toast.LENGTH_SHORT
-        val toast =
-                Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
-        toast.show()
+
     }
 
     private fun validateFields(
