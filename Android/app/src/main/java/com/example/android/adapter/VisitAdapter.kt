@@ -69,11 +69,11 @@ object VisitAdapter {
     /**
      * This method allows us to call the createRecord method of the VisitService object.
      */
-    fun createVisit(name: String, rut: String, admitted: String): VisitModel? {
+    fun createVisit(token : String, rut: String, name: String, admitted: String): VisitModel? {
 
         val call: Call<VisitModel> = ApiService
-                .buildService(VisitService::class.java).createRecord(name=name,
-                        rut = rut, admitted = admitted)
+                .buildService(VisitService::class.java).createRecord("Bearer $token",
+                        name=name, rut = rut, admitted = admitted)
         try{
             val response = call.execute()
             Log.v("Json", response.body()!!.toString())
