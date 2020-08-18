@@ -1,6 +1,7 @@
 package com.example.android.activities.save
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
@@ -31,6 +32,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SaveRecord : AppCompatActivity() {
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,7 +160,7 @@ class SaveRecord : AppCompatActivity() {
 
                 lifecycleScope.launch {
                     val register = withContext(Dispatchers.IO) {
-                        RecordAdapter.createRecord(visitRutAux, apartmentNumber, residentNameAux, kinshipAux, commentAux)
+                        RecordAdapter.createRecord(token, visitRutAux, apartmentNumber, residentNameAux, kinshipAux, commentAux)
                     }
                 }
             }

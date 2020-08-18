@@ -1,7 +1,7 @@
 package com.example.android.activities.save
 
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.android.R
@@ -12,6 +12,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class   SaveDepartment : AppCompatActivity() {
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +41,7 @@ class   SaveDepartment : AppCompatActivity() {
 
         lifecycleScope.launch {
             val department = withContext(Dispatchers.IO){
-                DepartmentAdapter.registerDepartment(number = number, floor = floor, block = block[0])
+                DepartmentAdapter.registerDepartment(token, number = number, floor = floor, block = block[0])
             }
         }
 

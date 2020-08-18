@@ -2,6 +2,7 @@ package com.example.android.activities.save
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
@@ -33,6 +34,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SaveResident : AppCompatActivity() {
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,7 +169,7 @@ class SaveResident : AppCompatActivity() {
             lifecycleScope.launch{
                 val register = withContext(Dispatchers.IO)
                 {
-                    ResidentAdapter.createResident(
+                    ResidentAdapter.createResident(token,
                         rut, name, email, phone, department)
                 }
             }
