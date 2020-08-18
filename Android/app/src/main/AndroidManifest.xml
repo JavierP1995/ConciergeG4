@@ -28,8 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--Departments-->
         <activity
-            android:name=".activities.save.SaveRecord"
+            android:name=".activities.save.SaveDepartment"
             android:label="@string/app_name"
             android:theme="@style/Theme.Android.NoActionBar">
         </activity>
@@ -48,6 +50,73 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Android.NoActionBar">
         </activity>
+
+        <!--Records-->
+        <activity
+            android:name=".activities.save.SaveRecord"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.display.DisplayRecords"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.menu.MenuRecord"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.search.SearchRecord">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+
+        <!--Residents-->
+        <activity
+            android:name=".activities.save.SaveResident"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.display.DisplayResidents"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.menu.MenuResident"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.search.SearchResident">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+
+        <!--Visit-->
+        <activity
+            android:name=".activities.save.SaveVisit"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.display.DisplayVisits"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.menu.MenuVisit"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activities.search.SearchVisit">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Android.NoActionBar">
+        </activity>
+
     </application>
 
 </manifest>
