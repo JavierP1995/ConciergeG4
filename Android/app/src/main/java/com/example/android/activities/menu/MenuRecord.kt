@@ -22,6 +22,8 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
 import com.example.android.activities.display.DisplayRecords
+import com.example.android.activities.save.SaveRecord
+import com.example.android.activities.search.SearchRecord
 import com.example.android.ui.utils.darkThemeColors
 
 
@@ -84,6 +86,10 @@ class MenuRecord : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                startActivity(
+                                    Intent(this@MenuRecord,
+                                            SaveRecord::class.java
+                                    ))
                             }
                     )
                     Button(
@@ -95,6 +101,10 @@ class MenuRecord : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                startActivity(
+                                        Intent(this@MenuRecord,
+                                                SearchRecord::class.java
+                                        ))
                             }
                     )
                 }
