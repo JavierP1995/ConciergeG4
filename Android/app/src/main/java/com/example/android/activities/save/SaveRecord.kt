@@ -164,6 +164,10 @@ class SaveRecord : AppCompatActivity() {
                     }
                 }
             }
+            val duration = Toast.LENGTH_SHORT
+            val toast =
+                    Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
+            toast.show()
         }else{
             val duration = Toast.LENGTH_SHORT
             val toast = Toast.makeText(applicationContext, "The apartment number couldn't be null", duration)
