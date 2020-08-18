@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Visit extends Model
 {
     protected $fillable = [
-        'id', 'name', 'rut', 'admitted'
+        'name', 'rut', 'admitted'
     ];
     protected $table = 'visits';
 
