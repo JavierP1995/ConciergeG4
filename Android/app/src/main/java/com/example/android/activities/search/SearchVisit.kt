@@ -2,6 +2,7 @@ package com.example.android.activities.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.state
@@ -24,6 +25,15 @@ class SearchVisit : AppCompatActivity() {
             MaterialTheme {
                 topBar()
             }
+        }
+    }
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
         }
     }
 
@@ -121,6 +131,7 @@ class SearchVisit : AppCompatActivity() {
                         onClick = {
                             val intent = Intent(this@SearchVisit,
                                     DisplayVisits::class.java)
+                            intent.putExtra("Authorization", SearchVisit.token)
                             intent.putExtra("option", "byDepartment")
                             intent.putExtra("search", searchD.value.text)
                             startActivity(intent)
