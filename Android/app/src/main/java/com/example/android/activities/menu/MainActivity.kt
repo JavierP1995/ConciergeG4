@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                                     shape = RoundedCornerShape(10.dp),
                                     onClick = {
+                                        //MenuRecords.setLoginData(token)
                                         startActivity(
                                                 Intent(this@MainActivity,
                                                         MenuRecord::class.java
@@ -92,6 +93,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                                     shape = RoundedCornerShape(10.dp),
                                     onClick = {
+                                        //MenuResident.setLoginData(token)
                                         startActivity(
                                                 Intent(this@MainActivity,
                                                         MenuResident::class.java
@@ -125,6 +127,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                                     shape = RoundedCornerShape(10.dp),
                                     onClick = {
+                                        MenuVisit.setLoginData(token)
                                         startActivity(
                                                 Intent(this@MainActivity,
                                                         MenuVisit::class.java
