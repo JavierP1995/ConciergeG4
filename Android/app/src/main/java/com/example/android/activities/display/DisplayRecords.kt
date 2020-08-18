@@ -25,6 +25,7 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.ListRecords
 import com.example.android.R
+import com.example.android.adapter.DepartmentAdapter
 import com.example.android.adapter.RecordAdapter
 import com.example.android.model.RecordModel
 import com.example.android.ui.utils.darkThemeColors
@@ -40,6 +41,9 @@ class DisplayRecords : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var bundle :Bundle ?= intent.extras
+        var option = bundle!!.getString("option")
+        var search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent(){
             MaterialTheme() {
@@ -50,7 +54,15 @@ class DisplayRecords : AppCompatActivity() {
         lifecycleScope.launch {
             recordsList.value = recordsList.value?.copy(loading = true)
             val records = withContext(Dispatchers.IO){
-                RecordAdapter.loadRecords()
+                if( option == "all"){
+                    RecordAdapter.loadRecords()
+                }else if(option == "byDepartment"){
+                    search?.let { RecordAdapter.loadByDepartment(it) }
+                }else if(option == "byResident"){
+                    search?.let { RecordAdapter.loadByResident(it) }
+                }else{
+                    search?.let { RecordAdapter.loadByVisit(it) }
+                }
             }
             recordsList.value = recordsList.value?.copy(records ?: emptyList(),
                 loading = false)

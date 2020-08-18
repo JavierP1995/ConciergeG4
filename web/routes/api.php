@@ -36,5 +36,5 @@ Route::apiResource('/records', 'Api\RecordController');
 Route::get('/records/{search}/{option?}', 'Api\RecordController@show');
 
 //DepartmentResource
-Route::apiResource('/departments','Api\DepartmentController');
+Route::apiResource('/departments','Api\DepartmentController')->middleware('auth:api');
 Route::get('/departments/{search}/{option?}', 'Api\DepartmentController@show');

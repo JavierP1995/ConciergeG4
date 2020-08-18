@@ -25,6 +25,7 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.ListVisits
 import com.example.android.R
+import com.example.android.adapter.DepartmentAdapter
 import com.example.android.adapter.VisitAdapter
 import com.example.android.model.VisitModel
 import com.example.android.ui.utils.darkThemeColors
@@ -40,6 +41,9 @@ class DisplayVisits : AppCompatActivity() {
         value = ListVisits(emptyList(), false)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        var bundle :Bundle ?= intent.extras
+        var option = bundle!!.getString("option")
+        var search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
@@ -51,7 +55,15 @@ class DisplayVisits : AppCompatActivity() {
         lifecycleScope.launch {
             visitsList.value = visitsList.value?.copy(loading = true)
             val visit = withContext(Dispatchers.IO){
-                VisitAdapter.loadVisits()
+                if( option == "all"){
+                    VisitAdapter.loadVisits()
+                }else if(option == "byRut"){
+                    search?.let { VisitAdapter.loadByRut(it) }
+                }else if(option == "byResident"){
+                    search?.let { VisitAdapter.loadByResident(it) }
+                }else{
+                    search?.let { VisitAdapter.loadByDepartment(it) }
+                }
             }
             visitsList.value = visitsList.value?.copy(visit ?: emptyList(),
                 loading = false)
