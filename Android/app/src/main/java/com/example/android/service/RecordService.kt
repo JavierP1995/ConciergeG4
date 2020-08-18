@@ -14,7 +14,7 @@ interface RecordService {
     fun getRecords(): Call<ArrayList<RecordModel>>
 
     @GET("records/{search}/department")
-    fun searchByDepartment(@Path("search") number: Int) : Call<ArrayList<RecordModel>>
+    fun searchByDepartment(@Path("search") number: String) : Call<ArrayList<RecordModel>>
 
     @GET("records/{search}/resident")
     fun searchByResident(@Path("search") rut: String) : Call<ArrayList<RecordModel>>

@@ -19,5 +19,6 @@ interface DepartmentService {
     fun searchByVisit(@Path("search") rut: String): Call<ArrayList<DepartmentModel>>
 
     @POST("/api/departments/")
-    fun createDepartment(@Query("number") number: Int, @Query("floor") floor: Int? ,@Query("block") block: Char?): Call<DepartmentModel>
+    fun createDepartment(@Query("number") number: Int, @Query("floor") floor: Int?,
+                         @Query("block") block: Char?): Call<DepartmentModel>
 }

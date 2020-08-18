@@ -17,10 +17,10 @@ interface VisitService {
     fun searchByRut(@Path("search") rut: String): Call<ArrayList<VisitModel>>
 
     @GET("visits/{search}/resident")
-    fun getByResident(@Path("search") rut: String): Call<ArrayList<VisitModel>>
+    fun searchByResident(@Path("search") rut: String): Call<ArrayList<VisitModel>>
 
     @GET("visits/{search}/department")
-    fun searchByDepartment(@Path("search") number: Int): Call<ArrayList<VisitModel>>
+    fun searchByDepartment(@Path("search") number: String): Call<ArrayList<VisitModel>>
 
 }
 

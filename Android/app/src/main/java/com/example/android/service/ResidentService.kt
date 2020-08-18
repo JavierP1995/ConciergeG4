@@ -18,7 +18,7 @@ interface ResidentService {
     fun searchByRut(@Path("search") rut: String): Call<ArrayList<ResidentModel>>
 
     @GET("residents/{search}/department")
-    fun searchByDepartment(@Path("search") number: Int): Call<ArrayList<ResidentModel>>
+    fun searchByDepartment(@Path("search") number: String): Call<ArrayList<ResidentModel>>
 
     @GET("residents/{search}/visit")
     fun searchByVisit(@Path("search") rut: String): Call<ArrayList<ResidentModel>>
