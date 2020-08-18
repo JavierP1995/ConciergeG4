@@ -1,6 +1,7 @@
 package com.example.android.activities.display
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.getValue
@@ -39,10 +40,19 @@ class DisplayResidents : AppCompatActivity() {
         value = ListResidents(emptyList(), false)
     }
 
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        var bundle :Bundle ?= intent.extras
-        var option = bundle!!.getString("option")
-        var search = bundle!!.getString("search")
+        val bundle :Bundle ?= intent.extras
+        val option = bundle!!.getString("option")
+        val search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
@@ -55,13 +65,13 @@ class DisplayResidents : AppCompatActivity() {
             residentsList.value = residentsList.value?.copy(loading = true)
             val residents = withContext(Dispatchers.IO) {
                 if( option == "all"){
-                    ResidentAdapter.loadResidents()
+                    ResidentAdapter.loadResidents(token)
                 }else if(option == "byRut"){
-                    search?.let { ResidentAdapter.loadByRut(it) }
+                    search?.let { ResidentAdapter.loadByRut(token, it) }
                 }else if(option == "byVisit"){
-                    search?.let { ResidentAdapter.loadByVisit(it) }
+                    search?.let { ResidentAdapter.loadByVisit(token, it) }
                 }else{
-                    search?.let { ResidentAdapter.loadByDepartment(it) }
+                    search?.let { ResidentAdapter.loadByDepartment(token, it) }
                 }
             }
             residentsList.value = residentsList.value?.copy(residents ?: emptyList(),

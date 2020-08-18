@@ -1,6 +1,7 @@
 package com.example.android.activities.display
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.getValue
@@ -40,10 +41,19 @@ class DisplayRecords : AppCompatActivity() {
         value = ListRecords(emptyList(), false)
     }
 
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        var bundle :Bundle ?= intent.extras
-        var option = bundle!!.getString("option")
-        var search = bundle!!.getString("search")
+        val bundle :Bundle ?= intent.extras
+        val option = bundle!!.getString("option")
+        val search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent(){
             MaterialTheme() {
@@ -55,13 +65,13 @@ class DisplayRecords : AppCompatActivity() {
             recordsList.value = recordsList.value?.copy(loading = true)
             val records = withContext(Dispatchers.IO){
                 if( option == "all"){
-                    RecordAdapter.loadRecords()
+                    RecordAdapter.loadRecords(token)
                 }else if(option == "byDepartment"){
-                    search?.let { RecordAdapter.loadByDepartment(it) }
+                    search?.let { RecordAdapter.loadByDepartment(token, it) }
                 }else if(option == "byResident"){
-                    search?.let { RecordAdapter.loadByResident(it) }
+                    search?.let { RecordAdapter.loadByResident(token, it) }
                 }else{
-                    search?.let { RecordAdapter.loadByVisit(it) }
+                    search?.let { RecordAdapter.loadByVisit(token, it) }
                 }
             }
             recordsList.value = recordsList.value?.copy(records ?: emptyList(),
