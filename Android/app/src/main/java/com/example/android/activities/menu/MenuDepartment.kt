@@ -113,6 +113,7 @@ class MenuDepartment : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                SearchDepartment.setLoginData(token)
                                 startActivity(
                                         Intent(
                                                 this@MenuDepartment,

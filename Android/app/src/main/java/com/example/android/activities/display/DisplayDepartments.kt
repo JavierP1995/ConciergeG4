@@ -26,6 +26,7 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.ListDepartments
 import com.example.android.R
+import com.example.android.activities.search.SearchDepartment
 import com.example.android.adapter.DepartmentAdapter
 import com.example.android.model.DepartmentModel
 import com.example.android.ui.utils.darkThemeColors
