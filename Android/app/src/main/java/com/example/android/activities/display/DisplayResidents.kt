@@ -1,6 +1,7 @@
 package com.example.android.activities.display
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.getValue
@@ -36,6 +37,15 @@ class DisplayResidents : AppCompatActivity() {
 
     private val residentsList = MutableLiveData<ListResidents>().apply {
         value = ListResidents(emptyList(), false)
+    }
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
