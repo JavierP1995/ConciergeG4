@@ -2,6 +2,7 @@ package com.example.android.activities.menu
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.ui.core.*
@@ -24,6 +25,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 
 class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +109,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                                     shape = RoundedCornerShape(10.dp),
                                     onClick = {
+                                        MenuDepartment.setLoginData(token)
                                         startActivity(
                                                 Intent(this@MainActivity,
                                                         MenuDepartment::class.java

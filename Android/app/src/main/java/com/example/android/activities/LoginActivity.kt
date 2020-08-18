@@ -24,6 +24,7 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
 import com.example.android.activities.display.DisplayDepartments
+import com.example.android.activities.menu.MainActivity
 import com.example.android.activities.menu.MenuDepartment
 import com.example.android.adapter.AuthAdapter.loginUser
 import kotlinx.coroutines.Dispatchers
@@ -48,8 +49,8 @@ class LoginActivity : AppCompatActivity() {
                 if (auth != null) {
                     Log.v("TOKEN", auth)
 
-                    DisplayDepartments.setLoginData(auth)
-                    startActivity(Intent(this@LoginActivity, MenuDepartment::class.java))
+                    MainActivity.setLoginData(auth)
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                 }
 
             }

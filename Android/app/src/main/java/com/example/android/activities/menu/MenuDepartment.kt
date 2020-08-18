@@ -2,6 +2,7 @@ package com.example.android.activities.menu
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.ui.core.Alignment
@@ -28,6 +29,15 @@ import com.example.android.ui.utils.darkThemeColors
 
 
 class MenuDepartment : AppCompatActivity() {
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +80,7 @@ class MenuDepartment : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                DisplayDepartments.setLoginData(token)
                                 val intent = Intent(this@MenuDepartment,
                                         DisplayDepartments::class.java)
                                 intent.putExtra("option", "all")
