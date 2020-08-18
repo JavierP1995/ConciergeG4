@@ -1,20 +1,17 @@
 package com.example.android.adapter
 
 import android.util.Log
-import android.widget.Toast
-import com.example.android.model.DepartmentModel
 import com.example.android.model.RecordModel
 import com.example.android.service.ApiService
-import com.example.android.service.DepartmentService
 import com.example.android.service.RecordService
 import retrofit2.Call
 
 object RecordAdapter {
 
-    fun loadRecords(): Collection<RecordModel>? {
+    fun loadRecords(token: String): Collection<RecordModel>? {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
-                getRecords()
+                getRecords("Bearer $token")
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -25,10 +22,10 @@ object RecordAdapter {
         return null
     }
 
-    fun loadByDepartment(number: String): Collection<RecordModel>? {
+    fun loadByDepartment(token : String , number: String): Collection<RecordModel>? {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
-                searchByDepartment(number = number)
+                searchByDepartment("Bearer $token", number = number)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -39,10 +36,10 @@ object RecordAdapter {
         return null
     }
 
-    fun loadByResident(rut: String): Collection<RecordModel>? {
+    fun loadByResident(token : String, rut: String): Collection<RecordModel>? {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
-                searchByResident(rut = rut)
+                searchByResident("Bearer $token", rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -53,10 +50,10 @@ object RecordAdapter {
         return null
     }
 
-    fun loadByVisit(rut: String): Collection<RecordModel>? {
+    fun loadByVisit(token : String, rut: String): Collection<RecordModel>? {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
-                searchByVisit(rut = rut)
+                searchByVisit("Bearer $token", rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -67,10 +64,10 @@ object RecordAdapter {
         return null
     }
 
-    fun createRecord(visitRut: String, departmentNumber: Int, residentName: String,
+    fun createRecord(token : String, visitRut: String, departmentNumber: Int, residentName: String,
                        kinship: String, comment: String): RecordModel? {
         val call: Call<RecordModel> = ApiService
-            .buildService(RecordService::class.java).createRecord(visitRut=visitRut,
+            .buildService(RecordService::class.java).createRecord("Bearer $token", visitRut=visitRut,
                 departmentNumber = departmentNumber, residentName = residentName,
                     kinship = kinship, comment = comment)
         try{
@@ -79,7 +76,6 @@ object RecordAdapter {
             return RecordModel(kinship = kinship, entryDate = null, departureDate = null,
                                 comment = comment, resident = residentName, visits = visitRut,
                                     department = departmentNumber)
-            //FIXME: Verificar si el objeto debe tener la id de departamento (como en la bd).
         } catch (e: Exception){
             e.printStackTrace()
         }

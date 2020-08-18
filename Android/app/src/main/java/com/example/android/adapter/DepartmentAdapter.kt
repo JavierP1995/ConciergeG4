@@ -22,10 +22,10 @@ object DepartmentAdapter {
         return null
     }
 
-    fun loadByNumber(number: String): Collection<DepartmentModel>? {
+    fun loadByNumber(token : String, number: String): Collection<DepartmentModel>? {
         val requestCall: Call<ArrayList<DepartmentModel>> =
                 ApiService.buildService(DepartmentService::class.java).
-                searchByNumber(number = number)
+                searchByNumber("Bearer $token", number = number)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -36,10 +36,10 @@ object DepartmentAdapter {
         return null
     }
 
-    fun loadByResident(rut: String): Collection<DepartmentModel>? {
+    fun loadByResident( token : String, rut: String): Collection<DepartmentModel>? {
         val requestCall: Call<ArrayList<DepartmentModel>> =
                 ApiService.buildService(DepartmentService::class.java).
-                searchByResident(rut = rut)
+                searchByResident("Bearer $token", rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -50,10 +50,10 @@ object DepartmentAdapter {
         return null
     }
 
-    fun loadByVisit(rut: String): Collection<DepartmentModel>? {
+    fun loadByVisit(token : String, rut: String): Collection<DepartmentModel>? {
         val requestCall: Call<ArrayList<DepartmentModel>> =
                 ApiService.buildService(DepartmentService::class.java).
-                searchByVisit(rut = rut)
+                searchByVisit("Bearer $token", rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -64,9 +64,9 @@ object DepartmentAdapter {
         return null
     }
 
-    fun registerDepartment(number: Int, floor: Int, block: Char): DepartmentModel? {
+    fun registerDepartment(token: String, number: Int, floor: Int, block: Char): DepartmentModel? {
         val call: Call<DepartmentModel> = ApiService
-            .buildService(DepartmentService::class.java).createDepartment(number = number, floor = floor, block = block)
+            .buildService(DepartmentService::class.java).createDepartment("Bearer $token", number = number, floor = floor, block = block)
         try{
             val response = call.execute()
             Log.v("Json", response.body()!!.toString())

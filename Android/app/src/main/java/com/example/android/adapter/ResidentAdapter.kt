@@ -8,10 +8,10 @@ import retrofit2.Call
 
 object ResidentAdapter {
 
-    fun loadResidents(): Collection<ResidentModel>? {
+    fun loadResidents(token : String): Collection<ResidentModel>? {
         val requestCall: Call<ArrayList<ResidentModel>> =
                 ApiService.buildService(ResidentService::class.java).
-                getResidents()
+                getResidents("Bearer $token")
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -22,10 +22,10 @@ object ResidentAdapter {
         return null
     }
 
-    fun loadByDepartment(number: String): Collection<ResidentModel>? {
+    fun loadByDepartment(token : String, number: String): Collection<ResidentModel>? {
         val requestCall: Call<ArrayList<ResidentModel>> =
             ApiService.buildService(ResidentService::class.java).
-            searchByDepartment(number = number)
+            searchByDepartment("Bearer $token", number = number)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -36,10 +36,10 @@ object ResidentAdapter {
         return null
     }
 
-    fun loadByRut(rut: String): Collection<ResidentModel>? {
+    fun loadByRut(token: String, rut: String): Collection<ResidentModel>? {
         val requestCall: Call<ArrayList<ResidentModel>> =
             ApiService.buildService(ResidentService::class.java).
-            searchByRut(rut = rut)
+            searchByRut("Bearer $token", rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -50,10 +50,10 @@ object ResidentAdapter {
         return null
     }
 
-    fun loadByVisit(rut: String): Collection<ResidentModel>? {
+    fun loadByVisit(token : String, rut: String): Collection<ResidentModel>? {
         val requestCall: Call<ArrayList<ResidentModel>> =
             ApiService.buildService(ResidentService::class.java).
-            searchByVisit(rut = rut)
+            searchByVisit("Bearer $token", rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -64,11 +64,11 @@ object ResidentAdapter {
         return null
     }
 
-    fun createResident(rut: String, name: String, email: String,
+    fun createResident(token : String, rut: String, name: String, email: String,
                      phone: Int, department: Int): ResidentModel? {
         val call: Call<ResidentModel> = ApiService
             .buildService(ResidentService::class.java)
-            .createResident(rut=rut, name = name, email = email,
+            .createResident("Bearer $token", rut=rut, name = name, email = email,
                 phone = phone, department_id = department)
         try{
             val response = call.execute()
