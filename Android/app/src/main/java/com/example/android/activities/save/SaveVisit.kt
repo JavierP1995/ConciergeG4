@@ -151,7 +151,7 @@ class SaveVisit : AppCompatActivity() {
         name: String,
         admitted: String?
     ): Boolean {
-        if (rut == "" || name == "" || admitted != "yes" || admitted != "yes" || admitted != "no") {
+        if (rut == "" || name == "" || admitted != "yes" || admitted != "Yes" || admitted != "no") {
             val duration = Toast.LENGTH_SHORT
             val toast =
                 Toast.makeText(applicationContext, "You must specify all the fields!", duration)
