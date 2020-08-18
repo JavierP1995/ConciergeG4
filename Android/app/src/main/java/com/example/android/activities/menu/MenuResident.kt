@@ -22,6 +22,8 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
 import com.example.android.activities.display.DisplayResidents
+import com.example.android.activities.save.SaveResident
+import com.example.android.activities.search.SearchResident
 import com.example.android.ui.utils.darkThemeColors
 
 
@@ -84,6 +86,10 @@ class MenuResident : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                startActivity(
+                                        Intent(this@MenuResident,
+                                                SaveResident::class.java
+                                        ))
                                     }
                     )
                     Button(
@@ -95,6 +101,10 @@ class MenuResident : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                startActivity(
+                                        Intent(this@MenuResident,
+                                                SearchResident::class.java
+                                        ))
                             }
                     )
                 }
