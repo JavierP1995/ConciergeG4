@@ -21,6 +21,7 @@ import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
+import com.example.android.activities.display.DisplayDepartments
 import com.example.android.activities.display.DisplayRecords
 import com.example.android.activities.save.SaveRecord
 import com.example.android.activities.search.SearchRecord
@@ -70,10 +71,11 @@ class MenuRecord : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
-                                startActivity(
-                                        Intent(this@MenuRecord,
-                                                DisplayRecords::class.java
-                                        ))
+                                val intent = Intent(this@MenuRecord,
+                                        DisplayRecords::class.java)
+                                intent.putExtra("option", "all")
+                                intent.putExtra("search", "")
+                                startActivity(intent)
                             }
                     )
 

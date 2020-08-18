@@ -21,7 +21,11 @@ import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
+import com.example.android.activities.display.DisplayRecords
 import com.example.android.activities.display.DisplayVisits
+import com.example.android.activities.save.SaveRecord
+import com.example.android.activities.search.SearchRecord
+import com.example.android.activities.search.SearchVisit
 import com.example.android.ui.utils.darkThemeColors
 
 
@@ -68,10 +72,11 @@ class MenuVisit : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
-                                startActivity(
-                                        Intent(this@MenuVisit,
-                                                DisplayVisits::class.java
-                                        ))
+                                val intent = Intent(this@MenuVisit,
+                                        DisplayVisits::class.java)
+                                intent.putExtra("option", "all")
+                                intent.putExtra("search", "")
+                                startActivity(intent)
                             }
                     )
 
@@ -84,6 +89,10 @@ class MenuVisit : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+/*                                startActivity(
+                                        Intent(this@MenuVisit,
+                                                SaveVisit::class.java
+                                        ))*/
                             }
                     )
                     Button(
@@ -95,6 +104,10 @@ class MenuVisit : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                startActivity(
+                                        Intent(this@MenuVisit,
+                                                SearchVisit::class.java
+                                        ))
                             }
                     )
                 }
