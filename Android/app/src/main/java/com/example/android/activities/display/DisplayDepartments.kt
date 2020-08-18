@@ -51,9 +51,9 @@ class DisplayDepartments : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //recibimos el bundle
-        var bundle :Bundle ?= intent.extras
-        var option = bundle!!.getString("option")
-        var search = bundle!!.getString("search")
+        val bundle :Bundle ?= intent.extras
+        val option = bundle!!.getString("option")
+        val search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
@@ -68,11 +68,11 @@ class DisplayDepartments : AppCompatActivity() {
                 if( option == "all"){
                     DepartmentAdapter.loadDepartments(token)
                 }else if(option == "byNumber"){
-                    search?.let { DepartmentAdapter.loadByNumber(it) }
+                    search?.let { DepartmentAdapter.loadByNumber(token, it) }
                 }else if(option == "byResident"){
-                    search?.let { DepartmentAdapter.loadByResident(it) }
+                    search?.let { DepartmentAdapter.loadByResident(token, it) }
                 }else{
-                    search?.let { DepartmentAdapter.loadByVisit(it) }
+                    search?.let { DepartmentAdapter.loadByVisit(token, it) }
                 }
 
             }
