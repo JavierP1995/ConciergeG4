@@ -8,10 +8,10 @@ import retrofit2.Call
 
 object VisitAdapter {
 
-    fun loadVisits(): Collection<VisitModel>? {
+    fun loadVisits(token : String): Collection<VisitModel>? {
         val requestCall: Call<ArrayList<VisitModel>> =
                 ApiService.buildService(VisitService::class.java).
-                getVisits()
+                getVisits("Bearer $token")
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -22,10 +22,10 @@ object VisitAdapter {
         return null
     }
 
-    fun loadByDepartment(number: String): Collection<VisitModel>? {
+    fun loadByDepartment(token : String, number: String): Collection<VisitModel>? {
         val requestCall: Call<ArrayList<VisitModel>> =
             ApiService.buildService(VisitService::class.java).
-            searchByDepartment(number = number)
+            searchByDepartment("Bearer $token", number = number)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -36,10 +36,10 @@ object VisitAdapter {
         return null
     }
 
-    fun loadByRut(rut: String): Collection<VisitModel>? {
+    fun loadByRut(token : String, rut: String): Collection<VisitModel>? {
         val requestCall: Call<ArrayList<VisitModel>> =
             ApiService.buildService(VisitService::class.java).
-            searchByRut(rut = rut)
+            searchByRut("Bearer $token", rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
@@ -50,10 +50,10 @@ object VisitAdapter {
         return null
     }
 
-    fun loadByResident(rut: String): Collection<VisitModel>? {
+    fun loadByResident(token : String, rut: String): Collection<VisitModel>? {
         val requestCall: Call<ArrayList<VisitModel>> =
             ApiService.buildService(VisitService::class.java).
-            searchByResident(rut = rut)
+            searchByResident("Bearer $token", rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
