@@ -15,6 +15,7 @@ import androidx.ui.material.*
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.activities.display.DisplayDepartments
+import com.example.android.activities.menu.MenuDepartment
 import com.example.android.ui.utils.darkThemeColors
 
 class SearchDepartment : AppCompatActivity() {
@@ -79,6 +80,7 @@ class SearchDepartment : AppCompatActivity() {
                         backgroundColor = darkColorPalette().secondary,
                         modifier = Modifier.padding(0.dp, 10.dp),
                         onClick = {
+                            DisplayDepartments.setLoginData(token)
                             val intent = Intent(this@SearchDepartment,
                                     DisplayDepartments::class.java)
                             intent.putExtra("option", "byNumber")
@@ -104,6 +106,7 @@ class SearchDepartment : AppCompatActivity() {
                         backgroundColor = darkColorPalette().secondary,
                         modifier = Modifier.padding(0.dp, 10.dp),
                         onClick = {
+                            DisplayDepartments.setLoginData(token)
                             val intent = Intent(this@SearchDepartment,
                                     DisplayDepartments::class.java)
                             intent.putExtra("option", "byResident")
@@ -129,6 +132,7 @@ class SearchDepartment : AppCompatActivity() {
                         backgroundColor = darkColorPalette().secondary,
                         modifier = Modifier.padding(0.dp, 10.dp),
                         onClick = {
+                            DisplayDepartments.setLoginData(token)
                             val intent = Intent(this@SearchDepartment,
                                     DisplayDepartments::class.java)
                             intent.putExtra("Authorization", token)
