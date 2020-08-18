@@ -1,10 +1,8 @@
 package com.example.android.adapter
 
 import android.util.Log
-import com.example.android.model.RecordModel
 import com.example.android.model.ResidentModel
 import com.example.android.service.ApiService
-import com.example.android.service.RecordService
 import com.example.android.service.ResidentService
 import retrofit2.Call
 
@@ -14,6 +12,48 @@ object ResidentAdapter {
         val requestCall: Call<ArrayList<ResidentModel>> =
                 ApiService.buildService(ResidentService::class.java).
                 getResidents()
+        try{
+            val response = requestCall.execute()
+            Log.v("Json", response.body()!!.toString())
+            return response.body()!!
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun loadByDepartment(number: String): Collection<ResidentModel>? {
+        val requestCall: Call<ArrayList<ResidentModel>> =
+            ApiService.buildService(ResidentService::class.java).
+            searchByDepartment(number = number)
+        try{
+            val response = requestCall.execute()
+            Log.v("Json", response.body()!!.toString())
+            return response.body()!!
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun loadByRut(rut: String): Collection<ResidentModel>? {
+        val requestCall: Call<ArrayList<ResidentModel>> =
+            ApiService.buildService(ResidentService::class.java).
+            searchByRut(rut = rut)
+        try{
+            val response = requestCall.execute()
+            Log.v("Json", response.body()!!.toString())
+            return response.body()!!
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun loadByVisit(rut: String): Collection<ResidentModel>? {
+        val requestCall: Call<ArrayList<ResidentModel>> =
+            ApiService.buildService(ResidentService::class.java).
+            searchByVisit(rut = rut)
         try{
             val response = requestCall.execute()
             Log.v("Json", response.body()!!.toString())
