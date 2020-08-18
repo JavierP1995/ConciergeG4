@@ -2,6 +2,7 @@ package com.example.android.activities.menu
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.ui.core.Alignment
@@ -23,8 +24,10 @@ import androidx.ui.unit.dp
 import com.example.android.R
 import com.example.android.activities.display.DisplayRecords
 import com.example.android.activities.display.DisplayVisits
+import com.example.android.activities.save.SaveDepartment
 import com.example.android.activities.save.SaveRecord
 import com.example.android.activities.save.SaveVisit
+import com.example.android.activities.search.SearchDepartment
 import com.example.android.activities.search.SearchRecord
 import com.example.android.activities.search.SearchVisit
 import com.example.android.ui.utils.darkThemeColors
@@ -37,6 +40,15 @@ class MenuVisit : AppCompatActivity() {
         setContent {
             subMenu()
 
+        }
+    }
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
         }
     }
 
@@ -90,6 +102,7 @@ class MenuVisit : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                SaveVisit.setLoginData(MenuVisit.token)
                                 startActivity(
                                         Intent(this@MenuVisit,
                                                 SaveVisit::class.java
