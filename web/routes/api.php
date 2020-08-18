@@ -32,9 +32,9 @@ Route::apiResource('/visits', 'Api\VisitController')->middleware('auth:api');
 Route::get('/visits/{search}/{option?}', 'Api\VisitController@show');
 
 // RecordResource
-Route::apiResource('/records', 'Api\RecordController');
+Route::apiResource('/records', 'Api\RecordController')->middleware('auth:api');
 Route::get('/records/{search}/{option?}', 'Api\RecordController@show');
 
 //DepartmentResource
 Route::apiResource('/departments','Api\DepartmentController')->middleware('auth:api');
-Route::get('/departments/{search}/{option?}', 'Api\DepartmentController@show');
+Route::get('/departments/{search}/{option?}', 'Api\DepartmentController@show')->middleware('auth:api');
