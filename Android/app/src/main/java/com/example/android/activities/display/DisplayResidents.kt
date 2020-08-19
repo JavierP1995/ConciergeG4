@@ -8,16 +8,15 @@ import androidx.compose.getValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.core.clip
-import androidx.ui.core.setContent
+import androidx.ui.core.*
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.CircleShape
 import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
+import androidx.ui.material.Divider
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
@@ -34,21 +33,36 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Class DisplayResidents, activity that show the list of residents in DB.
+ */
 class DisplayResidents : AppCompatActivity() {
 
+    /**
+     * List of residents, initially empty.
+     */
     private val residentsList = MutableLiveData<ListResidents>().apply {
         value = ListResidents(emptyList(), false)
     }
 
     companion object{
+        /**
+         * Global variable used to receive and send the token in the methods.
+         */
         var token : String = ""
 
+        /**
+         * Method used to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
         }
     }
 
+    /**
+     * Method used to star the activity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         val bundle :Bundle ?= intent.extras
         val option = bundle!!.getString("option")
@@ -80,27 +94,9 @@ class DisplayResidents : AppCompatActivity() {
         }
 
     }
-
-
-    @Preview
-    @Composable
-    private fun topBar() {
-        MaterialTheme(colors = darkThemeColors) {
-
-        }
-        TopAppBar(
-                {
-                    Text(
-                            text = "Residents",
-                            style = MaterialTheme.typography.h5
-                    )
-                },
-                backgroundColor = darkThemeColors.primary,
-                elevation = 0.dp
-        )
-
-    }
-
+    /**
+     * Method the used to show screen "loading" while the data is load.
+     */
     @Composable
     fun Loading() {
         MaterialTheme(colors = darkThemeColors) {
@@ -115,7 +111,9 @@ class DisplayResidents : AppCompatActivity() {
         }
     }
 
-
+    /**
+     * Method used to print the list of residents.
+     */
     @Composable
     private fun listResidents(residents: LiveData<ListResidents>) {
 
@@ -125,19 +123,26 @@ class DisplayResidents : AppCompatActivity() {
 
             Scaffold(
                     topAppBar = {
-                        topBar()
+                        TopAppBar(modifier = Modifier.fillMaxWidth()) {
+
+                            Image(painter = ImagePainter(imageResource(id = R.drawable.menuresidents)),
+                                    contentScale = ContentScale.FillWidth
+                            )
+
+                        }
                     },
                     bodyContent = {
                         if (resident == null || resident?.loading == true) {
                             Loading()
                         } else {
                             Column() {
-                                resident!!.residents.let {
-                                    it.forEach { resident ->
-                                        printResident(resident = resident)
+                                VerticalScroller(modifier = Modifier.fillMaxWidth()) {
+                                    resident!!.residents.let {
+                                        it.forEach { resident ->
+                                            printResident(resident = resident)
+                                        }
                                     }
                                 }
-
                             }
                         }
                     }
@@ -145,6 +150,9 @@ class DisplayResidents : AppCompatActivity() {
         }
     }
 
+    /**
+     * Method used to print attributes of residents.
+     */
     @Composable
     private fun printResident(resident: ResidentModel) {
         Column(
@@ -152,28 +160,39 @@ class DisplayResidents : AppCompatActivity() {
         )
         {
             Row() {
-                Column(
-                        modifier = Modifier.padding(10.dp, 0.dp)
-                ) {
-                    Text(
-                            text = "Name: " + resident.name,
-                            color = darkThemeColors.onPrimary
-                    )
-                    Text(
-                            text = "Rut: " + resident.rut,
-                            color = darkThemeColors.onPrimary
-                    )
-                    Text(
-                            text = "Email: " + resident.email,
-                            color = darkThemeColors.onPrimary
-                    )
-                    Text(
-                            text = "Phone: " + resident.phone.toString(),
-                            color = darkThemeColors.onPrimary
-                    )
-                }
-
+                Image(
+                        painter = ImagePainter(imageResource(id = R.drawable.iconuser)),
+                        modifier = Modifier.preferredSize(45.dp).clip(shape = CircleShape),
+                        alignment = Alignment.TopStart
+                )
+                Text(
+                        text = resident.name,
+                        color = darkThemeColors.onPrimary,
+                        modifier = Modifier.padding(10.dp, 5.dp)
+                )
             }
+            Column(modifier = Modifier.padding(30.dp, 0.dp)) {
+                Text(
+                        text = "Rut: " + resident.rut,
+                        style = MaterialTheme.typography.subtitle2,
+                        color = darkThemeColors.onPrimary,
+                        modifier = Modifier.padding(30.dp, 0.dp)
+                )
+                Text(
+                        text = "Email: " + resident.email,
+                        style = MaterialTheme.typography.subtitle2,
+                        color = darkThemeColors.onPrimary,
+                        modifier = Modifier.padding(30.dp, 0.dp)
+                )
+                Text(
+                        text = "Phone: " + resident.phone.toString(),
+                        style = MaterialTheme.typography.subtitle2,
+                        color = darkThemeColors.onPrimary,
+                        modifier = Modifier.padding(30.dp, 0.dp)
+                )
+            }
+
         }
+        Divider()
     }
 }

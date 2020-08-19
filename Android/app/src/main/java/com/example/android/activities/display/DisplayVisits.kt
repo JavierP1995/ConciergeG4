@@ -8,16 +8,15 @@ import androidx.compose.getValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.core.clip
-import androidx.ui.core.setContent
+import androidx.ui.core.*
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.CircleShape
 import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
+import androidx.ui.material.Divider
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
@@ -33,23 +32,36 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Class DisplayVisits, activity that show the list of visits in data base.
+ */
 class DisplayVisits : AppCompatActivity() {
 
-
-
+    /**
+     * List of visits, initially empty.
+     */
     private val visitsList = MutableLiveData<ListVisits>().apply {
         value = ListVisits(emptyList(), false)
     }
 
     companion object{
+        /**
+         * Global variable used to receive and send the token in the methods.
+         */
         var token : String = ""
 
+        /**
+         * Method used to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
         }
     }
 
+    /**
+     * Method used to star the activity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         val bundle :Bundle ?= intent.extras
         val option = bundle!!.getString("option")
@@ -82,26 +94,9 @@ class DisplayVisits : AppCompatActivity() {
 
     }
 
-
-    @Preview
-    @Composable
-    private fun topBar() {
-        MaterialTheme(colors = darkThemeColors) {
-
-        }
-        TopAppBar(
-            {
-                Text(
-                    text = "Visits",
-                    style = MaterialTheme.typography.h5
-                )
-            },
-            backgroundColor = darkThemeColors.primary,
-            elevation = 0.dp
-        )
-
-    }
-
+    /**
+     * Method the used to show screen "loading" while the data is load.
+     */
     @Composable
     fun Loading() {
         MaterialTheme(colors = darkThemeColors) {
@@ -117,6 +112,9 @@ class DisplayVisits : AppCompatActivity() {
     }
 
 
+    /**
+     * Method used to print the list of visits.
+     */
     @Composable
     private fun listVisits(visits : LiveData<ListVisits>){
 
@@ -126,19 +124,26 @@ class DisplayVisits : AppCompatActivity() {
 
             Scaffold(
                 topAppBar = {
-                    topBar()
+                    TopAppBar(modifier = Modifier.fillMaxWidth()) {
+
+                        Image(painter = ImagePainter(imageResource(id = R.drawable.menuvisits)),
+                                contentScale = ContentScale.FillWidth
+                        )
+
+                    }
                 },
                 bodyContent = {
                     if(visit == null || visit?.loading == true){
                         Loading()
                     } else {
                         Column() {
-                            visit!!.visits.let {
-                                it.forEach{visit->
-                                    printVisits(visit = visit)
+                            VerticalScroller(modifier = Modifier.fillMaxWidth()) {
+                                visit!!.visits.let {
+                                    it.forEach{visit->
+                                        printVisits(visit = visit)
+                                    }
                                 }
                             }
-
                         }
                     }
                 }
@@ -147,6 +152,9 @@ class DisplayVisits : AppCompatActivity() {
 
     }
 
+    /**
+     * Method used to print attributes of visits.
+     */
     @Composable
     private fun printVisits(visit: VisitModel) {
         Column(
@@ -155,7 +163,7 @@ class DisplayVisits : AppCompatActivity() {
         {
             Row() {
                 Image(
-                    painter = ImagePainter(imageResource(id = R.drawable.visits)),
+                    painter = ImagePainter(imageResource(id = R.drawable.iconusers)),
                     modifier = Modifier.preferredSize(45.dp).clip(shape = CircleShape),
                     alignment = Alignment.TopStart
                 )
@@ -178,6 +186,7 @@ class DisplayVisits : AppCompatActivity() {
 
             }
         }
+        Divider()
     }
 
 }

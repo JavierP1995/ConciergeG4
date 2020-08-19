@@ -8,6 +8,9 @@ import retrofit2.Call
 
 object DepartmentAdapter {
 
+    /**
+     * This function allows us to retrieve all the departments.
+     */
     fun loadDepartments(token : String): Collection<DepartmentModel>? {
         val requestCall: Call<ArrayList<DepartmentModel>> =
                 ApiService.buildService(DepartmentService::class.java).
@@ -22,6 +25,9 @@ object DepartmentAdapter {
         return null
     }
 
+    /**
+     * This function allows us to retrieve all the departments by number.
+     */
     fun loadByNumber(token : String, number: String): Collection<DepartmentModel>? {
         val requestCall: Call<ArrayList<DepartmentModel>> =
                 ApiService.buildService(DepartmentService::class.java).
@@ -36,6 +42,9 @@ object DepartmentAdapter {
         return null
     }
 
+    /**
+     * This function allows us to retrieve all the departments by resident.
+     */
     fun loadByResident( token : String, rut: String): Collection<DepartmentModel>? {
         val requestCall: Call<ArrayList<DepartmentModel>> =
                 ApiService.buildService(DepartmentService::class.java).
@@ -50,6 +59,9 @@ object DepartmentAdapter {
         return null
     }
 
+    /**
+     * This function allows us to retrieve all the departments by visits.
+     */
     fun loadByVisit(token : String, rut: String): Collection<DepartmentModel>? {
         val requestCall: Call<ArrayList<DepartmentModel>> =
                 ApiService.buildService(DepartmentService::class.java).
@@ -64,6 +76,9 @@ object DepartmentAdapter {
         return null
     }
 
+    /**
+     * This function allows us to inesrt a department into the database.
+     */
     fun registerDepartment(token: String, number: Int, floor: Int, block: Char): DepartmentModel? {
         val call: Call<DepartmentModel> = ApiService
             .buildService(DepartmentService::class.java).createDepartment("Bearer $token", number = number, floor = floor, block = block)

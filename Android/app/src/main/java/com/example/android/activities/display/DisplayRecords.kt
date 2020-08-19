@@ -8,16 +8,15 @@ import androidx.compose.getValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.core.clip
-import androidx.ui.core.setContent
+import androidx.ui.core.*
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.CircleShape
 import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
+import androidx.ui.material.Divider
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
@@ -34,31 +33,45 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Class DisplayRecords, activity that show the list of records in data base.
+ */
 class DisplayRecords : AppCompatActivity() {
 
-
+    /**
+     * List of records, initially empty.
+     */
     private val recordsList = MutableLiveData<ListRecords>().apply {
         value = ListRecords(emptyList(), false)
     }
 
     companion object{
+        /**
+         * Global variable used to receive and send the token in the methods.
+         */
         var token : String = ""
 
+        /**
+         * Method used to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
         }
     }
 
+    /**
+     * Method used to star the activity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         val bundle :Bundle ?= intent.extras
         val option = bundle!!.getString("option")
         val search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent(){
-            MaterialTheme() {
-                listRecords(recordsList)
-            }
+
+            listRecords(recordsList)
+
         }
 
         lifecycleScope.launch {
@@ -81,21 +94,9 @@ class DisplayRecords : AppCompatActivity() {
 
     }
 
-    @Preview
-    @Composable
-    private fun topBar() =
-        MaterialTheme( colors = darkThemeColors) {
-            TopAppBar(
-                { Text(
-                    text = "Records of Visits",
-                    style = MaterialTheme.typography.h5
-                )
-                },
-                backgroundColor = darkThemeColors.primary,
-                elevation = 0.dp
-            )
-        }
-
+    /**
+     * Method used to print the list of records.
+     */
     @Composable
     private fun listRecords(records : LiveData<ListRecords>){
 
@@ -104,16 +105,24 @@ class DisplayRecords : AppCompatActivity() {
         MaterialTheme(colors = darkThemeColors) {
             Scaffold(
                 topAppBar = {
-                    topBar()
+                    TopAppBar(modifier = Modifier.fillMaxWidth()) {
+
+                        Image(painter = ImagePainter(imageResource(id = R.drawable.menurecords)),
+                                contentScale = ContentScale.FillWidth
+                        )
+
+                    }
                 },
                 bodyContent = {
                     if(record == null || record?.loading == true){
                         Loading()
                     }else{
                         Column() {
-                            record!!.records.let {
-                                it.forEach { record ->
-                                    printRecords(record = record)
+                            VerticalScroller(modifier = Modifier.fillMaxWidth()) {
+                                record!!.records.let {
+                                    it.forEach { record ->
+                                        printRecords(record = record)
+                                    }
                                 }
                             }
                         }
@@ -123,6 +132,10 @@ class DisplayRecords : AppCompatActivity() {
         }
 
     }
+
+    /**
+     * Method the used to show screen "loading" while the data is load.
+     */
     @Composable
     fun Loading() {
         MaterialTheme(colors = darkThemeColors) {
@@ -136,6 +149,10 @@ class DisplayRecords : AppCompatActivity() {
 
         }
     }
+
+    /**
+     * Method used to print attributes of records.
+     */
     @Composable
     private fun printRecords(record: RecordModel) {
         Column (
@@ -144,7 +161,7 @@ class DisplayRecords : AppCompatActivity() {
             Row{
 
                 Image(
-                    painter = ImagePainter(imageResource(id = R.drawable.user)),
+                    painter = ImagePainter(imageResource(id = R.drawable.iconregister)),
                     modifier = Modifier.preferredSize(35.dp).clip(shape = CircleShape),
                     alignment = Alignment.TopStart
                 )
@@ -180,6 +197,7 @@ class DisplayRecords : AppCompatActivity() {
 
             }
         }
+        Divider()
     }
 
 }
