@@ -8,6 +8,9 @@ import retrofit2.Call
 
 object RecordAdapter {
 
+    /**
+     * This function allows us to load all the existing records in the database.
+     */
     fun loadRecords(token: String): Collection<RecordModel>? {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
@@ -22,6 +25,9 @@ object RecordAdapter {
         return null
     }
 
+    /**
+     * This function allows us to load all the existing records by a number of a department.
+     */
     fun loadByDepartment(token : String , number: String): Collection<RecordModel>? {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
@@ -36,6 +42,9 @@ object RecordAdapter {
         return null
     }
 
+    /**
+     * This function allows us to load all the existing records by the rut of a resident.
+     */
     fun loadByResident(token : String, rut: String): Collection<RecordModel>? {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
@@ -50,6 +59,9 @@ object RecordAdapter {
         return null
     }
 
+    /**
+     * This function allows us to load all the existing records by the rut of a visit.
+     */
     fun loadByVisit(token : String, rut: String): Collection<RecordModel>? {
         val requestCall: Call<ArrayList<RecordModel>> =
                 ApiService.buildService(RecordService::class.java).
@@ -64,6 +76,9 @@ object RecordAdapter {
         return null
     }
 
+    /**
+     * This function allows us to insert into the database a record.
+     */
     fun createRecord(token : String, visitRut: String, departmentNumber: Int, residentName: String,
                        kinship: String, comment: String): RecordModel? {
         val call: Call<RecordModel> = ApiService
