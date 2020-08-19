@@ -81,6 +81,7 @@ class MenuRecord : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                DisplayRecords.setLoginData(token)
                                 val intent = Intent(this@MenuRecord,
                                         DisplayRecords::class.java)
                                 intent.putExtra("option", "all")
@@ -114,6 +115,7 @@ class MenuRecord : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                SearchRecord.setLoginData(token)
                                 startActivity(
                                         Intent(this@MenuRecord,
                                                 SearchRecord::class.java

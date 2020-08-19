@@ -48,6 +48,9 @@ class MenuDepartment : AppCompatActivity() {
 
     @Preview
     @Composable
+    /**
+     *
+     */
     private fun subMenu(){
         MaterialTheme(colors = darkThemeColors)
         {
@@ -68,9 +71,6 @@ class MenuDepartment : AppCompatActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalGravity = Alignment.CenterHorizontally
                 ){
-
-
-
                     Button(
                             text = { Text("Display Data Departments",
                                     color = darkThemeColors.onPrimary,
@@ -97,6 +97,7 @@ class MenuDepartment : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                SaveDepartment.setLoginData(token)
                                 startActivity(
                                     Intent(this@MenuDepartment,
                                             SaveDepartment::class.java

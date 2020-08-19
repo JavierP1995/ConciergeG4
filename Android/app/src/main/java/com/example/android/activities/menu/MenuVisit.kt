@@ -85,6 +85,7 @@ class MenuVisit : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                DisplayVisits.setLoginData(token)
                                 val intent = Intent(this@MenuVisit,
                                         DisplayVisits::class.java)
                                 intent.putExtra("option", "all")
@@ -118,6 +119,7 @@ class MenuVisit : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                SearchVisit.setLoginData(token)
                                 startActivity(
                                         Intent(this@MenuVisit,
                                                 SearchVisit::class.java
