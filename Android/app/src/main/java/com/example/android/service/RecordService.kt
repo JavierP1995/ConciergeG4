@@ -12,7 +12,7 @@ interface RecordService {
     /**
      * Get operation for all records
      */
-    @GET("/api/records/")
+    @GET("records/")
     fun getRecords(@Header("Authorization") auth:String): Call<ArrayList<RecordModel>>
 
     /**
@@ -39,7 +39,7 @@ interface RecordService {
     /**
      * Post operation for records
      */
-    @POST("/api/records/")
+    @POST("records/")
     fun createRecord(@Header("Authorization") auth:String,
                      @Query("visit_rut") visitRut: String,
                      @Query("resident_name") residentName: String,

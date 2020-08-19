@@ -25,15 +25,15 @@ Route::get('/logout', 'Api\AuthController@logout')->middleware('auth:api');
 
 // ResidentResource
 Route::apiResource('/residents', 'Api\ResidentController')->middleware('auth:api');
-Route::get('/residents/{search}/{option?}', 'Api\ResidentController@show');
+Route::get('/residents/{search}/{option?}', 'Api\ResidentController@show')->middleware('auth:api');
 
 // VisitResource
 Route::apiResource('/visits', 'Api\VisitController')->middleware('auth:api');
-Route::get('/visits/{search}/{option?}', 'Api\VisitController@show');
+Route::get('/visits/{search}/{option?}', 'Api\VisitController@show')->middleware('auth:api');
 
 // RecordResource
 Route::apiResource('/records', 'Api\RecordController')->middleware('auth:api');
-Route::get('/records/{search}/{option?}', 'Api\RecordController@show');
+Route::get('/records/{search}/{option?}', 'Api\RecordController@show')->middleware('auth:api');
 
 //DepartmentResource
 Route::apiResource('/departments','Api\DepartmentController')->middleware('auth:api');
