@@ -10,6 +10,9 @@ import retrofit2.Call
 
 object VisitAdapter {
 
+    /**
+     * This function allows us to retrieve all the visits.
+     */
     fun loadVisits(token : String): Collection<VisitModel>? {
         val requestCall: Call<ArrayList<VisitModel>> =
                 ApiService.buildService(VisitService::class.java).
@@ -24,6 +27,9 @@ object VisitAdapter {
         return null
     }
 
+    /**
+     * This function allows us to retrieve all the visits by departments.
+     */
     fun loadByDepartment(token : String, number: String): Collection<VisitModel>? {
         val requestCall: Call<ArrayList<VisitModel>> =
             ApiService.buildService(VisitService::class.java).
@@ -38,6 +44,9 @@ object VisitAdapter {
         return null
     }
 
+    /**
+     * This function allows us to retrieve all the visits by rut.
+     */
     fun loadByRut(token : String, rut: String): Collection<VisitModel>? {
         val requestCall: Call<ArrayList<VisitModel>> =
             ApiService.buildService(VisitService::class.java).
@@ -52,6 +61,9 @@ object VisitAdapter {
         return null
     }
 
+    /**
+     * This function allows us to retrieve all the visits by resident.
+     */
     fun loadByResident(token : String, rut: String): Collection<VisitModel>? {
         val requestCall: Call<ArrayList<VisitModel>> =
             ApiService.buildService(VisitService::class.java).
@@ -67,7 +79,7 @@ object VisitAdapter {
     }
 
     /**
-     * This method allows us to call the createRecord method of the VisitService object.
+     * This method allows us to call the createVisit method of the VisitService object.
      */
     fun createVisit(token : String, rut: String, name: String, admitted: String): VisitModel? {
 
