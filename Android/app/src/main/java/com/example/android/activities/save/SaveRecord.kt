@@ -42,6 +42,9 @@ class SaveRecord : AppCompatActivity() {
         }
     }
 
+    /**
+     *
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -55,6 +58,9 @@ class SaveRecord : AppCompatActivity() {
 
     }
 
+    /**
+     *
+     */
     @Composable
     fun showForm() {
         var text = ""
@@ -146,6 +152,9 @@ class SaveRecord : AppCompatActivity() {
 
     }
 
+    /**
+     *
+     */
     private fun callRegisterActivity(visitRut: TextFieldValue, departmentNumber: TextFieldValue, residentName: TextFieldValue, kinship: TextFieldValue, comment: TextFieldValue) {
 
         val visitRutAux = visitRut.text
@@ -176,6 +185,9 @@ class SaveRecord : AppCompatActivity() {
 
     }
 
+    /**
+     *
+     */
     private fun validateFields(visitRut: String, departmentNumber: Int, residentName: String, kinship: String, comment: String?): Boolean {
 
         if(visitRut == "" || residentName == "" || departmentNumber == null || kinship == ""){
@@ -188,6 +200,26 @@ class SaveRecord : AppCompatActivity() {
         return true
     }
 
+    @Composable
+    private fun displayLateralMenu(){
+
+        val (drawerState, onDrawerStateChange) = state { DrawerState.Closed }
+
+        ModalDrawerLayout(drawerState = drawerState,
+                onStateChange = onDrawerStateChange,
+                drawerContent = {
+                    // add your UI code
+                },
+                bodyContent = {
+                    // add your UI code
+                }
+        )
+
+    }
+
+    /**
+     *
+     */
     @Preview(showBackground = true)
     @Composable
     fun DefaultPreview() {
