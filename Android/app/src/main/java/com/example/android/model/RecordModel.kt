@@ -1,9 +1,10 @@
 package com.example.android.model
 
-import android.service.autofill.DateTransformation
-import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Record representation in android
+ */
 data class RecordModel (
     val kinship: String,
     val entryDate: Date?,

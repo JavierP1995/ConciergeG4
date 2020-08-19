@@ -1,5 +1,8 @@
 package com.example.android.model
 
+/**
+ * Resident representation in android
+ */
 data class ResidentModel (
     var rut:String,
     var name:String,
