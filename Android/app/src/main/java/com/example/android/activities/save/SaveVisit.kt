@@ -2,6 +2,7 @@ package com.example.android.activities.save
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
@@ -45,6 +46,15 @@ class SaveVisit : AppCompatActivity() {
             }
         }
 
+    }
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
     }
 
     @Composable
@@ -138,10 +148,13 @@ class SaveVisit : AppCompatActivity() {
             lifecycleScope.launch{
                 val register = withContext(Dispatchers.IO)
                 {
-                    VisitAdapter.createVisit(
-                        rut, name, admitted)
+                    VisitAdapter.createVisit(token , rut, name, admitted)
                 }
             }
+            val duration = Toast.LENGTH_SHORT
+            val toast =
+                    Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
+            toast.show()
         }
 
     }
@@ -149,9 +162,9 @@ class SaveVisit : AppCompatActivity() {
     private fun validateFields(
         rut: String,
         name: String,
-        admitted: String?
+        admitted: String
     ): Boolean {
-        if (rut == "" || name == "" || admitted != "yes" || admitted != "Yes" || admitted != "no") {
+        if (rut == "" || name == "" || admitted == "") {
             val duration = Toast.LENGTH_SHORT
             val toast =
                 Toast.makeText(applicationContext, "You must specify all the fields!", duration)

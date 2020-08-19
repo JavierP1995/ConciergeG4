@@ -10,6 +10,9 @@ import java.lang.Exception
 
 object AuthAdapter {
 
+    /**
+     * This method allows us to register a new user into the database.
+     */
     fun registerUser(name : String, email: String, password : String, password_confirmation: String){
 
         val requestCall : Call<RegisterResponse> = ApiService.
@@ -24,6 +27,9 @@ object AuthAdapter {
 
     }
 
+    /**
+     * This method allows us to log in into the app.
+     */
     fun loginUser(email : String, password: String) : LoginResponse? {
 
         val requestCall : Call<LoginResponse> = ApiService.

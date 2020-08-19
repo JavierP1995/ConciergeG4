@@ -3,6 +3,7 @@ package com.example.android.activities.menu
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.ui.core.*
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     @Composable
     private fun menu() {
 
+        loginSuccessfullyMessage()
         MaterialTheme(colors = darkThemeColors){
 
             Scaffold(
@@ -76,6 +78,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                                     shape = RoundedCornerShape(10.dp),
                                     onClick = {
+                                        //MenuRecords.setLoginData(token)
                                         startActivity(
                                                 Intent(this@MainActivity,
                                                         MenuRecord::class.java
@@ -92,6 +95,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                                     shape = RoundedCornerShape(10.dp),
                                     onClick = {
+                                        //MenuResident.setLoginData(token)
                                         startActivity(
                                                 Intent(this@MainActivity,
                                                         MenuResident::class.java
@@ -125,6 +129,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                                     shape = RoundedCornerShape(10.dp),
                                     onClick = {
+                                        MenuVisit.setLoginData(token)
                                         startActivity(
                                                 Intent(this@MainActivity,
                                                         MenuVisit::class.java
@@ -141,6 +146,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     }
 
 
+    private fun loginSuccessfullyMessage(){
+        val duration = Toast.LENGTH_SHORT
+        val toast =
+                Toast.makeText(applicationContext, "Login Succesfully !", duration)
+        toast.show()
+    }
 
 
 

@@ -24,9 +24,11 @@ interface VisitService {
     fun searchByDepartment(@Header("Authorization") auth:String,
                            @Path("search") number: String): Call<ArrayList<VisitModel>>
 
-    @POST("/api/records/")
-    fun createRecord(@Query("name") name: String,
+    @POST("/api/visits/")
+    @Headers("Accept: application/json")
+    fun createRecord(@Header("Authorization") auth:String,
                      @Query("rut") rut: String,
+                     @Query("name") name: String,
                      @Query("admitted") admitted: String): Call<VisitModel>
 
 }

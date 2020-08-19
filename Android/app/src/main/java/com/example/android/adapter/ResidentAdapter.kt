@@ -8,6 +8,9 @@ import retrofit2.Call
 
 object ResidentAdapter {
 
+    /**
+     * This function allows us to retrieve all the existing residents in the database.
+     */
     fun loadResidents(token : String): Collection<ResidentModel>? {
         val requestCall: Call<ArrayList<ResidentModel>> =
                 ApiService.buildService(ResidentService::class.java).
@@ -22,6 +25,9 @@ object ResidentAdapter {
         return null
     }
 
+    /**
+     * This function allows us to retrieve all the residents by a department number.
+     */
     fun loadByDepartment(token : String, number: String): Collection<ResidentModel>? {
         val requestCall: Call<ArrayList<ResidentModel>> =
             ApiService.buildService(ResidentService::class.java).
@@ -36,6 +42,9 @@ object ResidentAdapter {
         return null
     }
 
+    /**
+     * This function allows us to retrieve all residents by their rut.
+     */
     fun loadByRut(token: String, rut: String): Collection<ResidentModel>? {
         val requestCall: Call<ArrayList<ResidentModel>> =
             ApiService.buildService(ResidentService::class.java).
@@ -50,6 +59,9 @@ object ResidentAdapter {
         return null
     }
 
+    /**
+     * This function allows us to retrieve all residents by the rut of a visit.
+     */
     fun loadByVisit(token : String, rut: String): Collection<ResidentModel>? {
         val requestCall: Call<ArrayList<ResidentModel>> =
             ApiService.buildService(ResidentService::class.java).
@@ -64,6 +76,9 @@ object ResidentAdapter {
         return null
     }
 
+    /**
+     * This function allows us to insert a resident into the database.
+     */
     fun createResident(token : String, rut: String, name: String, email: String,
                      phone: Int, department: Int): ResidentModel? {
         val call: Call<ResidentModel> = ApiService
