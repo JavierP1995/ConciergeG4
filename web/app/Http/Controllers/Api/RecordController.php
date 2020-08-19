@@ -107,9 +107,10 @@ class RecordController extends Controller
     }
 
     /**
-     * Display the department
-     * @param String $search
-     * @param String $option
+     * Display records filtered by an specified parameter
+     *
+     * @param string $search parameter to search
+     * @param string $option type of parameter
      * @return \Illuminate\Http\Response
      */
     public function show($search, $option)
