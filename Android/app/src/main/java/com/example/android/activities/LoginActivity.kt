@@ -3,6 +3,7 @@ package com.example.android.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.state
@@ -27,11 +28,14 @@ import com.example.android.activities.display.DisplayDepartments
 import com.example.android.activities.menu.MainActivity
 import com.example.android.activities.menu.MenuDepartment
 import com.example.android.adapter.AuthAdapter.loginUser
+import com.example.android.reponse.LoginResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
+
+    var error = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +47,23 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun callLogin(email : TextFieldValue, password : TextFieldValue){
+
         lifecycleScope.launch(){
             withContext(Dispatchers.IO){
-                val auth = (loginUser(email.text,password.text)?.token)
-                if (auth != null) {
-                    Log.v("TOKEN", auth)
+                var response = (loginUser(email.text,password.text))
+                val auth = (response?.token)
 
-                    MainActivity.setLoginData(auth)
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                if(response == null){
+                    error = true
+                }else{
+
+                    if (auth != null) {
+                        Log.v("TOKEN", auth)
+
+                        MainActivity.setLoginData(auth)
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    }
+
                 }
 
             }
@@ -58,11 +71,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
-
-
-
-
-
 
     @Preview
     @Composable
@@ -149,6 +157,36 @@ class LoginActivity : AppCompatActivity() {
 
             )
         }
+    }
+
+    @Composable
+    fun ShowAlertDialog() {
+
+        val openDialog = state { true }
+        if (openDialog.value) {
+            AlertDialog(
+                    onCloseRequest = {
+                    },
+                    title = {
+                        Text(text = "Title")
+                    },
+                    text = {
+                        Text("This is alert dialog in jetpack compose!")
+                    },
+                    confirmButton = {
+                        Button(onClick = {
+                            openDialog.value = false
+                        }, text = { Text("Confirm") })
+                    },
+                    dismissButton = {
+                        Button(onClick = {
+                            openDialog.value = false
+                        }, text = { Text("Dismiss") })
+                    },
+                    buttonLayout = AlertDialogButtonLayout.Stacked
+            )
+        }
+
     }
 
 }
