@@ -1,6 +1,7 @@
 package com.example.android.adapter
 
 import android.util.Log
+import android.widget.Toast
 import com.example.android.reponse.LoginResponse
 import com.example.android.reponse.RegisterResponse
 import com.example.android.service.ApiService
@@ -37,7 +38,10 @@ object AuthAdapter {
 
         try{
             val response  = requestCall.execute()
-            Log.v("Json", response.body().toString())
+
+            val message = response.message()
+            Log.v("JSON: ", message)
+
             return response.body()
         }catch (e: Exception){
             e.printStackTrace()

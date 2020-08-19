@@ -69,8 +69,8 @@ class AuthController extends Controller
         //One or more conditions in the request header fields evaluated to false
         if($validator -> fails()) {
             return response([
-                'error' => 'Validation Error',
-                'message' => $validator->errors(),
+                'error' => $validator->errors(),
+                'message' => 'Validation Error',
             ], 412);
         }
 
