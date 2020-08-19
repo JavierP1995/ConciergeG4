@@ -32,9 +32,14 @@ import com.example.android.activities.search.SearchRecord
 import com.example.android.activities.search.SearchVisit
 import com.example.android.ui.utils.darkThemeColors
 
-
+/**
+ * SubMenu activity to access options available for visits
+ */
 class MenuVisit : AppCompatActivity() {
 
+    /**
+     * Method to initialize the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -43,16 +48,25 @@ class MenuVisit : AppCompatActivity() {
         }
     }
 
+    /**
+     * Global variable used to receive and send the token in the methods.
+     */
     companion object{
         var token : String = ""
 
+        /**
+         * Method to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
         }
     }
 
-
+    /**
+     * Visual display and buttons to access the activity's for the specified tasks, a variable is
+     * send in the intent if needed
+     */
     @Preview
     @Composable
     private fun subMenu(){
