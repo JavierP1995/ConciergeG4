@@ -25,31 +25,47 @@ import com.example.android.ui.utils.darkThemeColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 
+/**
+ * Main menu visualization, with access to the specified entity's
+ */
 class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
-    companion object{
-        var token : String = ""
+    /**
+     * Global variable used to receive and send the token in the methods.
+     */
+    companion object {
+        var token: String = ""
 
-        fun setLoginData(authToken : String){
+        /**
+         * Method to change the token value
+         */
+        fun setLoginData(authToken: String) {
             this.token = authToken
             Log.v("TOKEN", this.token)
         }
     }
 
+    /**
+     * Method to initialize the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-                menu()
+            menu()
         }
     }
 
 
+    /**
+     * Visual display and buttons to access the activity's for the specified tasks, a variable is
+     * send in the intent if needed
+     */
     @Preview
     @Composable
     private fun menu() {
 
         loginSuccessfullyMessage()
-        MaterialTheme(colors = darkThemeColors){
+        MaterialTheme(colors = darkThemeColors) {
 
             Scaffold(
                     bodyContent = {
@@ -69,10 +85,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                 verticalArrangement = Arrangement.Center,
                                 horizontalGravity = Alignment.CenterHorizontally
 
-                        ){
+                        ) {
                             Button(
-                                    text = { Text("Records", color = darkThemeColors.onPrimary,
-                                            style = MaterialTheme.typography.h6) },
+                                    text = {
+                                        Text("Records", color = darkThemeColors.onPrimary,
+                                                style = MaterialTheme.typography.h6)
+                                    },
                                     backgroundColor = Color.Transparent,
                                     border = Border(5.dp, darkThemeColors.secondary),
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
@@ -87,9 +105,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     }
                             )
                             Button(
-                                    text = { Text("Residents", color = darkThemeColors.onPrimary,
-                                            style = MaterialTheme.typography.h6
-                                    )},
+                                    text = {
+                                        Text("Residents", color = darkThemeColors.onPrimary,
+                                                style = MaterialTheme.typography.h6
+                                        )
+                                    },
                                     backgroundColor = Color.Transparent,
                                     border = Border(5.dp, darkThemeColors.secondary),
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
@@ -106,8 +126,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
 
                             Button(
-                                    text = { Text("Departments", color = darkThemeColors.onPrimary,
-                                            style = MaterialTheme.typography.h6) },
+                                    text = {
+                                        Text("Departments", color = darkThemeColors.onPrimary,
+                                                style = MaterialTheme.typography.h6)
+                                    },
                                     backgroundColor = Color.Transparent,
                                     border = Border(5.dp, darkThemeColors.secondary),
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
@@ -122,8 +144,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     }
                             )
                             Button(
-                                    text = { Text("Visits", color = darkThemeColors.onPrimary,
-                                            style = MaterialTheme.typography.h6) },
+                                    text = {
+                                        Text("Visits", color = darkThemeColors.onPrimary,
+                                                style = MaterialTheme.typography.h6)
+                                    },
                                     backgroundColor = Color.Transparent,
                                     border = Border(5.dp, darkThemeColors.secondary),
                                     modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
@@ -146,14 +170,15 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     }
 
 
-    private fun loginSuccessfullyMessage(){
+    /**
+     * Display a message if the login was correct
+     */
+    private fun loginSuccessfullyMessage() {
         val duration = Toast.LENGTH_SHORT
         val toast =
                 Toast.makeText(applicationContext, "Login Succesfully !", duration)
         toast.show()
     }
-
-
 
 }
 

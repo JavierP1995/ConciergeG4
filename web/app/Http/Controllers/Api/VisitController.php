@@ -53,10 +53,10 @@ class VisitController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display visits filtered by an specified parameter
      *
-     * @param String $search
-     * @param String $option
+     * @param string $search parameter to search
+     * @param string $option type of parameter
      * @return \Illuminate\Http\Response
      */
     public function show($search, $option = null)

@@ -57,10 +57,10 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Display visits from an specific department
+     * Display departments filtered by an specified parameter
      *
-     * @param  string $search
-     * @param string $option
+     * @param string $search parameter to search
+     * @param string $option type of parameter
      * @return \Illuminate\Http\Response
      */
     public function show($search, $option = null)

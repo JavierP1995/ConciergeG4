@@ -2,6 +2,7 @@ package com.example.android.activities.menu
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.ui.core.Alignment
@@ -27,9 +28,14 @@ import com.example.android.activities.save.SaveResident
 import com.example.android.activities.search.SearchResident
 import com.example.android.ui.utils.darkThemeColors
 
-
+/**
+ * SubMenu activity to access options available for residents
+ */
 class MenuResident : AppCompatActivity() {
 
+    /**
+     * Method to initialize the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -38,7 +44,25 @@ class MenuResident : AppCompatActivity() {
         }
     }
 
+    /**
+     * Global variable used to receive and send the token in the methods.
+     */
+    companion object{
+        var token : String = ""
 
+        /**
+         * Method to change the token value
+         */
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
+
+    /**
+     * Visual display and buttons to access the activity's for the specified tasks, a variable is
+     * send in the intent if needed
+     */
     @Preview
     @Composable
     private fun subMenu(){
@@ -71,6 +95,7 @@ class MenuResident : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                DisplayResidents.setLoginData(token)
                                 val intent = Intent(this@MenuResident,
                                         DisplayResidents::class.java)
                                 intent.putExtra("option", "all")
@@ -88,6 +113,7 @@ class MenuResident : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                SaveResident.setLoginData(token)
                                 startActivity(
                                         Intent(this@MenuResident,
                                                 SaveResident::class.java
@@ -103,6 +129,7 @@ class MenuResident : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                SearchResident.setLoginData(token)
                                 startActivity(
                                         Intent(this@MenuResident,
                                                 SearchResident::class.java

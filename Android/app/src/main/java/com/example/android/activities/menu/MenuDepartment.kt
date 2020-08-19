@@ -27,9 +27,14 @@ import com.example.android.activities.save.SaveDepartment
 import com.example.android.activities.search.SearchDepartment
 import com.example.android.ui.utils.darkThemeColors
 
-
+/**
+ * SubMenu to access options available for departments
+ */
 class MenuDepartment : AppCompatActivity() {
 
+    /**
+     * Method to initialize the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -37,15 +42,25 @@ class MenuDepartment : AppCompatActivity() {
         }
     }
 
+    /**
+     * Global variable used to receive and send the token in the methods.
+     */
     companion object{
         var token : String = ""
 
+        /**
+         * Method to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
         }
     }
 
+    /**
+     * Visual display and buttons to access the activity's for the specified tasks, a variable is
+     * send in the intent if needed
+     */
     @Preview
     @Composable
     private fun subMenu(){
@@ -68,9 +83,6 @@ class MenuDepartment : AppCompatActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalGravity = Alignment.CenterHorizontally
                 ){
-
-
-
                     Button(
                             text = { Text("Display Data Departments",
                                     color = darkThemeColors.onPrimary,
@@ -97,6 +109,7 @@ class MenuDepartment : AppCompatActivity() {
                             modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
+                                SaveDepartment.setLoginData(token)
                                 startActivity(
                                     Intent(this@MenuDepartment,
                                             SaveDepartment::class.java
