@@ -1,5 +1,6 @@
 package com.example.android.activities.display
 
+import android.graphics.drawable.PaintDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -8,16 +9,22 @@ import androidx.compose.getValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.core.clip
-import androidx.ui.core.setContent
+import androidx.ui.core.*
+import androidx.ui.core.Alignment.Companion.Center
+import androidx.ui.core.Alignment.Companion.TopCenter
+import androidx.ui.core.Alignment.Companion.TopStart
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.CircleShape
+import androidx.ui.geometry.Offset
+import androidx.ui.geometry.Size
+import androidx.ui.graphics.RectangleShape
 import androidx.ui.graphics.painter.ImagePainter
+import androidx.ui.graphics.painter.Painter
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
+import androidx.ui.material.Divider
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
@@ -34,37 +41,52 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Class DisplayDepartments, activity that show the list of departments in the data base.
+ */
 class DisplayDepartments : AppCompatActivity() {
 
-    private val departamentsList = MutableLiveData<ListDepartments>().apply {
+    /**
+     * List of departments, initially empty.
+     */
+    private val departmentsList = MutableLiveData<ListDepartments>().apply {
         value = ListDepartments(emptyList(), false)
     }
 
+
     companion object{
+        /**
+         * Global variable used to receive and send the token in the methods.
+         */
         var token : String = ""
 
+        /**
+         * Method used to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
         }
     }
 
-
+    /**
+     * Method used to start the activity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
-        //recibimos el bundle
+        //Received the bundle
         val bundle :Bundle ?= intent.extras
         val option = bundle!!.getString("option")
         val search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                listDepartments(departamentsList)
+                listDepartments(departmentsList)
 
             }
         }
 
         lifecycleScope.launch {
-            departamentsList.value = departamentsList.value?.copy(loading = true)
+            departmentsList.value = departmentsList.value?.copy(loading = true)
             val dpts = withContext(Dispatchers.IO){
                 if( option == "all"){
                     DepartmentAdapter.loadDepartments(token)
@@ -77,29 +99,16 @@ class DisplayDepartments : AppCompatActivity() {
                 }
 
             }
-            departamentsList.value = departamentsList.value?.copy(dpts ?: emptyList(),
+            departmentsList.value = departmentsList.value?.copy(dpts ?: emptyList(),
                 loading = false)
 
         }
     }
-    @Preview
-    @Composable
-    private fun topBar() =
-            MaterialTheme( colors = darkThemeColors) {
 
 
-                TopAppBar(
-                        title =
-                        { Text(
-                                text = "Departments",
-                                style = MaterialTheme.typography.h5
-                                )
-                        },
-                        backgroundColor = darkThemeColors.primary,
-                        elevation = 0.dp
-                )
-            }
-
+    /**
+     * Method used to print the list of departments.
+     */
     @Composable
     private fun listDepartments(departments : LiveData<ListDepartments>){
 
@@ -107,18 +116,29 @@ class DisplayDepartments : AppCompatActivity() {
         MaterialTheme(colors = darkThemeColors) {
             Scaffold(
                     topAppBar = {
-                        topBar()
+                        TopAppBar(modifier = Modifier.fillMaxWidth()) {
+                            Image(
+                                    painter = ImagePainter(imageResource(id = R.drawable.menudepartments)),
+                                    contentScale = ContentScale.FillWidth
+
+                            )
+
+                        }
                     },
+
                     bodyContent = {
                         if(deptos == null || deptos?.loading == true){
                             Loading()
                         }else{
                             Column() {
-                                deptos!!.departments.let {
-                                    it.forEach { department ->
-                                        printDepartment(department = department)
+                                VerticalScroller(modifier = Modifier.fillMaxWidth()) {
+                                    deptos!!.departments.let {
+                                        it.forEach { department ->
+                                            printDepartment(department = department)
+                                        }
                                     }
                                 }
+
                             }
                         }
                     }
@@ -126,6 +146,10 @@ class DisplayDepartments : AppCompatActivity() {
         }
 
     }
+
+    /**
+     * Method the used to show screen "loading" while the data is load.
+     */
     @Composable
     fun Loading() {
         MaterialTheme(colors = darkThemeColors) {
@@ -139,16 +163,21 @@ class DisplayDepartments : AppCompatActivity() {
 
         }
     }
+
+    /**
+     * Method used to print attributes of department.
+     */
     @Composable
     private fun printDepartment(department: DepartmentModel) {
+
         Column (
                 modifier = Modifier.padding(0.dp, 10.dp)
         ){
             Row{
 
                 Image(
-                        painter = ImagePainter(imageResource(id = R.drawable.home)),
-                        modifier = Modifier.preferredSize(35.dp).clip(shape = CircleShape),
+                        painter = ImagePainter(imageResource(id = R.drawable.iconhome)),
+                        modifier = Modifier.preferredSize(35.dp),
                         alignment = Alignment.TopStart
                 )
 
@@ -176,6 +205,8 @@ class DisplayDepartments : AppCompatActivity() {
 
                         )
             }
+            Divider()
         }
     }
+
 }
