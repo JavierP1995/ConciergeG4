@@ -61,6 +61,24 @@ object RecordAdapter {
     }
 
     /**
+     * This function allows us to asign the departure date of a visit.
+     */
+    fun departureVisit(token : String, id: Int): RecordModel? {
+        val call: Call<RecordModel> = ApiService
+                .buildService(RecordService::class.java).departureVisit(
+                        "Bearer $token", id)
+        try{
+            val response = call.execute()
+            Log.v("Json", response.body()!!.toString())
+            return response.body()!!
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
+
+    /**
      * This function allows us to load all the existing records by the rut of a visit.
      */
     fun loadByVisit(token : String, rut: String): Collection<RecordModel>? {
