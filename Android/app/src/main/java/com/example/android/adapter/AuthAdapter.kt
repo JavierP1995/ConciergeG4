@@ -42,7 +42,7 @@ object AuthAdapter {
             val message = response.message()
             Log.v("JSON: ", message)
 
-            return arrayOf(message, token)
+            return arrayOf(message, token) // return a array with the token an the response message.
 
         }catch (e: Exception){
             e.printStackTrace()
