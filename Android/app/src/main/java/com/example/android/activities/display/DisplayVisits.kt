@@ -9,22 +9,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.ui.core.*
+import androidx.ui.foundation.Border
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.CircleShape
+import androidx.ui.foundation.shape.corner.RoundedCornerShape
+import androidx.ui.graphics.Color
 import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
-import androidx.ui.material.Divider
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Scaffold
-import androidx.ui.material.TopAppBar
+import androidx.ui.material.*
 import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.ListVisits
 import com.example.android.R
+import com.example.android.adapter.RecordAdapter
 import com.example.android.adapter.VisitAdapter
 import com.example.android.model.VisitModel
 import com.example.android.ui.utils.darkThemeColors
@@ -167,6 +168,32 @@ class DisplayVisits : AppCompatActivity() {
                     modifier = Modifier.preferredSize(45.dp).clip(shape = CircleShape),
                     alignment = Alignment.TopStart
                 )
+                if(visit.admitted == "yes")
+                {
+                    Button(
+                            text = {
+                                Text("Ban", color = darkThemeColors.onPrimary,
+                                        style = MaterialTheme.typography.subtitle2)
+                            },
+                            backgroundColor = Color.Transparent,
+                            border = Border(2.dp, darkThemeColors.secondary),
+                            modifier = Modifier.size(120.dp, 40.dp).padding(5.dp, 0.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            onClick = {
+                                lifecycleScope.launch {
+                                    val visit = withContext(Dispatchers.IO){
+                                        VisitAdapter.banVisit(DisplayRecords.token, visit.rut)
+                                    }
+                                    visitsList.value = visitsList.value?.copy(loading = true)
+                                    val visits = withContext(Dispatchers.IO){
+                                        VisitAdapter.loadVisits(DisplayRecords.token)
+                                    }
+                                    visitsList.value = visitsList.value?.copy(visits ?: emptyList(),
+                                            loading = false)
+                                }
+                            }
+                    )
+                }
                 Column(
                     modifier = Modifier.padding(10.dp, 0.dp)
                 ) {

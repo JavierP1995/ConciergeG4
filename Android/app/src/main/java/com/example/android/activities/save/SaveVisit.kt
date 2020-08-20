@@ -117,14 +117,8 @@ class SaveVisit : AppCompatActivity() {
                     Spacer(modifier = Modifier.padding(top = 20.dp))
 
                     Row(modifier = Modifier.padding(top = 20.dp, end = 10.dp)) {
-                        Button(onClick = {
-                            startActivity(
-                                Intent(
-                                    this@SaveVisit,
-                                    MenuRecord::class.java
-                                ))
-                        }, backgroundColor =
-                        darkColorPalette().secondary, text = { Text(text = "Cancel") })
+                        Button(onClick = {finish()},
+                            backgroundColor = darkColorPalette().secondary, text = { Text(text = "Cancel") })
                         Button(modifier = Modifier.padding(start = 40.dp),
                             backgroundColor = darkColorPalette().secondary, onClick =
                             {

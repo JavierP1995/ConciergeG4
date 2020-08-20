@@ -9,17 +9,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.ui.core.*
+import androidx.ui.foundation.Border
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.CircleShape
+import androidx.ui.foundation.shape.corner.RoundedCornerShape
+import androidx.ui.graphics.Color
 import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
-import androidx.ui.material.Divider
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Scaffold
-import androidx.ui.material.TopAppBar
+import androidx.ui.material.*
 import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
@@ -171,6 +171,33 @@ class DisplayRecords : AppCompatActivity() {
                     color = darkThemeColors.onPrimary,
                     modifier = Modifier.padding(10.dp, 5.dp)
                 )
+                if(record.visit != "not a visit" && record.departureDate == "not yet")
+                {
+                    Button(
+                            text = {
+                                Text("Leaving", color = darkThemeColors.onPrimary,
+                                        style = MaterialTheme.typography.subtitle2)
+                            },
+                            backgroundColor = Color.Transparent,
+                            border = Border(2.dp, darkThemeColors.secondary),
+                            modifier = Modifier.size(120.dp, 40.dp).padding(5.dp, 0.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            onClick = {
+                                lifecycleScope.launch {
+                                    val record = withContext(Dispatchers.IO){
+                                        RecordAdapter.departureVisit(token, record.id)
+                                    }
+                                    recordsList.value = recordsList.value?.copy(loading = true)
+                                    val records = withContext(Dispatchers.IO){
+                                        RecordAdapter.loadRecords(token)
+                                    }
+                                    recordsList.value = recordsList.value?.copy(records ?: emptyList(),
+                                            loading = false)
+
+                                }
+                            }
+                    )
+                }
             }
             Column(
                 modifier = Modifier.padding(10.dp, 3.dp)
