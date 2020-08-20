@@ -35,8 +35,7 @@ import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
 
-    var errorCredentials = false
-    var errorValidation = false
+    var error = false
     lateinit var message: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,42 +47,37 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun callLogin(email : TextFieldValue, password : TextFieldValue){
+    private fun callLogin(email : TextFieldValue, password : TextFieldValue) {
 
-        lifecycleScope.launch(){
-            withContext(Dispatchers.IO){
-                var response = (loginUser(email.text,password.text))
-                val auth = (response?.get(1))
-                message = (response?.get(0).toString())
+        if (validateFields(email, password)){
+            lifecycleScope.launch(){
+                withContext(Dispatchers.IO){
+                    var response = (loginUser(email.text,password.text))
+                    val auth = (response?.get(1))
+                    message = (response?.get(0).toString())
 
-                if(message == "Unauthorized") {
-                    errorCredentials = true
-                }else if(message == "Validation Error"){
-                    errorValidation = true
-                }else{
+                    if(message == "Unauthorized"){
+                        error = true
+                    }else{
 
-                    if (auth != null) {
-                        Log.v("TOKEN", auth)
+                        if (auth != null) {
+                            Log.v("TOKEN", auth)
 
-                        MainActivity.setLoginData(auth)
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            MainActivity.setLoginData(auth)
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        }
+
                     }
 
                 }
-
-            }
-            when {
-                errorCredentials -> {
-                    showMessage(message = "Invalid credentials, try again !")
-                }
-                errorValidation -> {
-                    showMessage(message = "Validation error, check your inputs !")
-                }
-                else -> {
+                if(error){
+                    showMessage(message = message)
+                }else{
                     finish()
                 }
             }
         }
+
     }
 
     @Preview
@@ -177,5 +171,17 @@ class LoginActivity : AppCompatActivity() {
         toast.show()
 
     }
+
+    private fun validateFields(email : TextFieldValue, password: TextFieldValue): Boolean{
+
+        if(email.text == "" || password.text == ""){
+            val duration = Toast.LENGTH_SHORT
+            val toast = Toast.makeText(applicationContext, "Must specify all the fields", duration)
+            toast.show()
+            return false
+        }
+        return true
+    }
+
 
 }
