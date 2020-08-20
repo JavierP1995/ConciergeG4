@@ -6,6 +6,7 @@ import java.util.*
  * Record representation in android
  */
 data class RecordModel (
+    val id : Int,
     val kinship: String,
     val entryDate: String?,
     val departureDate: String?,
