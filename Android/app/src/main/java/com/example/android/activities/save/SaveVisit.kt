@@ -34,6 +34,9 @@ import kotlinx.coroutines.withContext
  */
 class SaveVisit : AppCompatActivity() {
 
+    private var error = false
+    lateinit var message: String
+
     companion object{
         /**
          * Global variable used to receive and send the token in the methods.
@@ -156,18 +159,28 @@ class SaveVisit : AppCompatActivity() {
         val rut = rut.text
         val name = name.text
         val admitted = admitted.text
+        lateinit var displayMessage: String
 
         if (validateFields(rut, name, admitted)) {
             lifecycleScope.launch{
                 val register = withContext(Dispatchers.IO)
                 {
-                    VisitAdapter.createVisit(token , rut, name, admitted)
+                    val response = VisitAdapter.createVisit(token , rut, name, admitted)
+                    message = response?.message.toString()
+
+                    if(message == "Created Successfully"){
+                        error = false
+                        displayMessage = "Insertion Successfully !!"
+                    }else{
+                        error = true
+                    }
+                }
+                if(error){
+                    showMessage(message = "An error occurred, please try again !")
+                }else{
+                    showMessage(message = displayMessage)
                 }
             }
-            val duration = Toast.LENGTH_SHORT
-            val toast =
-                    Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
-            toast.show()
         }
 
     }
@@ -188,6 +201,18 @@ class SaveVisit : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    /**
+     * This function allows us to display a toast message
+     */
+    private fun showMessage(message: String?) {
+
+        val duration = Toast.LENGTH_SHORT
+        val toast =
+                Toast.makeText(applicationContext, message, duration)
+        toast.show()
+
     }
 
 }

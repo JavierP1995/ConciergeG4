@@ -50,12 +50,13 @@ interface VisitService {
     /**
      * Post operation for visits
      */
+    @FormUrlEncoded
     @POST("visits/")
     @Headers("Accept: application/json")
     fun createVisit(@Header("Authorization") auth:String,
-                     @Query("rut") rut: String,
-                     @Query("name") name: String,
-                     @Query("admitted") admitted: String): Call<VisitResponse>
+                    @Field("rut") rut: String,
+                    @Field("name") name: String,
+                    @Field("admitted") admitted: String): Call<VisitResponse>
 
 }
 
