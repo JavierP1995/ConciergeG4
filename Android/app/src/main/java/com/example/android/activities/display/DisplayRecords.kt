@@ -162,12 +162,12 @@ class DisplayRecords : AppCompatActivity() {
 
                 Image(
                     painter = ImagePainter(imageResource(id = R.drawable.iconregister)),
-                    modifier = Modifier.preferredSize(35.dp).clip(shape = CircleShape),
+                    modifier = Modifier.preferredSize(35.dp),
                     alignment = Alignment.TopStart
                 )
 
                 Text(
-                    text = record.visit + " , " + record.department.toString(),
+                    text = record.resident + " , " + record.department.toString(),
                     color = darkThemeColors.onPrimary,
                     modifier = Modifier.padding(10.dp, 5.dp)
                 )
@@ -190,7 +190,13 @@ class DisplayRecords : AppCompatActivity() {
                 )
 
                 Text(
-                    text = "Resident: "+ record.resident,
+                    text = "Visit: "+ record.visit,
+                    style = MaterialTheme.typography.subtitle2,
+                    color = darkThemeColors.onPrimary
+                )
+
+                Text(
+                    text = "Comment: "+ record.comment,
                     style = MaterialTheme.typography.subtitle2,
                     color = darkThemeColors.onPrimary
                 )
