@@ -88,7 +88,7 @@ class MenuRecord : AppCompatActivity() {
                         horizontalGravity = Alignment.CenterHorizontally
                 ){
                     Button(
-                            text = { Text("Display data Records",
+                            text = { Text("Display Data",
                                     color = darkThemeColors.onPrimary,
                                     style = MaterialTheme.typography.h6) },
                             backgroundColor = Color.Transparent,
