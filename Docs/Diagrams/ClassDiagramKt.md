@@ -20,7 +20,6 @@ class ResidentModel
   void methods()
 }
 class VisitModel {
-  id : Long
   name : String
   rut : String
   admitted : String
@@ -44,6 +43,18 @@ class DepartmentModel {
    block : char
    void methods()
 }
+
+class UserModel {
+   name : String
+   email : String
+   password : String
+   remember_token : String
+   void methods()
+}
+
+
+
+
 @enduml
 
 -->

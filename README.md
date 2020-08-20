@@ -13,10 +13,6 @@ Gerald Lopez Guitierrez ICCI
 Javier Palacios Arce ICCI
 ```
 
-## Domain Model
-
-![Domain Model](./Docs/Diagrams/Domain_Model.jpeg)
-
 ## Class Diagram PHP
 
 ![Domain Model](Docs/Diagrams/ClassDiagram.png)
