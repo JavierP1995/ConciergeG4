@@ -35,6 +35,18 @@ import kotlinx.coroutines.withContext
 
 class SaveVisit : AppCompatActivity() {
 
+    var error= false
+    lateinit var message: String
+
+    companion object{
+        var token : String = ""
+
+        fun setLoginData(authToken : String){
+            this.token = authToken
+            Log.v("TOKEN", this.token)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -46,15 +58,6 @@ class SaveVisit : AppCompatActivity() {
             }
         }
 
-    }
-
-    companion object{
-        var token : String = ""
-
-        fun setLoginData(authToken : String){
-            this.token = authToken
-            Log.v("TOKEN", this.token)
-        }
     }
 
     @Composable
@@ -133,36 +136,63 @@ class SaveVisit : AppCompatActivity() {
         }
     }
 
+    /**
+     * This function allows us to call to the createVisit adapter method.
+     */
     private fun callRegister(rut: TextFieldValue, name: TextFieldValue, admitted: TextFieldValue) {
         val rut = rut.text
         val name = name.text
         val admitted = admitted.text
+        lateinit var displayMessage : String
 
         if (validateFields(rut, name, admitted)) {
             lifecycleScope.launch{
                 val register = withContext(Dispatchers.IO)
                 {
-                    VisitAdapter.createVisit(token , rut, name, admitted)
+                    val response = VisitAdapter.createVisit(token , rut, name, admitted)
+                    message = response?.message.toString()
+
+                    if(message == "Created Successfully"){
+                        error = false
+                        displayMessage = "Insertion Successfully !!"
+                    }else{
+                        error = true
+                    }
+
                 }
             }
-            val duration = Toast.LENGTH_SHORT
-            val toast =
-                    Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
-            toast.show()
+            if(error){
+                showMessage(message = displayMessage)
+            }else{
+                showMessage(message = "An error ocurred, please try again !")
+            }
         }
 
     }
 
+    /**
+     * This function allows us to display a toast message
+     */
+    private fun showMessage(message
+                            : String?) {
+
+        val duration = Toast.LENGTH_SHORT
+        val toast =
+                Toast.makeText(applicationContext, message, duration)
+        toast.show()
+
+    }
+
+    /**
+     * This function validate if the fields are empty.
+     */
     private fun validateFields(
         rut: String,
         name: String,
         admitted: String
     ): Boolean {
         if (rut == "" || name == "" || admitted == "") {
-            val duration = Toast.LENGTH_SHORT
-            val toast =
-                Toast.makeText(applicationContext, "You must specify all the fields!", duration)
-            toast.show()
+            showMessage(message = "You must specify all the fields!")
             return false
         }
         return true
@@ -175,4 +205,6 @@ class SaveVisit : AppCompatActivity() {
             showForm()
         }
     }
+
+
 }
