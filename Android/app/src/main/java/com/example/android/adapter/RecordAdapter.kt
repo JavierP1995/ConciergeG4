@@ -89,7 +89,7 @@ object RecordAdapter {
             val response = call.execute()
             Log.v("Json", response.body()!!.toString())
             return RecordModel(kinship = kinship, entryDate = null, departureDate = null,
-                                comment = comment, resident = residentName, visits = visitRut,
+                                comment = comment, resident = residentName, visit = visitRut,
                                     department = departmentNumber)
         } catch (e: Exception){
             e.printStackTrace()

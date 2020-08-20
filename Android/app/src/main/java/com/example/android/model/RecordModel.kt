@@ -7,10 +7,10 @@ import java.util.*
  */
 data class RecordModel (
     val kinship: String,
-    val entryDate: Date?,
-    val departureDate: Date?,
+    val entryDate: String?,
+    val departureDate: String?,
     val comment: String,
     val resident: String,
-    val visits: String,
+    val visit: String,
     val department: Int
 )
