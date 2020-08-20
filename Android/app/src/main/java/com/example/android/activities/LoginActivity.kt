@@ -48,32 +48,36 @@ class LoginActivity : AppCompatActivity() {
 
     private fun callLogin(email : TextFieldValue, password : TextFieldValue){
 
-        lifecycleScope.launch(){
-            withContext(Dispatchers.IO){
-                var response = (loginUser(email.text,password.text))
-                val auth = (response?.get(1))
-                val message = (response?.get(0))
+        if(validateFields(email, password)){
 
-                if(message == "Unauthorized"){
-                    error = true
-                }else{
+            lifecycleScope.launch(){
+                withContext(Dispatchers.IO){
+                    val response = (loginUser(email.text,password.text))
+                    val auth = (response?.get(1))
+                    val message = (response?.get(0))
 
-                    if (auth != null) {
-                        Log.v("TOKEN", auth)
+                    if(message == "Unauthorized"){
+                        error = true
+                    }else{
 
-                        MainActivity.setLoginData(auth)
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        if (auth != null) {
+                            Log.v("TOKEN", auth)
+
+                            MainActivity.setLoginData(auth)
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        }
                     }
-
                 }
+                if(error){
+                    showMessage(message = "Error, invalid credentials !")
+                }else{
+                    finish()
+                }
+            }
 
-            }
-            if(error){
-                showMessage(message = "Error, invalid credentials !")
-            }else{
-                finish()
-            }
         }
+
+
     }
 
     @Preview
@@ -116,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
                                     value = email.value,
                                     onValueChange = { email.value = it },
                                     activeColor = darkColorPalette().secondary,
-                                    keyboardType = KeyboardType.Email,
+                                    keyboardType = KeyboardType.Password,
                                     label = { Text("Email") }
                             )
 
@@ -130,7 +134,9 @@ class LoginActivity : AppCompatActivity() {
                             )
 
                             Button(
-                                    onClick = {callLogin(email.value,password.value)},
+                                    onClick = {
+                                        callLogin(email.value,password.value)
+                                    },
                                     text = {Text(text = "Login")},
                                     modifier = Modifier.padding(20.dp),
                                     backgroundColor = darkColorPalette().secondary
@@ -167,5 +173,17 @@ class LoginActivity : AppCompatActivity() {
         toast.show()
 
     }
+
+    private fun validateFields(email : TextFieldValue, password: TextFieldValue): Boolean{
+
+        if(email.text == "" || password.text == ""){
+            val duration = Toast.LENGTH_SHORT
+            val toast = Toast.makeText(applicationContext, "Must specify all the fields", duration)
+            toast.show()
+            return false
+        }
+        return true
+    }
+
 
 }
