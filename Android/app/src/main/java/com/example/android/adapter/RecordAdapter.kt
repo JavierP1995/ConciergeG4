@@ -76,6 +76,20 @@ object RecordAdapter {
         return null
     }
 
+    fun departureVisit(token : String, id: Int): RecordModel? {
+        val call: Call<RecordModel> = ApiService
+                .buildService(RecordService::class.java).departureVisit(
+                        "Bearer $token", id)
+        try{
+            val response = call.execute()
+            Log.v("Json", response.body()!!.toString())
+            return response.body()!!
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
+
     /**
      * This function allows us to insert into the database a record.
      */
@@ -88,9 +102,7 @@ object RecordAdapter {
         try{
             val response = call.execute()
             Log.v("Json", response.body()!!.toString())
-            return RecordModel(kinship = kinship, entryDate = null, departureDate = null,
-                                comment = comment, resident = residentName, visit = visitRut,
-                                    department = departmentNumber)
+            return response.body()!!
         } catch (e: Exception){
             e.printStackTrace()
         }

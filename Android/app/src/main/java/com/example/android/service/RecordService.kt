@@ -40,6 +40,13 @@ interface RecordService {
     fun searchByVisit(@Header("Authorization") auth:String,
                       @Path("search") rut: String) : Call<ArrayList<RecordModel>>
 
+
+    @PUT("records/{id}")
+    @Headers("Accept: application/json")
+    fun departureVisit(@Header("Authorization") auth:String,
+                       @Path("id") id: Int): Call<RecordModel>
+
+
     /**
      * Post operation for records
      */
