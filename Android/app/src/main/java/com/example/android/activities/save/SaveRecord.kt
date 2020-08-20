@@ -8,13 +8,11 @@ import androidx.compose.Composable
 import androidx.compose.state
 import androidx.lifecycle.lifecycleScope
 import androidx.ui.core.Alignment
-import androidx.ui.core.ContentScale
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
 import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
-import androidx.ui.graphics.ColorFilter
 import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.material.*
@@ -31,6 +29,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SaveRecord : AppCompatActivity() {
+
+    var error= false
+    lateinit var message: String
 
     companion object{
         var token : String = ""
@@ -133,11 +134,11 @@ class SaveRecord : AppCompatActivity() {
 
                             Row(modifier = Modifier.padding(top = 20.dp, end = 10.dp)) {
                                 Button(
-                                        onClick = {/*Actividad aquí*/},
+                                        onClick = {finish()},
                                         backgroundColor = Color.Transparent,
                                         shape = RoundedCornerShape(10.dp),
                                         border = Border(5.dp, darkColorPalette().secondary),
-                                        text = { Text(text = "Cancel", style = MaterialTheme.typography.h6)})
+                                        text = { Text(text = "Close", style = MaterialTheme.typography.h6)})
                                 Button(
                                         modifier = Modifier.padding(start = 40.dp),
                                         backgroundColor = Color.Transparent,
@@ -173,6 +174,7 @@ class SaveRecord : AppCompatActivity() {
         val residentNameAux = residentName.text
         val kinshipAux = kinship.text
         val commentAux = comment.text
+        lateinit var displayMessage: String
 
         if(departmentNumber.text != ""){
             val apartmentNumber = departmentNumber.text.toInt()
@@ -181,13 +183,42 @@ class SaveRecord : AppCompatActivity() {
 
                 lifecycleScope.launch {
                     val register = withContext(Dispatchers.IO) {
-                        RecordAdapter.createRecord(token, visitRutAux, apartmentNumber, residentNameAux, kinshipAux, commentAux)
+                        val response = RecordAdapter.createRecord(token, visitRutAux, apartmentNumber, residentNameAux, kinshipAux, commentAux)
+
+                        message = response?.message.toString()
+
+
+                        when (message) {
+                            "The provided visit name it's not exists !" -> {
+                                error = true
+                                displayMessage = "The visitant it's not registered !"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            "The provided number it's not exists !" -> {
+                                error = true
+                                displayMessage = "The department number entered does not exist !!"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            "The visitant isn't admitted" -> {
+                                error = true
+                                displayMessage = "The visitant it's not admitted !"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            "The visitant is not registered !" -> {
+                                error = true
+                                displayMessage = "The visitant it's not registered !"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            else -> error = false
+                        }
+
+                    }
+                    if(error){
+                        showMessage(message = displayMessage)
+                    }else{
+                        showMessage(message = "Insertion Successfully !!!")
                     }
                 }
-                val duration = Toast.LENGTH_SHORT
-                val toast =
-                        Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
-                toast.show()
             }
         }else{
             val duration = Toast.LENGTH_SHORT
@@ -211,4 +242,18 @@ class SaveRecord : AppCompatActivity() {
 
         return true
     }
+
+    /**
+     * This function allows us to display a toast message
+     */
+    private fun showMessage(message: String?) {
+
+        val duration = Toast.LENGTH_SHORT
+        val toast =
+                Toast.makeText(applicationContext, message, duration)
+        toast.show()
+
+    }
+
+
 }
