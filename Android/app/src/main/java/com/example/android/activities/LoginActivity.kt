@@ -35,7 +35,8 @@ import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
 
-    var error = false
+    var errorValidation = false
+    var errorCredentials = false
     lateinit var message: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +57,10 @@ class LoginActivity : AppCompatActivity() {
                     val auth = (response?.get(1))
                     message = (response?.get(0).toString())
 
-                    if(message == "Unauthorized"){
-                        error = true
+                    if(message == "Unauthorized") {
+                        errorCredentials = true
+                    }else if (message == "Precondition Failed"){
+                        errorValidation = true
                     }else{
 
                         if (auth != null) {
@@ -70,10 +73,16 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                 }
-                if(error){
-                    showMessage(message = message)
-                }else{
-                    finish()
+                when {
+                    errorCredentials -> {
+                        showMessage(message = "Invalid credentials, try again !")
+                    }
+                    errorValidation -> {
+                        showMessage(message = "Validation error, check your inputs please !!")
+                    }
+                    else -> {
+                        finish()
+                    }
                 }
             }
         }
