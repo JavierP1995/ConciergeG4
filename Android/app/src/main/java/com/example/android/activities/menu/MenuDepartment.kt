@@ -84,7 +84,7 @@ class MenuDepartment : AppCompatActivity() {
                         horizontalGravity = Alignment.CenterHorizontally
                 ){
                     Button(
-                            text = { Text("Display Data Departments",
+                            text = { Text("Display Data",
                                     color = darkThemeColors.onPrimary,
                                     style = MaterialTheme.typography.h6) },
                             backgroundColor = Color.Transparent,

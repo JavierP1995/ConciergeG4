@@ -1,6 +1,7 @@
 package com.example.android.service
 
 import com.example.android.model.RecordModel
+import com.example.android.reponse.RecordResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -40,16 +41,24 @@ interface RecordService {
     fun searchByVisit(@Header("Authorization") auth:String,
                       @Path("search") rut: String) : Call<ArrayList<RecordModel>>
 
+
+    @PUT("records/{id}")
+    @Headers("Accept: application/json")
+    fun departureVisit(@Header("Authorization") auth:String,
+                       @Path("id") id: Int): Call<RecordModel>
+
+
     /**
      * Post operation for records
      */
+    @FormUrlEncoded
     @POST("records/")
     @Headers("Accept: application/json")
     fun createRecord(@Header("Authorization") auth:String,
-                     @Query("visit_rut") visitRut: String,
-                     @Query("resident_name") residentName: String,
-                     @Query("department_number") departmentNumber: Int,
-                     @Query("kinship") kinship: String,
-                     @Query("comment") comment: String?): Call<RecordModel>
+                     @Field("visit_rut") visitRut: String,
+                     @Field("resident_name") residentName: String,
+                     @Field("department_number") departmentNumber: Int,
+                     @Field("kinship") kinship: String,
+                     @Field("comment") comment: String?): Call<RecordResponse>
 
 }

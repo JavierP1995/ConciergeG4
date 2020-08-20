@@ -36,6 +36,7 @@ class RecordResource extends JsonResource
             'resident' => $this->resident->name,
             'visit' => $visit,
             'department' => $this->department->number,
+            'id' => $this->id
         ];
     }
 }

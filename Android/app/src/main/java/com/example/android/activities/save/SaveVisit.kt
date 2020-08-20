@@ -125,10 +125,7 @@ class SaveVisit : AppCompatActivity() {
 
                             Row(modifier = Modifier.padding(top = 20.dp, end = 10.dp)) {
                                 Button(
-                                        onClick = {
-                                            startActivity(Intent(this@SaveVisit,
-                                            MenuRecord::class.java)
-                                            )},
+                                        onClick = {finish()},
                                         backgroundColor = Color.Transparent,
                                         shape = RoundedCornerShape(10.dp),
                                         border = Border(5.dp, darkColorPalette().secondary),

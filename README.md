@@ -4,18 +4,22 @@ Concierge is a simple universitary application to manage visits and amendments a
 
 ## Subject
 
-Platform-oriented Software Development Project UCN
+Platform-oriented Software Development Project UCN.
 
-## Autors
+## Instructions
+
+For use this app please execute this command in terminal:
+
+ - php artisan serve --host 0.0.0.0 --port=8000
+ 
+Then replace the current ip with your machine ip in [ApiService](./Android/app/src/main/java/com/example/android/service/ApiService.kt) file.
+
+## Authors
 ```c
 Ignacio Chirino Farias ICCI
 Gerald Lopez Guitierrez ICCI 
 Javier Palacios Arce ICCI
 ```
-
-## Domain Model
-
-![Domain Model](./Docs/Diagrams/Domain_Model.jpeg)
 
 ## Class Diagram PHP
 

@@ -37,6 +37,9 @@ import kotlinx.coroutines.withContext
 class SaveRecord : AppCompatActivity() {
 
 
+    var error= false
+    lateinit var message: String
+
     companion object{
         /**
          * Global variable used to receive and send the token in the methods.
@@ -150,7 +153,7 @@ class SaveRecord : AppCompatActivity() {
                                         border = Border(5.dp, darkColorPalette().secondary),
                                         text = { Text(text = "Cancel", style = MaterialTheme.typography.h6)})
                                 Button(
-                                        modifier = Modifier.padding(start = 25.dp),
+                                        modifier = Modifier.padding(start = 40.dp),
                                         backgroundColor = Color.Transparent,
                                         shape = RoundedCornerShape(10.dp),
                                         border = Border(5.dp, darkColorPalette().secondary),
@@ -176,7 +179,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     * Method used to send the attributes of the object to save in the database.
+     *
      */
     private fun callRegisterActivity(visitRut: TextFieldValue, departmentNumber: TextFieldValue, residentName: TextFieldValue, kinship: TextFieldValue, comment: TextFieldValue) {
 
@@ -184,6 +187,7 @@ class SaveRecord : AppCompatActivity() {
         val residentNameAux = residentName.text
         val kinshipAux = kinship.text
         val commentAux = comment.text
+        lateinit var displayMessage: String
 
         if(departmentNumber.text != ""){
             val apartmentNumber = departmentNumber.text.toInt()
@@ -192,13 +196,42 @@ class SaveRecord : AppCompatActivity() {
 
                 lifecycleScope.launch {
                     val register = withContext(Dispatchers.IO) {
-                        RecordAdapter.createRecord(token, visitRutAux, apartmentNumber, residentNameAux, kinshipAux, commentAux)
+                        val response = RecordAdapter.createRecord(token, visitRutAux, apartmentNumber, residentNameAux, kinshipAux, commentAux)
+
+                        message = response?.message.toString()
+
+
+                        when (message) {
+                            "The provided visit name it's not exists !" -> {
+                                error = true
+                                displayMessage = "The visitant it's not registered !"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            "The provided number it's not exists !" -> {
+                                error = true
+                                displayMessage = "The department number entered does not exist !!"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            "The visitant isn't admitted" -> {
+                                error = true
+                                displayMessage = "The visitant it's not admitted !"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            "The visitant is not registered !" -> {
+                                error = true
+                                displayMessage = "The visitant it's not registered !"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            else -> error = false
+                        }
+
+                    }
+                    if(error){
+                        showMessage(message = displayMessage)
+                    }else{
+                        showMessage(message = "Insertion Successfully !!!")
                     }
                 }
-                val duration = Toast.LENGTH_SHORT
-                val toast =
-                        Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
-                toast.show()
             }
         }else{
             val duration = Toast.LENGTH_SHORT
@@ -222,4 +255,18 @@ class SaveRecord : AppCompatActivity() {
 
         return true
     }
+
+    /**
+     * This function allows us to display a toast message
+     */
+    private fun showMessage(message: String?) {
+
+        val duration = Toast.LENGTH_SHORT
+        val toast =
+                Toast.makeText(applicationContext, message, duration)
+        toast.show()
+
+    }
+
+
 }
