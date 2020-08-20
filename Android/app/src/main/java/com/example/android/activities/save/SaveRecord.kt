@@ -16,6 +16,7 @@ import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.ColorFilter
 import androidx.ui.graphics.painter.ImagePainter
+import androidx.ui.input.KeyboardType
 import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.material.icons.Icons
@@ -30,11 +31,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Class SaveRecord, activity that save a record in data base.
+ */
 class SaveRecord : AppCompatActivity() {
 
+
     companion object{
+        /**
+         * Global variable used to receive and send the token in the methods.
+         */
         var token : String = ""
 
+        /**
+         * Method used to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
@@ -42,7 +53,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * Method used to star the activity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +64,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * The method used shows the fields required to insert a record in the database.
      */
     @Preview
     @Composable
@@ -139,7 +150,7 @@ class SaveRecord : AppCompatActivity() {
                                         border = Border(5.dp, darkColorPalette().secondary),
                                         text = { Text(text = "Cancel", style = MaterialTheme.typography.h6)})
                                 Button(
-                                        modifier = Modifier.padding(start = 40.dp),
+                                        modifier = Modifier.padding(start = 25.dp),
                                         backgroundColor = Color.Transparent,
                                         shape = RoundedCornerShape(10.dp),
                                         border = Border(5.dp, darkColorPalette().secondary),
@@ -165,7 +176,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * Method used to send the attributes of the object to save in the database.
      */
     private fun callRegisterActivity(visitRut: TextFieldValue, departmentNumber: TextFieldValue, residentName: TextFieldValue, kinship: TextFieldValue, comment: TextFieldValue) {
 
@@ -198,7 +209,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * Method that validates the parameters of the object being entered
      */
     private fun validateFields(visitRut: String, departmentNumber: Int, residentName: String, kinship: String, comment: String?): Boolean {
 
