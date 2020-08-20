@@ -36,6 +36,7 @@ import kotlinx.coroutines.withContext
 class LoginActivity : AppCompatActivity() {
 
     var error = false
+    lateinit var message: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,15 +47,14 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun callLogin(email : TextFieldValue, password : TextFieldValue){
+    private fun callLogin(email : TextFieldValue, password : TextFieldValue) {
 
-        if(validateFields(email, password)){
-
+        if (validateFields(email, password)){
             lifecycleScope.launch(){
                 withContext(Dispatchers.IO){
-                    val response = (loginUser(email.text,password.text))
+                    var response = (loginUser(email.text,password.text))
                     val auth = (response?.get(1))
-                    val message = (response?.get(0))
+                    message = (response?.get(0).toString())
 
                     if(message == "Unauthorized"){
                         error = true
@@ -66,17 +66,17 @@ class LoginActivity : AppCompatActivity() {
                             MainActivity.setLoginData(auth)
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         }
+
                     }
+
                 }
                 if(error){
-                    showMessage(message = "Error, invalid credentials !")
+                    showMessage(message = message)
                 }else{
                     finish()
                 }
             }
-
         }
-
 
     }
 
@@ -120,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
                                     value = email.value,
                                     onValueChange = { email.value = it },
                                     activeColor = darkColorPalette().secondary,
-                                    keyboardType = KeyboardType.Password,
+                                    keyboardType = KeyboardType.Email,
                                     label = { Text("Email") }
                             )
 
@@ -134,9 +134,7 @@ class LoginActivity : AppCompatActivity() {
                             )
 
                             Button(
-                                    onClick = {
-                                        callLogin(email.value,password.value)
-                                    },
+                                    onClick = {callLogin(email.value,password.value)},
                                     text = {Text(text = "Login")},
                                     modifier = Modifier.padding(20.dp),
                                     backgroundColor = darkColorPalette().secondary
