@@ -95,4 +95,19 @@ object VisitAdapter {
         }
         return null
     }
+
+    fun banVisit(token : String, rut: String): VisitModel? {
+        val call: Call<VisitModel> = ApiService
+                .buildService(VisitService::class.java)
+                .banVisit(
+                        "Bearer $token", rut)
+        try{
+            val response = call.execute()
+            Log.v("Json", response.body()!!.toString())
+            return response.body()!!
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null
+    }
 }
