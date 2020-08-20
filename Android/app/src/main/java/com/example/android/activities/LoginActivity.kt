@@ -51,9 +51,10 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch(){
             withContext(Dispatchers.IO){
                 var response = (loginUser(email.text,password.text))
-                val auth = (response?.token)
+                val auth = (response?.get(1))
+                val message = (response?.get(0))
 
-                if(response == null){
+                if(message == "Unauthorized"){
                     error = true
                 }else{
 
@@ -67,9 +68,12 @@ class LoginActivity : AppCompatActivity() {
                 }
 
             }
-            finish()
+            if(error){
+                showMessage(message = "Error, invalid credentials !")
+            }else{
+                finish()
+            }
         }
-
     }
 
     @Preview
@@ -126,11 +130,7 @@ class LoginActivity : AppCompatActivity() {
                             )
 
                             Button(
-                                    onClick = {callLogin(email.value,password.value)
-
-
-
-                                    },
+                                    onClick = {callLogin(email.value,password.value)},
                                     text = {Text(text = "Login")},
                                     modifier = Modifier.padding(20.dp),
                                     backgroundColor = darkColorPalette().secondary
@@ -159,33 +159,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    @Composable
-    fun ShowAlertDialog() {
+    private fun showMessage(message: String) {
 
-        val openDialog = state { true }
-        if (openDialog.value) {
-            AlertDialog(
-                    onCloseRequest = {
-                    },
-                    title = {
-                        Text(text = "Title")
-                    },
-                    text = {
-                        Text("This is alert dialog in jetpack compose!")
-                    },
-                    confirmButton = {
-                        Button(onClick = {
-                            openDialog.value = false
-                        }, text = { Text("Confirm") })
-                    },
-                    dismissButton = {
-                        Button(onClick = {
-                            openDialog.value = false
-                        }, text = { Text("Dismiss") })
-                    },
-                    buttonLayout = AlertDialogButtonLayout.Stacked
-            )
-        }
+        val duration = Toast.LENGTH_SHORT
+        val toast =
+                Toast.makeText(applicationContext, message, duration)
+        toast.show()
 
     }
 

@@ -1,7 +1,6 @@
 package com.example.android.adapter
 
 import android.util.Log
-import android.widget.Toast
 import com.example.android.reponse.LoginResponse
 import com.example.android.reponse.RegisterResponse
 import com.example.android.service.ApiService
@@ -31,7 +30,7 @@ object AuthAdapter {
     /**
      * This method allows us to log in into the app.
      */
-    fun loginUser(email : String, password: String) : LoginResponse? {
+    fun loginUser(email : String, password: String) : Array<String?>? {
 
         val requestCall : Call<LoginResponse> = ApiService.
         buildService(AuthService::class.java).login(email, password)
@@ -39,10 +38,12 @@ object AuthAdapter {
         try{
             val response  = requestCall.execute()
 
+            val token = response.body()?.token
             val message = response.message()
             Log.v("JSON: ", message)
 
-            return response.body()
+            return arrayOf(message, token)
+
         }catch (e: Exception){
             e.printStackTrace()
         }
