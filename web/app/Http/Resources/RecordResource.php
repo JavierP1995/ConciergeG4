@@ -14,7 +14,6 @@ class RecordResource extends JsonResource
      */
     public function toArray($request)
     {
-        $departureDate = "";
         if($this->departureDate == null)
         {
             $departureDate = "not yet";
@@ -22,13 +21,20 @@ class RecordResource extends JsonResource
         {
             $departureDate = $this->departureDate->format('d-m-Y H:i');
         }
+        if($this->visit == null)
+        {
+            $visit = "not a visit";
+        }else
+        {
+            $visit = $this->visit->name;
+        }
         return [
             'kinship' => $this->kinship,
             'entryDate' => $this->entryDate->format('d-m-Y H:i'),
             $departureDate,
             'comment' => $this->comment,
             'resident' => $this->resident->name,
-            'visits' => $this->visit->name,
+            $visit,
             'department' => $this->department->number,
         ];
     }
