@@ -13,6 +13,7 @@ interface ResidentService {
      * Get operation for all residents
      */
     @GET("residents")
+    @Headers("Accept: application/json")
     fun getResidents(@Header("Authorization") auth:String): Call<ArrayList<ResidentModel>>
 
     /**

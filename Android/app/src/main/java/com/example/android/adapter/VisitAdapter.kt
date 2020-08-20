@@ -84,7 +84,7 @@ object VisitAdapter {
     fun createVisit(token : String, rut: String, name: String, admitted: String): VisitModel? {
 
         val call: Call<VisitModel> = ApiService
-                .buildService(VisitService::class.java).createRecord("Bearer $token",
+                .buildService(VisitService::class.java).createVisit("Bearer $token",
                         name=name, rut = rut, admitted = admitted)
         try{
             val response = call.execute()

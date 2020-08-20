@@ -15,6 +15,7 @@ interface AuthService {
      */
     @FormUrlEncoded
     @POST("register")
+    @Headers("Accept: application/json")
     fun register(@Field ("name") name : String,
                  @Field ("email") email: String,
                  @Field("password") password : String,
@@ -26,6 +27,7 @@ interface AuthService {
      */
     @FormUrlEncoded
     @POST("login")
+    @Headers("Accept: application/json")
     fun login(@Field("email") email : String,
               @Field("password") password : String
              ): Call<LoginResponse>
