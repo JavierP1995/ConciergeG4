@@ -36,6 +36,7 @@ import kotlinx.coroutines.withContext
 class LoginActivity : AppCompatActivity() {
 
     var error = false
+    lateinit var message: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
             withContext(Dispatchers.IO){
                 var response = (loginUser(email.text,password.text))
                 val auth = (response?.get(1))
-                val message = (response?.get(0))
+                message = (response?.get(0).toString())
 
                 if(message == "Unauthorized"){
                     error = true
@@ -69,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
 
             }
             if(error){
-                showMessage(message = "Error, invalid credentials !")
+                showMessage(message = message)
             }else{
                 finish()
             }
