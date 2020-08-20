@@ -68,23 +68,40 @@ class RecordController extends Controller
                                 ->where('name', '=' ,$request->resident_name) // Clausula and
                                 ->where('department_id', '=' ,$department_id)->value('id');*/
 
-                    $resident_id = Resident::all()->where('name', $request->resident_name)
-                        ->where('department_id', $department_id)->first()->id;
+                    error_log($request->resident_name);
 
-                    $visit_id = $visit->id;
+                    $resident = Resident::all()->where('name', $request->resident_name)
+                        ->where('department_id', $department_id)->first();
 
-                    $request->request->add(['resident_id' => $resident_id, 'department_id' => $department_id,'visit_id' => $visit_id]);
+                    if ($resident != null){
 
-                    $request->request->add(['entryDate' => Carbon::now()]);
+                        $resident_id = $resident->id;
 
-                    $data = $request->except(['visit_rut', 'department_number', 'resident_name']);
+                        $visit_id = $visit->id;
 
-                    $record = Record::create($data); // Create the record
+                        $request->request->add(['resident_id' => $resident_id, 'department_id' => $department_id,'visit_id' => $visit_id]);
 
-                    return response([
-                        'message' => 'Record created successfully',
-                        'record' => new RecordResource($record)
-                    ], 201);
+                        $request->request->add(['entryDate' => Carbon::now()]);
+
+                        $data = $request->except(['visit_rut', 'department_number', 'resident_name']);
+
+                        $record = Record::create($data); // Create the record
+
+                        error_log("Almost insert !");
+
+                        return response([
+                             'message' => 'Record created successfully',
+                             'record' => new RecordResource($record)
+                        ], 201);
+
+                    }else{
+
+                        return response([
+                            'message' => "The provided visit name it's not exists !"
+                        ]);
+
+                    }
+
 
                 }else{
                     return response([
