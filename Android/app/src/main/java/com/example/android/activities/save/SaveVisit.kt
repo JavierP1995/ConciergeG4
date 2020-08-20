@@ -8,16 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.state
 import androidx.lifecycle.lifecycleScope
-import androidx.ui.core.Alignment
-import androidx.ui.core.ContentScale
-import androidx.ui.core.Modifier
-import androidx.ui.core.setContent
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Image
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.TextFieldValue
+import androidx.ui.core.*
+import androidx.ui.foundation.*
+import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.ColorFilter
+import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.material.icons.Icons
@@ -33,33 +29,41 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Class SaveVisit, activity that save a visit in data base.
+ */
 class SaveVisit : AppCompatActivity() {
 
-    var error= false
-    lateinit var message: String
-
     companion object{
+        /**
+         * Global variable used to receive and send the token in the methods.
+         */
         var token : String = ""
 
+        /**
+         * Method used to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
         }
     }
 
+    /**
+     * Method used to star the activity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AndroidTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    showForm()
-                }
-            }
+           showForm()
         }
 
     }
 
+    /**
+     * The method used shows the fields required to insert a record in the database.
+     */
+    @Preview
     @Composable
     fun showForm() {
 
@@ -68,123 +72,108 @@ class SaveVisit : AppCompatActivity() {
         val admitted = state { TextFieldValue("") }
 
         MaterialTheme(colors = darkColorPalette()) {
-            Scaffold(topAppBar = {
-                TopAppBar(title = { Text(text = "Add Visit") },
-                    navigationIcon = {
-                        IconButton(onClick = {/*Activity*/ }) {
-                            Icon(Icons.Filled.Menu)
-                        }
-                    })
-            }
+            Scaffold(
 
-            ) {
-                Image(
-                    asset = imageResource(id = R.drawable.register_icon),
-                    alignment = Alignment.Center,
-                    modifier = Modifier.padding(start = 25.dp, bottom = 40.dp),
-                    colorFilter = ColorFilter.tint(Color(red = 25, blue = 25, green = 25)),
-                    contentScale = ContentScale.Fit
-                )
+                    bodyContent = {
 
-                Column(
-                    modifier = Modifier.padding(55.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalGravity = Alignment.CenterHorizontally
-                ) {
+                        Image(
+                                painter = ImagePainter(imageResource(id = R.drawable.menuvisits)),
+                                alignment = Alignment.TopCenter
+                        )
+                        Image(
+                                painter = ImagePainter(imageResource(id = R.drawable.conciergewallpaper)),
+                                alignment = Alignment.Center,
+                                modifier = Modifier.fillMaxSize()
+                        )
 
-                    Spacer(modifier = Modifier.padding(top = 20.dp))
-                    FilledTextField(
-                        value = rut.value,
-                        activeColor = darkColorPalette().secondary,
-                        onValueChange = { rut.value = it },
-                        label = { Text("Rut*") }
-                    )
+                        Column(
+                                modifier = Modifier.fillMaxSize().padding(55.dp),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalGravity = Alignment.CenterHorizontally
+                        ) {
 
-                    Spacer(modifier = Modifier.padding(top = 20.dp))
+                            Spacer(modifier = Modifier.padding(top = 20.dp))
+                            FilledTextField(
+                                    value = rut.value,
+                                    activeColor = darkColorPalette().secondary,
+                                    shape = RoundedCornerShape(10.dp),
+                                    onValueChange = { rut.value = it },
+                                    label = { Text("Rut *") }
+                            )
 
-                    FilledTextField(
-                        value = name.value,
-                        activeColor = darkColorPalette().secondary,
-                        onValueChange = { name.value = it },
-                        label = { Text("Name*") }
-                    )
+                            Spacer(modifier = Modifier.padding(top = 20.dp))
 
-                    Spacer(modifier = Modifier.padding(top = 20.dp))
+                            FilledTextField(
+                                    value = name.value,
+                                    activeColor = darkColorPalette().secondary,
+                                    shape = RoundedCornerShape(10.dp),
+                                    onValueChange = { name.value = it },
+                                    label = { Text("Name *") }
+                            )
 
-                    FilledTextField(
-                        value = admitted.value,
-                        activeColor = darkColorPalette().secondary,
-                        onValueChange = { admitted.value = it },
-                        label = { Text("Admitted*") }
-                    )
-                    Spacer(modifier = Modifier.padding(top = 20.dp))
+                            Spacer(modifier = Modifier.padding(top = 20.dp))
 
-                    Row(modifier = Modifier.padding(top = 20.dp, end = 10.dp)) {
-                        Button(onClick = {finish()},
-                            backgroundColor = darkColorPalette().secondary, text = { Text(text = "Cancel") })
-                        Button(modifier = Modifier.padding(start = 40.dp),
-                            backgroundColor = darkColorPalette().secondary, onClick =
-                            {
-                                callRegister(
-                                    rut.value, name.value, admitted.value
+                            FilledTextField(
+                                    value = admitted.value,
+                                    activeColor = darkColorPalette().secondary,
+                                    shape = RoundedCornerShape(10.dp),
+                                    onValueChange = { admitted.value = it },
+                                    label = { Text("Admitted *") }
+                            )
+
+                            Spacer(modifier = Modifier.padding(top = 20.dp))
+
+                            Row(modifier = Modifier.padding(top = 20.dp, end = 10.dp)) {
+                                Button(
+                                        onClick = {finish()},
+                                        backgroundColor = Color.Transparent,
+                                        shape = RoundedCornerShape(10.dp),
+                                        border = Border(5.dp, darkColorPalette().secondary),
+                                        text = { Text(text = "Cancel", style = MaterialTheme.typography.h6)})
+                                Button(onClick = { callRegister(rut.value, name.value,
+                                                admitted.value)
+                                        },
+                                        modifier = Modifier.padding(start = 25.dp),
+                                        backgroundColor = Color.Transparent,
+                                        shape = RoundedCornerShape(10.dp),
+                                        border = Border(5.dp, darkColorPalette().secondary),
+                                        text = { Text(text = "Register",
+                                                style = MaterialTheme.typography.h6)}
                                 )
-                            },
-                            text = { Text(text = "Register") })
+                            }
+                        }
+
                     }
-                }
-            }
+
+            )
         }
     }
 
     /**
-     * This function allows us to call to the createVisit adapter method.
+     * Method used to send the attributes of the object to save in the database.
      */
     private fun callRegister(rut: TextFieldValue, name: TextFieldValue, admitted: TextFieldValue) {
         val rut = rut.text
         val name = name.text
         val admitted = admitted.text
-        lateinit var displayMessage : String
 
         if (validateFields(rut, name, admitted)) {
             lifecycleScope.launch{
                 val register = withContext(Dispatchers.IO)
                 {
-                    val response = VisitAdapter.createVisit(token , rut, name, admitted)
-                    message = response?.message.toString()
-
-                    if(message == "Created Successfully"){
-                        error = false
-                        displayMessage = "Insertion Successfully !!"
-                    }else{
-                        error = true
-                    }
-
-                }
-                if(error){
-                    showMessage(message = "An error occurred, please try again !")
-                }else{
-                    showMessage(message = displayMessage)
+                    VisitAdapter.createVisit(token , rut, name, admitted)
                 }
             }
+            val duration = Toast.LENGTH_SHORT
+            val toast =
+                    Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
+            toast.show()
         }
 
     }
 
     /**
-     * This function allows us to display a toast message
-     */
-    private fun showMessage(message
-                            : String?) {
-
-        val duration = Toast.LENGTH_SHORT
-        val toast =
-                Toast.makeText(applicationContext, message, duration)
-        toast.show()
-
-    }
-
-    /**
-     * This function validate if the fields are empty.
+     * Method that validates the parameters of the object being entered
      */
     private fun validateFields(
         rut: String,
@@ -192,19 +181,13 @@ class SaveVisit : AppCompatActivity() {
         admitted: String
     ): Boolean {
         if (rut == "" || name == "" || admitted == "") {
-            showMessage(message = "You must specify all the fields!")
+            val duration = Toast.LENGTH_SHORT
+            val toast =
+                Toast.makeText(applicationContext, "You must specify all the fields!", duration)
+            toast.show()
             return false
         }
         return true
     }
-
-    @Preview(showBackground = true)
-    @Composable
-    fun DefaultPreview() {
-        MaterialTheme() {
-            showForm()
-        }
-    }
-
 
 }

@@ -8,12 +8,15 @@ import androidx.compose.Composable
 import androidx.compose.state
 import androidx.lifecycle.lifecycleScope
 import androidx.ui.core.Alignment
+import androidx.ui.core.ContentScale
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
 import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
+import androidx.ui.graphics.ColorFilter
 import androidx.ui.graphics.painter.ImagePainter
+import androidx.ui.input.KeyboardType
 import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.material.icons.Icons
@@ -28,14 +31,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Class SaveRecord, activity that save a record in data base.
+ */
 class SaveRecord : AppCompatActivity() {
+
 
     var error= false
     lateinit var message: String
 
     companion object{
+        /**
+         * Global variable used to receive and send the token in the methods.
+         */
         var token : String = ""
 
+        /**
+         * Method used to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
@@ -43,7 +56,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * Method used to star the activity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +67,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * The method used shows the fields required to insert a record in the database.
      */
     @Preview
     @Composable
@@ -134,11 +147,11 @@ class SaveRecord : AppCompatActivity() {
 
                             Row(modifier = Modifier.padding(top = 20.dp, end = 10.dp)) {
                                 Button(
-                                        onClick = {finish()},
+                                        onClick = {/*Actividad aquí*/},
                                         backgroundColor = Color.Transparent,
                                         shape = RoundedCornerShape(10.dp),
                                         border = Border(5.dp, darkColorPalette().secondary),
-                                        text = { Text(text = "Close", style = MaterialTheme.typography.h6)})
+                                        text = { Text(text = "Cancel", style = MaterialTheme.typography.h6)})
                                 Button(
                                         modifier = Modifier.padding(start = 40.dp),
                                         backgroundColor = Color.Transparent,
@@ -229,7 +242,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * Method that validates the parameters of the object being entered
      */
     private fun validateFields(visitRut: String, departmentNumber: Int, residentName: String, kinship: String, comment: String?): Boolean {
 
