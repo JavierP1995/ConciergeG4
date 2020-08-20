@@ -143,13 +143,14 @@ class RecordController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $record = Record::all()->where('id', $id)->first();
+        $record->update(['departureDate' => Carbon::now()]);
+        return $record;
     }
 
     /**
