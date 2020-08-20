@@ -160,11 +160,11 @@ class SaveVisit : AppCompatActivity() {
                     }
 
                 }
-            }
-            if(error){
-                showMessage(message = displayMessage)
-            }else{
-                showMessage(message = "An error ocurred, please try again !")
+                if(error){
+                    showMessage(message = "An error occurred, please try again !")
+                }else{
+                    showMessage(message = displayMessage)
+                }
             }
         }
 
