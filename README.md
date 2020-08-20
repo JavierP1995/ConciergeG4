@@ -12,7 +12,7 @@ For use this app please execute this command in terminal:
 
  - php artisan serve --host 0.0.0.0 --port=8000
  
-Then replace the current ip for your machine ip in [ApiService](./Android/app/src/main/java/com/example/android/service/ApiService.kt) file.
+Then replace the current ip with your machine ip in [ApiService](./Android/app/src/main/java/com/example/android/service/ApiService.kt) file.
 
 ## Autors
 ```c
