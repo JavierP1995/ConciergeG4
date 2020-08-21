@@ -100,7 +100,7 @@ class SearchRecord : AppCompatActivity() {
                                 Button(
                                         text = { Text("Search By Department") },
                                         backgroundColor = darkColorPalette().secondary,
-                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.searchicon)),
+                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.iconsearch)),
                                                 sizeToIntrinsics = false),
                                         onClick = {
                                             val intent = Intent(this@SearchRecord,
@@ -127,7 +127,7 @@ class SearchRecord : AppCompatActivity() {
                                 Button(
                                         text = { Text("Search By Resident") },
                                         backgroundColor = darkColorPalette().secondary,
-                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.searchicon)),
+                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.iconsearch)),
                                                 sizeToIntrinsics = false),
                                         onClick = {
                                             val intent = Intent(this@SearchRecord,
@@ -155,7 +155,7 @@ class SearchRecord : AppCompatActivity() {
                                 Button(
                                         text = { Text("Search By Visit") },
                                         backgroundColor = darkColorPalette().secondary,
-                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.searchicon)),
+                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.iconsearch)),
                                                 sizeToIntrinsics = false),
                                         onClick = {
                                             val intent = Intent(this@SearchRecord,

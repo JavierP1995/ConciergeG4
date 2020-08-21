@@ -68,7 +68,7 @@ class DisplayVisits : AppCompatActivity() {
         val option = bundle!!.getString("option")
         val search = bundle!!.getString("search")
         super.onCreate(savedInstanceState)
-        setContent {
+        setContent{
             MaterialTheme {
                 listVisits(visitsList)
 
@@ -168,32 +168,6 @@ class DisplayVisits : AppCompatActivity() {
                     modifier = Modifier.preferredSize(45.dp).clip(shape = CircleShape),
                     alignment = Alignment.TopStart
                 )
-                if(visit.admitted == "yes")
-                {
-                    Button(
-                            text = {
-                                Text("Ban", color = darkThemeColors.onPrimary,
-                                        style = MaterialTheme.typography.subtitle2)
-                            },
-                            backgroundColor = Color.Transparent,
-                            border = Border(2.dp, darkThemeColors.secondary),
-                            modifier = Modifier.size(120.dp, 40.dp).padding(5.dp, 0.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            onClick = {
-                                lifecycleScope.launch {
-                                    val visit = withContext(Dispatchers.IO){
-                                        VisitAdapter.banVisit(DisplayRecords.token, visit.rut)
-                                    }
-                                    visitsList.value = visitsList.value?.copy(loading = true)
-                                    val visits = withContext(Dispatchers.IO){
-                                        VisitAdapter.loadVisits(DisplayRecords.token)
-                                    }
-                                    visitsList.value = visitsList.value?.copy(visits ?: emptyList(),
-                                            loading = false)
-                                }
-                            }
-                    )
-                }
                 Column(
                     modifier = Modifier.padding(10.dp, 0.dp)
                 ) {
@@ -209,8 +183,34 @@ class DisplayVisits : AppCompatActivity() {
                         text = "Admitted: " + visit.admitted,
                         color = darkThemeColors.onPrimary
                     )
-                }
 
+                }
+                if(visit.admitted == "yes")
+                {
+                    Button(
+                            text = {
+                                Text("Ban", color = darkThemeColors.onPrimary,
+                                        style = MaterialTheme.typography.subtitle2)
+                            },
+                            backgroundColor = Color.Transparent,
+                            border = Border(2.dp, darkThemeColors.secondary),
+                            modifier = Modifier.fillMaxWidth().wrapContentSize(Alignment.BottomEnd),
+                            shape = CircleShape,
+                            onClick = {
+                                lifecycleScope.launch {
+                                    val visit = withContext(Dispatchers.IO){
+                                        VisitAdapter.banVisit(DisplayVisits.token, visit.rut)
+                                    }
+                                    visitsList.value = visitsList.value?.copy(loading = true)
+                                    val visits = withContext(Dispatchers.IO){
+                                        VisitAdapter.loadVisits(DisplayVisits.token)
+                                    }
+                                    visitsList.value = visitsList.value?.copy(visits ?: emptyList(),
+                                            loading = false)
+                                }
+                            }
+                    )
+                }
             }
         }
         Divider()

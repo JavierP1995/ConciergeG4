@@ -100,7 +100,7 @@ class SearchVisit : AppCompatActivity() {
                                 Button(
                                         text = { Text("Search By Department") },
                                         backgroundColor = darkColorPalette().secondary,
-                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.searchicon)),
+                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.iconsearch)),
                                                 sizeToIntrinsics = false),
                                         onClick = {
                                             val intent = Intent(this@SearchVisit,
@@ -128,7 +128,7 @@ class SearchVisit : AppCompatActivity() {
                                 Button(
                                         text = { Text("Search By Rut") },
                                         backgroundColor = darkColorPalette().secondary,
-                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.searchicon)),
+                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.iconsearch)),
                                                 sizeToIntrinsics = false),
                                         onClick = {
                                             val intent = Intent(this@SearchVisit,
@@ -155,7 +155,7 @@ class SearchVisit : AppCompatActivity() {
                                 Button(
                                         text = { Text("Search by rut of resident") },
                                         backgroundColor = darkColorPalette().secondary,
-                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.searchicon)),
+                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.iconsearch)),
                                                 sizeToIntrinsics = false),
                                         onClick = {
                                             val intent = Intent(this@SearchVisit,
