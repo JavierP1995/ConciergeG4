@@ -1,6 +1,7 @@
 package com.example.android.service
 
 import com.example.android.reponse.LoginResponse
+import com.example.android.reponse.LogoutResponse
 import com.example.android.reponse.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -31,6 +32,14 @@ interface AuthService {
     fun login(@Field("email") email : String,
               @Field("password") password : String
              ): Call<LoginResponse>
+
+    /**
+     * logout operation
+     */
+    @FormUrlEncoded
+    @POST("logout")
+    @Headers("Accept: application/json")
+    fun logout(@Header("Authorization") auth:String): Call<LogoutResponse>
 
 
 }

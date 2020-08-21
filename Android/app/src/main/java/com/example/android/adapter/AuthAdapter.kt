@@ -2,6 +2,7 @@ package com.example.android.adapter
 
 import android.util.Log
 import com.example.android.reponse.LoginResponse
+import com.example.android.reponse.LogoutResponse
 import com.example.android.reponse.RegisterResponse
 import com.example.android.service.ApiService
 import com.example.android.service.AuthService
@@ -43,6 +44,29 @@ object AuthAdapter {
             Log.v("JSON: ", message)
 
             return arrayOf(message, token) // return a array with the token an the response message.
+
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+
+        return null
+    }
+
+    /**
+     * This method allows us to logout.
+     */
+    fun logoutUser(token: String) : Array<String?>? {
+
+        val requestCall : Call<LogoutResponse> = ApiService.
+        buildService(AuthService::class.java).logout(token)
+
+        try{
+            val response  = requestCall.execute()
+
+            val message = response.message()
+            Log.v("JSON: ", message)
+
+            return arrayOf(message) // return a array with the token an the response message.
 
         }catch (e: Exception){
             e.printStackTrace()

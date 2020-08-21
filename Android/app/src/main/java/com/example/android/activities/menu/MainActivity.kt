@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
+import androidx.lifecycle.lifecycleScope
 import androidx.ui.core.*
 import androidx.ui.foundation.Border
 import androidx.ui.foundation.Image
@@ -17,13 +18,16 @@ import androidx.ui.layout.*
 import androidx.ui.material.Button
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
+import androidx.ui.material.darkColorPalette
 import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import com.example.android.R
+import com.example.android.activities.save.SaveRecord
+import com.example.android.adapter.AuthAdapter
+import com.example.android.adapter.RecordAdapter
 import com.example.android.ui.utils.darkThemeColors
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.*
 
 /**
  * Main menu visualization, with access to the specified entity's
@@ -162,6 +166,21 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                     }
                             )
 
+                            Row(modifier = Modifier.padding(top = 20.dp, end = 10.dp)) {
+                                Button(
+                                        text = {
+                                            Text("Logout", color = darkThemeColors.onPrimary,
+                                                    style = MaterialTheme.typography.h6)
+                                        },
+                                        modifier = Modifier.padding(start = 18.dp),
+                                        backgroundColor = Color.Transparent,
+                                        shape = RoundedCornerShape(10.dp),
+                                        border = Border(5.dp, darkColorPalette().secondary),
+                                        onClick = {
+                                            doLogout()
+                                        }
+                                )
+                            }
 
                         }
                     })
@@ -171,12 +190,29 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
 
     /**
+     * This function allows you to log out
+     */
+    private fun doLogout(){
+
+        var message: String
+
+        lifecycleScope.launch {
+            val register = withContext(Dispatchers.IO) {
+                val response = AuthAdapter.logoutUser(token)
+
+                message = response?.get(0).toString()
+
+            }
+        }
+    }
+
+    /**
      * Display a message if the login was correct
      */
     private fun loginSuccessfullyMessage() {
         val duration = Toast.LENGTH_SHORT
         val toast =
-                Toast.makeText(applicationContext, "Login Succesfully !", duration)
+                Toast.makeText(applicationContext, "Login Successfully !", duration)
         toast.show()
     }
 
