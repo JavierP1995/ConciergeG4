@@ -14,7 +14,7 @@ For use this app please execute this command in terminal:
  
 Then replace the current ip with your machine ip in [ApiService](./Android/app/src/main/java/com/example/android/service/ApiService.kt) file.
 
-## Autors
+## Authors
 ```c
 Ignacio Chirino Farias ICCI
 Gerald Lopez Guitierrez ICCI 

@@ -16,6 +16,7 @@ import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.ColorFilter
 import androidx.ui.graphics.painter.ImagePainter
+import androidx.ui.input.KeyboardType
 import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.material.icons.Icons
@@ -30,11 +31,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Class SaveRecord, activity that save a record in data base.
+ */
 class SaveRecord : AppCompatActivity() {
 
+
+    var error= false
+    lateinit var message: String
+
     companion object{
+        /**
+         * Global variable used to receive and send the token in the methods.
+         */
         var token : String = ""
 
+        /**
+         * Method used to change the token value
+         */
         fun setLoginData(authToken : String){
             this.token = authToken
             Log.v("TOKEN", this.token)
@@ -42,7 +56,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * Method used to star the activity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +67,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * The method used shows the fields required to insert a record in the database.
      */
     @Preview
     @Composable
@@ -173,6 +187,7 @@ class SaveRecord : AppCompatActivity() {
         val residentNameAux = residentName.text
         val kinshipAux = kinship.text
         val commentAux = comment.text
+        lateinit var displayMessage: String
 
         if(departmentNumber.text != ""){
             val apartmentNumber = departmentNumber.text.toInt()
@@ -181,13 +196,42 @@ class SaveRecord : AppCompatActivity() {
 
                 lifecycleScope.launch {
                     val register = withContext(Dispatchers.IO) {
-                        RecordAdapter.createRecord(token, visitRutAux, apartmentNumber, residentNameAux, kinshipAux, commentAux)
+                        val response = RecordAdapter.createRecord(token, visitRutAux, apartmentNumber, residentNameAux, kinshipAux, commentAux)
+
+                        message = response?.message.toString()
+
+
+                        when (message) {
+                            "The provided visit name it's not exists !" -> {
+                                error = true
+                                displayMessage = "The visitant it's not registered !"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            "The provided number it's not exists !" -> {
+                                error = true
+                                displayMessage = "The department number entered does not exist !!"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            "The visitant isn't admitted" -> {
+                                error = true
+                                displayMessage = "The visitant it's not admitted !"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            "The visitant is not registered !" -> {
+                                error = true
+                                displayMessage = "The visitant it's not registered !"
+                                Log.v("RESPONSE MESSAGE: ", message)
+                            }
+                            else -> error = false
+                        }
+
+                    }
+                    if(error){
+                        showMessage(message = displayMessage)
+                    }else{
+                        showMessage(message = "Insertion Successfully !!!")
                     }
                 }
-                val duration = Toast.LENGTH_SHORT
-                val toast =
-                        Toast.makeText(applicationContext, "Insertion Succesfully !", duration)
-                toast.show()
             }
         }else{
             val duration = Toast.LENGTH_SHORT
@@ -198,7 +242,7 @@ class SaveRecord : AppCompatActivity() {
     }
 
     /**
-     *
+     * Method that validates the parameters of the object being entered
      */
     private fun validateFields(visitRut: String, departmentNumber: Int, residentName: String, kinship: String, comment: String?): Boolean {
 
@@ -211,4 +255,18 @@ class SaveRecord : AppCompatActivity() {
 
         return true
     }
+
+    /**
+     * This function allows us to display a toast message
+     */
+    private fun showMessage(message: String?) {
+
+        val duration = Toast.LENGTH_SHORT
+        val toast =
+                Toast.makeText(applicationContext, message, duration)
+        toast.show()
+
+    }
+
+
 }

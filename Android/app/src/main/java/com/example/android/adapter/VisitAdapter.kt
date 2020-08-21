@@ -3,6 +3,7 @@ package com.example.android.adapter
 import android.util.Log
 import com.example.android.model.RecordModel
 import com.example.android.model.VisitModel
+import com.example.android.reponse.VisitResponse
 import com.example.android.service.ApiService
 import com.example.android.service.RecordService
 import com.example.android.service.VisitService
@@ -81,15 +82,16 @@ object VisitAdapter {
     /**
      * This method allows us to call the createVisit method of the VisitService object.
      */
-    fun createVisit(token : String, rut: String, name: String, admitted: String): VisitModel? {
+    fun createVisit(token : String, rut: String, name: String, admitted: String): VisitResponse? {
 
-        val call: Call<VisitModel> = ApiService
+        val call: Call<VisitResponse> = ApiService
                 .buildService(VisitService::class.java).createVisit("Bearer $token",
                         name=name, rut = rut, admitted = admitted)
         try{
             val response = call.execute()
             Log.v("Json", response.body()!!.toString())
-            return VisitModel(name = name, rut = rut, admitted = admitted)
+            return response.body()
+
         } catch (e: Exception){
             e.printStackTrace()
         }
