@@ -147,7 +147,7 @@ class SaveRecord : AppCompatActivity() {
 
                             Row(modifier = Modifier.padding(top = 20.dp, end = 10.dp)) {
                                 Button(
-                                        onClick = {/*Actividad aquí*/},
+                                        onClick = {finish()},
                                         backgroundColor = Color.Transparent,
                                         shape = RoundedCornerShape(10.dp),
                                         border = Border(5.dp, darkColorPalette().secondary),
