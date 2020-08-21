@@ -172,10 +172,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
                                             Text("Logout", color = darkThemeColors.onPrimary,
                                                     style = MaterialTheme.typography.h6)
                                         },
-                                        modifier = Modifier.padding(start = 18.dp),
                                         backgroundColor = Color.Transparent,
+                                        border = Border(5.dp, darkThemeColors.secondary),
+                                        modifier = Modifier.size(300.dp, 100.dp).padding(0.dp, 10.dp),
                                         shape = RoundedCornerShape(10.dp),
-                                        border = Border(5.dp, darkColorPalette().secondary),
                                         onClick = {
                                             doLogout()
                                         }
