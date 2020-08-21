@@ -2,6 +2,7 @@ package com.example.android.service
 
 import com.example.android.model.RecordModel
 import com.example.android.model.VisitModel
+import com.example.android.reponse.VisitResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -49,12 +50,13 @@ interface VisitService {
     /**
      * Post operation for visits
      */
+    @FormUrlEncoded
     @POST("visits/")
     @Headers("Accept: application/json")
     fun createVisit(@Header("Authorization") auth:String,
-                     @Query("rut") rut: String,
-                     @Query("name") name: String,
-                     @Query("admitted") admitted: String): Call<VisitModel>
+                    @Field("rut") rut: String,
+                    @Field("name") name: String,
+                    @Field("admitted") admitted: String): Call<VisitResponse>
 
 }
 
