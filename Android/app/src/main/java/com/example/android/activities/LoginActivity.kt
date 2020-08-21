@@ -159,7 +159,9 @@ class LoginActivity : AppCompatActivity() {
                             Text(text = "Don't have account?")
 
                             TextButton(
-                                    onClick = { /*Aqui RegisterActivity*/},
+                                    onClick = {startActivity(Intent(this@LoginActivity,
+                                                            RegisterActivity::class.java))
+                                                onResume()},
                                     text = { Text(text ="Register Account") },
                                     contentColor = MaterialTheme.colors.secondary
                             )
