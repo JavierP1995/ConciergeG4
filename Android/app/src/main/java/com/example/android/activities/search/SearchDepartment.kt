@@ -6,10 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.state
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.core.paint
-import androidx.ui.core.setContent
+import androidx.ui.core.*
 import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.painter.ImagePainter
@@ -51,9 +48,7 @@ class SearchDepartment : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
-                searchMenu()
-            }
+            searchMenu()
         }
     }
 
@@ -63,18 +58,20 @@ class SearchDepartment : AppCompatActivity() {
     @Preview
     @Composable
     private fun searchMenu() {
+
         val searchN = state { TextFieldValue("") }
         val searchR = state { TextFieldValue("") }
         val searchV = state { TextFieldValue("") }
 
         MaterialTheme(colors = darkThemeColors) {
-            Scaffold(
-                    bodyContent = {
 
+            Scaffold(bodyContent = {
                         Image(
                                 painter = ImagePainter(imageResource(id = R.drawable.appbarsearch)),
-                                alignment = Alignment.TopCenter
+                                alignment = Alignment.TopCenter,
+                                modifier = Modifier.fillMaxSize()
                         )
+
                         Image(
                                 painter = ImagePainter(imageResource(id = R.drawable.conciergewallpaper)),
                                 alignment = Alignment.Center,
@@ -100,9 +97,9 @@ class SearchDepartment : AppCompatActivity() {
                                 )
                                 Spacer(modifier = Modifier.padding(bottom = 20.dp))
                                 Button(
-                                        text = { Text("Search By umber") },
+                                        text = { Text("Search By number") },
                                         backgroundColor = darkColorPalette().secondary,
-                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.searchicon)),
+                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.iconsearch)),
                                                 sizeToIntrinsics = false),
                                         onClick = {
                                             DisplayDepartments.setLoginData(token)
@@ -130,7 +127,7 @@ class SearchDepartment : AppCompatActivity() {
                                 Button(
                                         text = { Text("Search By Resident") },
                                         backgroundColor = darkColorPalette().secondary,
-                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.searchicon)),
+                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.iconsearch)),
                                                 sizeToIntrinsics = false),
                                         onClick = {
                                             DisplayDepartments.setLoginData(token)
@@ -158,7 +155,7 @@ class SearchDepartment : AppCompatActivity() {
                                 Button(
                                         text = { Text("Search By Visit") },
                                         backgroundColor = darkColorPalette().secondary,
-                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.searchicon)),
+                                        modifier = Modifier.paint(painter = ImagePainter(imageResource(id = R.drawable.iconsearch)),
                                                 sizeToIntrinsics = false),
                                         onClick = {
                                             DisplayDepartments.setLoginData(token)
