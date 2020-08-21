@@ -175,13 +175,13 @@ class DisplayRecords : AppCompatActivity() {
                 {
                     Button(
                             text = {
-                                Text("Leaving", color = darkThemeColors.onPrimary,
+                                Text("Leave", color = darkThemeColors.onPrimary,
                                         style = MaterialTheme.typography.subtitle2)
                             },
                             backgroundColor = Color.Transparent,
                             border = Border(2.dp, darkThemeColors.secondary),
-                            modifier = Modifier.size(120.dp, 40.dp).padding(5.dp, 0.dp),
-                            shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier.fillMaxWidth().wrapContentSize(Alignment.BottomEnd),
+                            shape = CircleShape,
                             onClick = {
                                 lifecycleScope.launch {
                                     val record = withContext(Dispatchers.IO){
@@ -203,6 +203,12 @@ class DisplayRecords : AppCompatActivity() {
                 modifier = Modifier.padding(10.dp, 3.dp)
             ){
                 Text(
+                        text = "Visit: "+ record.visit,
+                        style = MaterialTheme.typography.subtitle2,
+                        color = darkThemeColors.onPrimary
+                )
+
+                Text(
                     text = "Entry: "+ record.entryDate.toString(),
                     style = MaterialTheme.typography.subtitle2,
                     color = darkThemeColors.onPrimary
@@ -214,12 +220,6 @@ class DisplayRecords : AppCompatActivity() {
                     style = MaterialTheme.typography.subtitle2,
                     color = darkThemeColors.onPrimary
 
-                )
-
-                Text(
-                    text = "Visit: "+ record.visit,
-                    style = MaterialTheme.typography.subtitle2,
-                    color = darkThemeColors.onPrimary
                 )
 
                 Text(
