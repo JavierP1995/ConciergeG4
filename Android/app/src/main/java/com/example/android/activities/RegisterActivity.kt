@@ -1,6 +1,7 @@
 package com.example.android.activities
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.state
@@ -8,9 +9,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
+import androidx.ui.foundation.Border
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.TextFieldValue
+import androidx.ui.graphics.Color
 import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.input.KeyboardType
 import androidx.ui.input.PasswordVisualTransformation
@@ -28,6 +31,9 @@ import kotlinx.coroutines.withContext
 
 class RegisterActivity : AppCompatActivity() {
 
+    var error = false
+    lateinit var message : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,11 +45,27 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun callRegisterUser(name: TextFieldValue, email: TextFieldValue, password: TextFieldValue, passwordConfirmation:TextFieldValue){
 
-        lifecycleScope.launch{
-            withContext(Dispatchers.IO){
-                registerUser(name.text, email.text, password.text, passwordConfirmation.text)
+        if(validateFields(name, email, password, passwordConfirmation)){
+
+            lifecycleScope.launch{
+                withContext(Dispatchers.IO){
+                    val response = registerUser(name.text, email.text, password.text, passwordConfirmation.text)
+                    message = response
+                    if (message == "Precondition Failed"){
+                        error = true
+                    }
+                }
+                if(error){
+                    showMessage(message = "Validation Error, try again!")
+                }
+                else{
+                    showMessage("Created Successfully!")
+                    finish()
+                }
             }
+
         }
+
 
     }
 
@@ -67,13 +89,19 @@ class RegisterActivity : AppCompatActivity() {
        MaterialTheme(colors = darkColorPalette() ) {
 
            Scaffold(
-                   topAppBar = { topBar() },
+
                    bodyContent = {
-                       
+
                        Image(
-                               painter = ImagePainter(imageResource(id = R.drawable.register)),
+                               painter = ImagePainter(imageResource(id = R.drawable.registerbar)),
                                modifier = Modifier.fillMaxWidth(),
                                alignment = Alignment.TopCenter
+                       )
+
+                       Image(
+                               painter = ImagePainter(imageResource(id = R.drawable.conciergewallpaper)),
+                               modifier = Modifier.fillMaxSize(),
+                               alignment = Alignment.Center
                        )
                        Column(
                                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
@@ -116,10 +144,12 @@ class RegisterActivity : AppCompatActivity() {
                            )
 
                            Button(
-                                   onClick = { callRegisterUser(name.value, email.value, password.value, passwordConfirmation.value)} ,
+                                   onClick = { callRegisterUser(name.value, email.value,
+                                           password.value, passwordConfirmation.value) },
                                    text = {Text(text = "Register")},
                                    modifier = Modifier.padding(20.dp),
-                                   backgroundColor = darkColorPalette().secondary
+                                   backgroundColor = Color.Transparent,
+                                   border = Border(2.dp, darkColorPalette().secondary)
                            )
 
                        }
@@ -131,17 +161,31 @@ class RegisterActivity : AppCompatActivity() {
        }
    }
 
-    @Composable
-    fun topBar() {
-        TopAppBar() {
-            Text(
-                    text = "Register",
-                    style = MaterialTheme.typography.h5,
-                    modifier = Modifier.gravity(Alignment.CenterVertically)
-            )
+    /**
+     * Method that validates the parameter of the object being entered
+     */
+    private fun validateFields(name: TextFieldValue, email: TextFieldValue, password: TextFieldValue,
+                               passwordConfirmation: TextFieldValue) : Boolean{
 
+        if(name.text == "" || email.text == "" || password.text == "" || passwordConfirmation.text == ""){
+            val duration = Toast.LENGTH_SHORT
+            val toast = Toast.makeText(applicationContext, "You must specify all the fields!", duration)
+            toast.show()
+            return false
         }
+
+        return true
     }
+
+    private fun showMessage(message: String) {
+
+        val duration = Toast.LENGTH_SHORT
+        val toast =
+                Toast.makeText(applicationContext, message, duration)
+        toast.show()
+
+    }
+
 
 
 }
