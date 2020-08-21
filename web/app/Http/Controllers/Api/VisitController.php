@@ -105,18 +105,14 @@ class VisitController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param VisitRequest $request
-     * @param Visit $visit
+     * @param String $rut
      * @return \Illuminate\Http\Response
      */
-    public function update(VisitRequest $request, Visit $visit)
+    public function update(String $rut)
     {
-        $visit->update($request->all());
-
-        return response([
-            'message' => 'Updated Successfully',
-            'visit' => new VisitResource($visit),
-        ], 200);
+        $visit = Visit::all()->where('rut', $rut)->first();
+        $visit->update(['admitted' => 'no']);
+        return $visit;
     }
 
     /**
