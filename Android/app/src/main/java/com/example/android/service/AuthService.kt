@@ -36,7 +36,6 @@ interface AuthService {
     /**
      * logout operation
      */
-    @FormUrlEncoded
     @POST("logout")
     @Headers("Accept: application/json")
     fun logout(@Header("Authorization") auth:String): Call<LogoutResponse>
